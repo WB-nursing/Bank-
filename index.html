@@ -1,0 +1,664 @@
+<!--
+🩺 Pediatric Surgery Interactive Quiz
+68 questions · 4 lectures · English content · Arabic UI
+Instant feedback · Bilingual explanations · Sound effects
+-->
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>اختبار جراحة الأطفال · Pediatric Surgery Quiz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@700&family=Cairo:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f8fafc;--card:#ffffff;--text:#0f172a;--muted:#64748b;--border:#e5e7eb;--soft:#f1f5f9;
+  --shadow:0 4px 24px rgba(15,23,42,.06);--ok:#22c55e;--err:#ef4444;--warn:#f59e0b;
+  --g1:#0ea5e9;--g2:#06b6d4;--grad:linear-gradient(135deg,#0ea5e9,#06b6d4);--tint:rgba(14,165,233,.08);
+  --ease:cubic-bezier(.4,0,.2,1);
+}
+[data-theme="dark"]{
+  --bg:#0f172a;--card:#1e293b;--text:#f1f5f9;--muted:#94a3b8;--border:#334155;--soft:#0f172a;
+  --shadow:0 4px 24px rgba(0,0,0,.4);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{font-family:'Cairo','Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;line-height:1.6;transition:background .28s var(--ease),color .28s var(--ease)}
+body::before{content:"";position:fixed;inset:0;z-index:-1;background:radial-gradient(600px 400px at 90% -5%,rgba(14,165,233,.14),transparent),radial-gradient(500px 400px at 5% 105%,rgba(139,92,246,.12),transparent)}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+:focus-visible{outline:3px solid #3b82f6;outline-offset:2px}
+.en{font-family:'Inter',system-ui,sans-serif;direction:ltr;text-align:left}
+.ar{font-family:'Cairo',sans-serif;direction:rtl;text-align:right}
+.wrap{max-width:720px;margin:0 auto;padding:20px 16px 60px}
+.hidden{display:none!important}
+
+/* ---------- Welcome ---------- */
+.hero{text-align:center;padding:24px 0 8px;animation:rise .6s var(--ease) both}
+.badge{width:64px;height:64px;border-radius:50%;margin:0 auto 12px;display:grid;place-items:center;font-size:30px;background:linear-gradient(135deg,#0ea5e9,#8b5cf6);box-shadow:0 0 0 6px rgba(14,165,233,.15),0 8px 30px rgba(14,165,233,.45)}
+h1{font-size:32px;font-weight:700}
+.sub{color:var(--muted);margin-top:4px;font-size:15px}
+.pills{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:14px}
+.pill{padding:6px 14px;border-radius:999px;font-size:13px;font-weight:600;background:var(--card);border:1px solid var(--border);backdrop-filter:blur(8px);box-shadow:var(--shadow)}
+.sacred{margin:22px 0;text-align:center;padding:24px 18px;border-radius:24px;background:linear-gradient(135deg,#fef3c7,#fde68a,#fcd34d);border:2px solid rgba(245,158,11,.25);box-shadow:0 10px 40px rgba(245,158,11,.28);animation:rise .7s .1s var(--ease) both}
+.sacred .ic{font-size:30px}
+.sacred .main{font-family:'Amiri',serif;font-size:26px;font-weight:700;color:#92400e;margin:6px 0 10px;line-height:1.8}
+.sacred hr{border:none;height:1px;background:rgba(146,64,14,.25);width:60%;margin:0 auto 10px}
+.sacred .dua{font-size:14px;font-style:italic;color:#b45309;opacity:.85}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:22px}
+.feat{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:16px;text-align:center;font-weight:600;font-size:14px;box-shadow:var(--shadow);transition:transform .28s var(--ease),box-shadow .28s var(--ease);animation:rise .6s .2s var(--ease) both}
+.feat:hover{transform:translateY(-4px);box-shadow:0 12px 30px rgba(15,23,42,.12)}
+.feat .e{display:block;font-size:26px;margin-bottom:4px}
+.setup{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:20px;box-shadow:var(--shadow);animation:rise .6s .3s var(--ease) both}
+.setup h3{font-size:16px;margin-bottom:10px}
+.lecs{display:grid;gap:8px;margin-bottom:16px}
+.lec{display:flex;align-items:center;gap:10px;min-height:44px;padding:8px 12px;border-radius:12px;border:2px solid var(--border);cursor:pointer;user-select:none}
+.lec input{width:20px;height:20px;accent-color:#10b981}
+.chip{display:inline-block;padding:2px 12px;border-radius:999px;color:#fff;font-weight:700;font-size:13px;font-family:'Inter',sans-serif;direction:ltr}
+.row{display:flex;justify-content:space-between;align-items:center;min-height:44px;gap:12px;border-top:1px dashed var(--border)}
+.row label.t{font-weight:600;font-size:15px}
+.sw{position:relative;width:52px;height:30px;flex:none}
+.sw input{opacity:0;position:absolute;inset:0;width:100%;height:100%;cursor:pointer;z-index:2;margin:0}
+.sw i{position:absolute;inset:0;background:#cbd5e1;border-radius:999px;transition:.28s var(--ease)}
+.sw i::after{content:"";position:absolute;top:3px;inset-inline-start:3px;width:24px;height:24px;border-radius:50%;background:#fff;transition:.28s var(--ease);box-shadow:0 1px 4px rgba(0,0,0,.3)}
+.sw input:checked+i{background:#10b981}
+.sw input:checked+i::after{inset-inline-start:25px}
+.sw input:focus-visible+i{outline:3px solid #3b82f6;outline-offset:2px}
+.seg{display:flex;border:2px solid var(--border);border-radius:12px;overflow:hidden}
+.seg button{padding:8px 16px;min-height:40px;font-weight:600;font-size:14px}
+.seg button.on{background:linear-gradient(135deg,#0ea5e9,#06b6d4);color:#fff}
+.cta{text-align:center;margin:24px 0 8px}
+.start{width:100%;max-width:420px;height:60px;border-radius:16px;background:linear-gradient(135deg,#10b981,#059669);color:#fff;font-size:20px;font-weight:700;box-shadow:0 8px 24px rgba(16,185,129,.4);animation:pulse 2s infinite;transition:transform .28s var(--ease)}
+.start:hover{transform:translateY(-2px)}
+.hint{margin-top:10px;font-size:12px;color:var(--muted)}
+.foot{margin-top:22px;text-align:center;color:var(--muted);font-size:13px}
+.foot b{color:var(--text);font-size:15px}
+.err{color:var(--err);font-size:13px;margin-top:8px;text-align:center}
+
+/* ---------- Quiz ---------- */
+.top{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--border)}
+.topin{max-width:780px;margin:0 auto;padding:8px 14px;display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.topin .ttl{font-weight:700;font-size:14px}
+.topin .mid{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:600}
+.topin .end{display:flex;align-items:center;gap:6px;font-weight:700;font-size:14px}
+.ib{width:44px;height:44px;border-radius:12px;font-size:18px;display:grid;place-items:center;background:var(--card);border:1px solid var(--border)}
+.prog{height:5px;background:var(--border)}
+.prog>div{height:100%;width:0;background:var(--grad);transition:width .4s var(--ease)}
+.qwrap{max-width:780px;margin:0 auto;padding:18px 14px 80px}
+.qcard{position:relative;background:var(--card);border-radius:20px;box-shadow:var(--shadow);padding:26px 18px 18px;overflow:hidden;border:1px solid var(--border)}
+.qcard.anim{animation:rise .35s var(--ease) both}
+.ribbon{position:absolute;top:0;left:0;right:0;height:6px;background:var(--grad)}
+.qhead{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:10px}
+.qchip{background:var(--tint);color:var(--g1);font-weight:700;padding:3px 12px;border-radius:999px;font-family:'Inter',sans-serif;font-size:13px}
+.trbtn{min-height:44px;padding:6px 14px;border-radius:12px;border:2px solid var(--border);font-weight:600;font-size:14px;background:var(--soft)}
+.trbtn.on{border-color:var(--g1);background:var(--tint)}
+.qtext{font-size:1.25rem;font-weight:600;line-height:1.7;font-family:'Inter',sans-serif;direction:ltr;text-align:left}
+.qar{margin-top:10px;padding:10px 14px;border-radius:12px;background:var(--tint);font-size:1.05rem;direction:rtl;text-align:right;animation:slide .3s var(--ease) both}
+.opts{display:grid;gap:10px;margin-top:18px}
+.opt{display:flex;align-items:center;gap:12px;width:100%;min-height:64px;padding:10px 14px;border-radius:14px;border:2px solid var(--border);background:var(--card);text-align:left;direction:ltr;transition:transform .28s var(--ease),border-color .28s var(--ease),box-shadow .28s var(--ease);position:relative}
+.opt:not(:disabled):hover{transform:translateY(-2px);border-color:var(--g1);box-shadow:0 6px 18px rgba(15,23,42,.1)}
+.opt .l{flex:none;width:34px;height:34px;border-radius:50%;background:var(--grad);color:#fff;font-weight:700;display:grid;place-items:center;font-family:'Inter',sans-serif}
+.opt .b{flex:1;font-family:'Inter',sans-serif;font-size:16px}
+.opt .oar{display:block;margin-top:6px;padding-top:6px;border-top:1px dotted var(--muted);font-size:13px;color:var(--muted);direction:rtl;text-align:right;font-family:'Cairo',sans-serif}
+.opt .mk{flex:none;font-size:20px;font-weight:700;width:24px;text-align:center}
+.opt:disabled{cursor:default}
+.opt.right{background:linear-gradient(135deg,#22c55e,#16a34a);border-color:#16a34a;color:#fff}
+.opt.right .oar{color:#dcfce7;border-color:#bbf7d0}
+.opt.wrong{background:linear-gradient(135deg,#ef4444,#dc2626);border-color:#dc2626;color:#fff}
+.opt.wrong .oar{color:#fee2e2;border-color:#fecaca}
+.opt.right .l,.opt.wrong .l{background:rgba(255,255,255,.25)}
+.opt.reveal{border-color:#22c55e;box-shadow:0 0 0 3px rgba(34,197,94,.3)}
+.opt.reveal .mk{color:#22c55e}
+.opt.dim{opacity:.6}
+.exp{margin-top:18px;animation:slide .35s var(--ease) both}
+.exp .hd{font-weight:700;font-size:17px;margin-bottom:8px}
+.exp .hd.ok{color:var(--ok)}.exp .hd.no{color:var(--err)}
+.eb{padding:12px 14px;border-radius:12px;background:var(--card);border:1px solid var(--border);font-size:15px;line-height:1.7;margin-bottom:8px}
+.eb.en{font-family:'Inter',sans-serif}
+.eb.ar{background:var(--tint);border-color:transparent}
+.nextbtn{display:block;margin-inline-start:0;min-height:50px;padding:10px 28px;border-radius:14px;background:var(--grad);color:#fff;font-weight:700;font-size:16px;box-shadow:0 6px 18px rgba(15,23,42,.18);margin-top:6px}
+
+/* ---------- Results ---------- */
+.res{text-align:center;animation:rise .5s var(--ease) both}
+.ring{position:relative;width:200px;height:200px;margin:10px auto}
+.ring svg{transform:rotate(-90deg)}
+.ring .n{position:absolute;inset:0;display:grid;place-items:center;font-size:38px;font-weight:700;font-family:'Inter',sans-serif;direction:ltr}
+.gradeL{font-size:56px;font-weight:700;font-family:'Inter',sans-serif;background:linear-gradient(135deg,#0ea5e9,#8b5cf6);-webkit-background-clip:text;background-clip:text;color:transparent;line-height:1.1}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:16px 0}
+.stat{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:10px 4px;box-shadow:var(--shadow)}
+.stat b{display:block;font-size:20px;font-family:'Inter',sans-serif}
+.stat span{font-size:12px;color:var(--muted)}
+.bars{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:14px;text-align:start;margin-bottom:16px}
+.bar{margin:10px 0}
+.bar .bt{display:flex;justify-content:space-between;font-size:13px;font-weight:600;margin-bottom:4px}
+.bar .tr{height:12px;border-radius:99px;background:var(--border);overflow:hidden}
+.bar .tr>div{height:100%;border-radius:99px;transition:width .9s var(--ease)}
+.filters{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:14px 0}
+.fc{min-height:44px;padding:6px 16px;border-radius:999px;border:2px solid var(--border);font-weight:600;font-size:14px;background:var(--card)}
+.fc.on{background:var(--grad);color:#fff;border-color:transparent}
+.rv{background:var(--card);border:1px solid var(--border);border-radius:14px;margin-bottom:8px;text-align:start;overflow:hidden}
+.rv summary{list-style:none;cursor:pointer;padding:12px 14px;display:flex;gap:10px;align-items:center;min-height:48px}
+.rv summary::-webkit-details-marker{display:none}
+.rv .st{font-size:18px;font-weight:700;flex:none;width:24px;text-align:center}
+.rv.ok .st{color:var(--ok)}.rv.no .st{color:var(--err)}.rv.na .st{color:var(--muted)}
+.rv .qq{font-family:'Inter',sans-serif;direction:ltr;text-align:left;font-size:14px;font-weight:600;flex:1}
+.rvb{padding:0 14px 14px;font-size:14px}
+.rvb p{margin:6px 0}
+.btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:20px}
+.btn{min-height:50px;padding:10px 26px;border-radius:14px;font-weight:700;font-size:16px;color:#fff}
+.btn.a{background:linear-gradient(135deg,#10b981,#059669)}.btn.b{background:var(--grad)}
+
+.modal{position:fixed;inset:0;background:rgba(15,23,42,.55);display:grid;place-items:center;z-index:50;padding:16px}
+.mbox{background:var(--card);border-radius:20px;padding:22px;max-width:340px;width:100%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.4)}
+.mbox .btns{margin-top:14px}
+
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes slide{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:none}}
+@keyframes pulse{0%,100%{box-shadow:0 8px 24px rgba(16,185,129,.4)}50%{box-shadow:0 8px 36px rgba(16,185,129,.7)}}
+@media (max-width:900px){.grid{grid-template-columns:1fr 1fr}}
+@media (max-width:420px){h1{font-size:26px}.sacred .main{font-size:22px}.qtext{font-size:1.1rem}.stats{grid-template-columns:1fr 1fr}.topin .ttl{display:none}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+@media print{
+  .top,.ib,.trbtn,.nextbtn,.btns,.filters,.start,.hint,#modal{display:none!important}
+  body{background:#fff;color:#000}body::before{display:none}
+  .rv .rvb{display:block}.rv{break-inside:avoid}
+}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<div id="live" class="hidden" aria-live="polite"></div>
+
+<script>
+// ═══════════════════ DATA ═══════════════════
+const RAW = `
+// LECTURE 1 — CDH — 22 questions ✅
+1|CDH|What is Congenital Diaphragmatic Hernia (CDH)?|ما هو فتق الحجاب الحاجز الخلقي؟|A defect in the diaphragm allowing abdominal organs into the chest~عيب في الحجاب يسمح بانتقال أعضاء البطن إلى الصدر|A lung infection~عدوى رئوية|A heart defect~عيب في القلب|A kidney problem~مشكلة في الكلى|A|CDH is a congenital diaphragmatic defect causing herniation of abdominal viscera into the thorax and interfering with lung development.|فتق الحجاب الحاجز الخلقي عيب خلقي يسمح بانتقال أحشاء البطن إلى الصدر ويعيق نمو الرئة.
+2|CDH|Which side of the diaphragm is most commonly affected?|أي جانب من الحجاب يتأثر عادةً؟|Right side~الأيمن|Left side~الأيسر|Both sides equally~كلا الجانبين بالتساوي|Middle part~الأوسط|B|More than 80% occur on the left, usually through a posterolateral Bochdalek defect.|أكثر من 80% في الجانب الأيسر عبر عيب بوخداليك الخلفي الجانبي.
+3|CDH|Common symptom of CDH in newborns?|عرض شائع لـ CDH عند حديثي الولادة؟|Cyanosis~زرقة|High blood sugar~ارتفاع سكر الدم|Skin rash~طفح جلدي|Jaundice only~يرقان فقط|A|Neonates present with respiratory distress and cyanosis.|حديثو الولادة يعانون من ضيق تنفس وزرقة.
+4|CDH|Recommended immediate respiratory management?|التدبير التنفسي الفوري الموصى به؟|Give oral feeding~تغذية فموية|Use mask ventilation~تهوية بالقناع|Intubate the trachea and avoid mask ventilation~تنبيب الرغامى وتجنب القناع|Send home for observation~إرسال للمنزل|C|Endotracheal intubation provides controlled ventilation; mask ventilation can distend intrathoracic bowel.|التنبيب يوفر تهوية محكومة؛ القناع ينفخ الأمعاء داخل الصدر.
+5|CDH|When is surgery usually performed?|متى تُجرى الجراحة عادةً؟|Immediately at birth in all cases~فور الولادة دائمًا|After stabilization of the infant's condition~بعد استقرار حالة الرضيع|After one year~بعد سنة|Before diagnosis~قبل التشخيص|B|Repair is delayed until adequate cardiopulmonary stabilization.|الإصلاح يُؤجل حتى استقرار القلب والرئة.
+6|CDH|Major cause of respiratory distress in CDH?|السبب الرئيسي لضيق التنفس؟|Surfactant deficiency alone~نقص سورفكتانت وحده|Pulmonary hypoplasia and pulmonary hypertension~نقص تنسج الرئة وارتفاع ضغط الشريان الرئوي|Upper airway obstruction~انسداد مجرى هوائي|Congenital pneumonia~ذات رئة خلقية|B|Abnormal fetal lung development causes pulmonary hypoplasia and abnormal vasculature leading to pulmonary hypertension.|نمو رئوي غير طبيعي يسبب نقص التنسج وخلل الأوعية الرئوية.
+7|CDH|Organs that may herniate in left-sided CDH?|أعضاء قد تفتق في CDH الأيسر؟|Stomach~المعدة|Spleen~الطحال|Small and large intestines~الأمعاء|All of the above~كل ما سبق|D|Herniated contents include stomach, spleen, intestines, sometimes left lobe of liver.|المعدة والطحال والأمعاء وأحيانًا الفص الأيسر من الكبد.
+8|CDH|How are most cases currently diagnosed?|كيف تُشخَّص معظم الحالات حاليًا؟|During routine antenatal ultrasonography~بالموجات قبل الولادة|By postnatal bronchoscopy~بالتنظير الرغامي|During exploratory laparotomy~بفتح البطن الاستكشافي|By neonatal abdominal examination alone~بفحص البطن وحده|A|Antenatal ultrasound may reveal abdominal organs within the fetal thoracic cavity.|الموجات قبل الولادة تُظهر الأحشاء في الصدر الجنيني.
+9|CDH|Newborn with severe distress, scaphoid abdomen, diminished breath sounds on left?|مولود بضيق شديد وبطن منخمص ونقص أصوات تنفس يسار؟|Neonatal pneumonia~ذات رئة وليدية|Congenital diaphragmatic hernia~فتق الحجاب الحاجز|Esophageal atresia~رتق المريء|Congenital lobar emphysema~انتفاخ فصي خلقي|B|These findings are characteristic of CDH.|هذه العلامات مميزة لفتق الحجاب.
+10|CDH|Why does the abdomen appear scaphoid?|لماذا البطن منخمص؟|Due to abdominal muscle weakness~ضعف عضلات البطن|Due to displacement of viscera into the thoracic cavity~انتقال الأحشاء إلى الصدر|Due to intestinal obstruction~انسداد معوي|Due to fluid loss~فقدان سوائل|B|Abdominal contents herniate into the chest, reducing abdominal fullness.|الأحشاء تنتقل للصدر فيقل امتلاء البطن.
+11|CDH|Suggestive auscultatory finding?|علامة سمعية مميزة؟|Bilateral wheezing~أزيز ثنائي|Loud bronchial breathing~تنفس قصبي عالٍ|Bowel sounds heard over the affected hemithorax~أصوات أمعاء فوق الصدر المصاب|Bilateral basal crepitations~خراخر قاعدية|C|Bowel sounds are audible in the chest because intestinal loops have herniated.|حلقات الأمعاء المفتقّة تنتج أصوات أمعاء صدرية.
+12|CDH|Large left CDH: tracheal deviation toward?|انحراف الرغامى في CDH أيسر كبير؟|Left side~اليسار|Right side~اليمين|No deviation~لا انحراف|Varies with respiration~يتغير مع التنفس|B|Herniated viscera displace mediastinum and trachea away from affected side.|الأحشاء تزيح المنصف والرغامى بعيدًا عن الجانب المصاب.
+13|CDH|Most characteristic CXR finding?|أشهر علامة على CXR؟|Bilateral ground-glass~زجاج أرضي ثنائي|Air-filled bowel loops in thorax with mediastinal shift~حلقات أمعاء في الصدر مع انزياح المنصف|Enlarged cardiac silhouette~تضخم القلب|Bilateral hyperinflation~فرط انتفاخ ثنائي|B|Bowel loops in thorax with mediastinal displacement.|حلقات أمعاء صدرية مع انزياح المنصف.
+14|CDH|Why is bag-mask ventilation contraindicated?|لماذا القناع ممنوع؟|It causes pulmonary infection~يسبب عدوى|It increases surfactant deficiency~يزيد نقص السورفكتانت|It may cause intestinal distension and worsen pulmonary compression~انتفاخ معوي يزيد ضغط الرئة|It causes diaphragmatic paralysis~شلل حجابي|C|Air enters stomach/intestines, distending herniated viscera and worsening lung compression.|هواء يدخل الأمعاء فيزيد الضغط على الرئة.
+15|CDH|Purpose of nasogastric tube?|الهدف من الأنبوب المعدي؟|Early enteral feeding~تغذية مبكرة|Decompress stomach and intestines~تفريغ المعدة والأمعاء|Prevent gastroesophageal reflux~منع الارتجاع|Assess intestinal motility~تقييم الحركة|B|Decompression reduces distension of intrathoracic bowel loops.|التفريغ يقلل انتفاخ الأمعاء الصدرية.
+16|CDH|Most important test for cardiovascular abnormalities and pulmonary hypertension?|أهم فحص للقلب وضغط الرئة؟|Electrocardiography~تخطيط قلب|Echocardiography~إيكو|Chest radiography~أشعة صدر|Abdominal ultrasonography~أشعة بطن|B|Echo assesses cardiac anatomy, ventricular function, and PHTN severity.|الإيكو يقيّم القلب ووظيفة البطين وضغط الرئة.
+17|CDH|Essential component of preoperative stabilization?|عنصر أساسي في الاستقرار قبل الجراحة؟|Immediate oral feeding~تغذية فورية|Correction of electrolyte and acid-base disturbances~تصحيح الشوارد والحمض-القاعدة|Excessive IV fluids~سوائل مفرطة|Immediate surgery without cardiac assessment~جراحة بدون تقييم قلبي|B|Stabilization includes ventilation, careful fluids, electrolyte correction, cardiovascular optimization.|يشمل التهوية والسوائل وتصحيح الشوارد وتحسين القلب.
+18|CDH|Most important factor for surgical approach?|أهم عامل لاختيار الأسلوب الجراحي؟|Patient's sex~الجنس|Defect type/size and clinical condition~نوع وحجم العيب وحالة الرضيع|Mode of delivery~طريقة الولادة|Birth weight alone~الوزن فقط|B|Approach depends on anatomy, size, contents, stability, expertise.|يعتمد على التشريح والحجم والمحتويات والاستقرار والخبرة.
+19|CDH|First major reconstructive step?|أول خطوة إصلاح جراحي؟|Resection of affected lung~استئصال الرئة|Reduction of herniated viscera into abdomen~إعادة الأحشاء للبطن|Routine splenectomy~استئصال الطحال|Phrenic nerve division~قطع العصب الحجابي|B|Reduce herniated organs, then close/reconstruct the defect.|إعادة الأحشاء ثم إغلاق العيب.
+20|CDH|Term neonate with left CDH, severe distress: initial management?|مولود بضيق شديد: التدبير الأولي؟|Vigorous bag-mask ventilation~قناع بقوة|Intubate + orogastric decompression + gentle ventilation~تنبيب + تفريغ معدي + تهوية لطيفة|Immediate thoracoscopy without cardiac assessment~إصلاح فوري بدون تقييم قلبي|Nasogastric feeding~تغذية بالأنبوب|B|Mask ventilation can insufflate bowel; priorities are controlled intubation, decompression, stabilization.|القناع ينفخ الأمعاء؛ الأولويات: تنبيب + تفريغ + استقرار.
+21|CDH|Severe CDH, poor oxygenation, falling BP: lung-protective approach?|CDH شديد وهبوط ضغط: استراتيجية واقية؟|Increase airway pressure until PaCO2<35~رفع الضغط حتى PaCO2<35|Permissive hypercapnia with limited lung injury~فرط CO2 متسامح مع تقليل رضح|Extubate to CPAP~فك تنبيب لـCPAP|Stop PHTN assessment~إيقاف تقييم ضغط الرئة|B|Hypoplastic lungs vulnerable to barotrauma; gentle ventilation accepts some hypercapnia.|الرئتان ناقصتا التنسج معرضتان للرضح؛ تهوية لطيفة تقبل بعض فرط CO2.
+22|CDH|Left CDH with persistent PHTN and unstable perfusion 12h after birth: defer surgery why?|CDH أيسر مع ضغط رئوي مستمر: سبب تأجيل الجراحة؟|Defect heals spontaneously~يُشفى تلقائيًا|Anesthesia/surgical stress worsen unstable patient; stabilize first~التخدير والإجهاد يزيدان سوء الحالة؛ استقر أولًا|Delay all until 30 days~تأجيل 30 يومًا|NG tube suffices~الأنبوب كافٍ|B|CDH repair is not usually an immediate emergency; stabilize first.|الإصلاح ليس طارئًا فوريًا؛ استقر أولًا.
+// LECTURE 2 — INT — 13 questions ✅
+23|INT|What is intussusception?|ما هو الانغلاف المعوي؟|Inflammation of stomach~التهاب المعدة|A segment of bowel telescopes into a more distal segment~انزلاق جزء من الأمعاء داخل جزء أبعد|Infection of intestine~عدوى معوية|Congenital absence of bowel~غياب خلقي للأمعاء|B|Telescoping causes obstruction and risk of ischemia.|الانزلاق يسبب انسدادًا وخطر نقص تروية.
+24|INT|Most common type?|النوع الأشيع؟|Colo-colic~قولوني-قولوني|Ileo-ileal~لفائفي-لفائفي|Ileo-colic~لفائفي-قولوني|Gastric~معدي|C|Ileocolic is the most common type.|اللفائفي-القولوني هو الأشيع.
+25|INT|Typical symptom?|عرض نموذجي؟|Currant jelly stool~براز جيلي أحمر|Skin rash~طفح جلدي|Increased urination~زيادة التبول|Ear pain~ألم أذن|A|Currant jelly stool = blood mixed with mucus.|براز الجيلي الأحمر = دم مختلط بالمخاط.
+26|INT|Preferred imaging test?|الفحص التصويري المفضّل؟|Abdominal ultrasound (target sign)~موجات بطن (علامة الهدف)|Chest X-ray~أشعة صدر|MRI brain~رنين دماغ|ECG~تخطيط قلب|A|US shows target/doughnut sign and pseudokidney sign.|الموجات تُظهر علامة الهدف/الدونات والكلية الكاذبة.
+27|INT|Nursing intervention?|تدخل تمريضي؟|Start oral feeding immediately~بدء تغذية فورية|Maintain NPO status as ordered~إبقاء NPO حسب الأمر|Avoid monitoring vitals~تجاهل العلامات|Encourage activity~تشجيع النشاط|B|NPO prepares for reduction or surgery.|الصيام يحضّر للرد أو الجراحة.
+28|INT|Peak age of incidence?|ذروة العمر؟|First month~الشهر الأول|5-9 months~5-9 أشهر|4-6 years~4-6 سنوات|10-12 years~10-12 سنة|B|Most cases between 3 months and 3 years, peaking at 5-9 months.|معظم الحالات بين 3 أشهر و3 سنوات بذروة 5-9 أشهر.
+29|INT|Classic triad?|الثلاثي الكلاسيكي؟|Fever, vomiting, diarrhea~حمى وقيء وإسهال|Distension, constipation, fever~انتفاخ وإمساك وحمى|Bilious vomiting, jaundice~قيء صفراوي ويرقان|Intermittent pain + currant jelly stool + palpable mass~ألم متقطع + براز جيلي + كتلة|D|Full triad in fewer than 50% of cases.|الثلاثي الكامل في أقل من 50%.
+30|INT|Serious complication of untreated?|مضاعفة خطيرة إن لم يُعالج؟|Intestinal ischemia and perforation~نقص تروية وانثقاب|Hypertrophic pyloric stenosis~تضيق البواب|Appendiceal obstruction~انسداد زائدة|GERD~ارتجاع معدي مريئي|A|Can cause obstruction, ischemia, necrosis, perforation, sepsis.|قد يسبب انسدادًا ونقص تروية وتنخرًا وانثقابًا وإنتانًا.
+31|INT|Stable 7-month-old with ileocolic intussusception, no perforation: initial definitive treatment?|رضيع مستقر بدون انثقاب: العلاج الأولي؟|Immediate bowel resection~استئصال فوري|Emergency laparotomy always~فتح بطن دائمًا|Oral antibiotics and observation~مضاد حيوي ومراقبة|Image-guided enema reduction~رد بالحقنة تحت التوجيه|D|Pneumatic or hydrostatic enema is first-line in stable cases.|الحقنة الهوائية أو المائية هي الخيار الأول في الحالات المستقرة.
+32|INT|Accepted non-surgical reduction method?|طريقة رد غير جراحي مقبولة؟|Endoscopic balloon dilation~توسيع بالوني|Pneumatic reduction under fluoroscopy~رد هوائي تحت فلوروسكوبي|Manual abdominal compression~ضغط يدوي|Oral contrast~صبغة فموية|B|Air or fluid enema under imaging guidance.|حقنة هوائية أو مائية تحت توجيه تصويري.
+33|INT|Most important nursing after successful reduction?|أهم تدخل تمريضي بعد الرد؟|Monitor vitals, tenderness, bowel sounds, recurrence~مراقبة العلامات والإيلام والأصوات والتكرار|Discontinue all monitoring~إيقاف المراقبة|Restrict fluids 48h~تقييد سوائل 48 ساعة|Vigorous massage~تدليك قوي|A|Watch for recurrent pain, vomiting, bloody stools, lethargy.|راقب تكرار الألم والقيء والبراز الدموي والخمول.
+34|INT|8-month-old, 30h symptoms, stable, soft abdomen: next step?|8 أشهر، 30 ساعة أعراض، مستقر: الخطوة التالية؟|Laparotomy because >24h~فتح بطن لأن >24 ساعة|Image-guided enema with surgical backup~رد بالحقنة مع فريق جراحي|Oral laxative and observe~ملين ومراقبة|Routine CT~CT روتيني|B|Duration >24h alone is not an absolute contraindication if stable.|>24 ساعة وحدها ليست مانعًا إن كان مستقرًا.
+35|INT|9-month-old hypotensive with guarding and free air: management?|9 أشهر هبط ضغطه مع علامات بريتون وهواء حر؟|Urgent resuscitation, antibiotics, operative exploration~إنعاش عاجل ومضاد حيوي واستكشاف|Repeat pneumatic enema~إعادة حقنة هوائية|Delay for contrast CT~تأجيل للـCT|Discharge after oral fluids~تسريح بعد سوائل فموية|A|Shock + peritonitis + free air = perforation; enema contraindicated.|صدمة+بريتون+هواء حر = انثقاب؛ الحقنة ممنوعة.
+// LECTURE 3 — EATEF — 17 questions ✅
+36|EATEF|Common TEF presentation?|عرض شائع لـ TEF؟|Constipation~إمساك|Choking and drooling~اختناق وسيلان لعاب|Leg swelling~تورم ساقين|Headache~صداع|B|Salivation, choking, coughing, cyanosis during feeding.|لعاب واختناق وسعال وزرقة أثناء الرضاعة.
+37|EATEF|Investigation that confirms diagnosis?|فحص يؤكد التشخيص؟|ECG~تخطيط قلب|CXR with NG tube~أشعة صدر مع أنبوب معدي|Urine analysis~تحليل بول|CT brain~CT دماغ|B|Failure to pass NG tube with coiling in upper pouch.|فشل تمرير الأنبوب والتفافه بالجيب العلوي.
+38|EATEF|Preoperative oral feeding should be?|التغذية الفموية قبل الجراحة؟|Increased~زيادتها|Continued normally~مستمرة طبيعيًا|Stopped~إيقافها|Given hourly~كل ساعة|C|NPO to prevent aspiration.|صيام لمنع الشفط.
+39|EATEF|Commonly associated congenital abnormality?|تشوه مصاحب شائع؟|Cardiac defects~عيوب قلبية|Cataract~إعتام عدسة|Clubfoot only~قدم فحجاء فقط|Appendicitis~التهاب زائدة|A|Consider VACTERL association.|ضمن ارتباط VACTERL.
+40|EATEF|Surgical treatment includes?|العلاج الجراحي يشمل؟|Removal of stomach~استئصال المعدة|Ligation of the fistula~ربط الناسور|Removal of trachea~استئصال الرغامى|Tonsillectomy~استئصال اللوزتين|B|Fistula ligation + end-to-end anastomosis.|ربط الناسور مع مفاغرة طرفية-طرفية.
+41|EATEF|Definition of esophageal atresia?|تعريف رتق المريء؟|Congenital narrowing~تضيق خلقي|Interruption of continuity of esophagus ± TEF~انقطاع استمرارية المريء ± ناسور|Abnormal dilation~توسع غير طبيعي|Gastric obstruction~انسداد معدي|B|May occur alone or with TEF.|قد يحدث منفردًا أو مع ناسور.
+42|EATEF|Most common anatomical type?|النوع التشريحي الأشيع؟|Pure EA without fistula~رتق نقي بدون ناسور|EA with proximal TEF~رتق مع ناسور قريب|EA with distal TEF~رتق مع ناسور بعيد|Isolated H-type~ناسور H معزول|C|Distal TEF accounts for ~85% of cases.|الناسور البعيد يمثل ~85%.
+43|EATEF|Associated antenatal finding?|علامة قبل الولادة؟|Oligohydramnios~قلة سائل|Polyhydramnios~كثرة سائل|Fetal ascites~استسقاء جنيني|Placental calcification~تكلس مشيمي|B|Fetus cannot swallow amniotic fluid normally.|الجنين لا يستطيع البلع طبيعيًا.
+44|EATEF|Newborn with salivation, choking, cyanosis during feeding?|مولود بسيلان لعاب واختناق وزرقة أثناء الرضاعة؟|Hypertrophic pyloric stenosis~تضيق البواب|CDH~فتق حجاب|Esophageal atresia ± TEF~رتق مريء ± ناسور|Duodenal atresia~رتق اثنا عشري|C|Secretions in blind pouch + aspiration risk.|إفرازات في جيب أعمى + خطر شفط.
+45|EATEF|Most characteristic radiological finding?|العلامة الشعاعية الأكثر تميزًا؟|Double bubble~فقاعة مزدوجة|Coiling of NG tube in upper pouch~التفاف أنبوب معدي بالجيب العلوي|Multiple air-fluid levels~مستويات متعددة|Free air under diaphragm~هواء حر تحت الحجاب|B|Contrast studies unnecessary and increase aspiration risk.|الصبغة غير ضرورية وتزيد خطر الشفط.
+46|EATEF|Most common associated anomalies category?|أشيع فئة تشوهات مصاحبة؟|Cardiac~قلبية|Craniofacial~قحفية وجهية|Pulmonary~رئوية|CNS~عصبية مركزية|A|Cardiac anomalies are most common; VACTERL.|العيوب القلبية الأشيع؛ VACTERL.
+47|EATEF|Best preoperative management?|التدبير قبل الجراحة الأنسب؟|Immediate oral feeding~تغذية فورية|Continuous suction of upper pouch + NPO~شفط مستمر + صيام|Repeated forceful NG attempts~محاولات عنيفة|Routine oral contrast~صبغة روتينية|B|NPO, suction, positioning, IV fluids, correct metabolic abnormalities.|صيام وشفط ووضعية وسوائل وريدية وتصحيح أيضي.
+48|EATEF|Important preoperative cardiac test?|فحص مهم قبل الجراحة للقلب؟|ECG alone~ECG وحده|Echocardiography~إيكو|Upper GI endoscopy~تنظير علوي|Barium swallow~بلع باريوم|B|Echo detects heart defects and aortic arch position.|الإيكو يكشف عيوب القلب وموضع قوس الأبهر.
+49|EATEF|Standard surgical treatment when primary repair feasible?|العلاج القياسي عند إمكان الإصلاح؟|Gastrostomy alone~فغر معدة وحده|Esophageal resection without reconstruction~استئصال بدون إعادة بناء|Fistula ligation + end-to-end anastomosis~ربط الناسور + مفاغرة|Dilation alone~توسيع وحده|C|Ligate fistula then restore continuity.|ربط الناسور ثم إعادة الاستمرارية.
+50|EATEF|Post-op day 3: NG tube dislodged. Action?|يوم 3: الأنبوب خرج عرضيًا؟|Reinsert blindly immediately~إعادة عشوائية فورًا|Start oral feeding~بدء تغذية|Avoid blind reinsertion; inform surgical team~تجنب العشوائي وأبلغ الجراحين|Vigorous suction~شفط قوي|C|Blind reinsertion may disrupt anastomosis.|الإدخال العشوائي قد يؤذي المفاغرة.
+51|EATEF|Post-op day 2: tube removed, baby stable. Safest action?|يوم 2: الأنبوب أُزيل والطفل مستقر؟|Blind advance~إدخال حتى رشاحة|Nurse attempts several times~محاولات متكررة|Do not replace blindly; urgently inform surgical team~لا تُدخل عشوائيًا وأبلغ الجراح|Unrestricted oral feeding~تغذية غير مقيدة|C|Tube may protect repair; guided replacement.|الأنبوب قد يحمي الإصلاح؛ الاستبدال بتوجيه.
+52|EATEF|Post-op day 6: distress + saliva-like chest tube fluid?|يوم 6: ضيق تنفس وسائل لعابي من أنبوب الصدر؟|Anastomotic leak~تسرب المفاغرة|Physiological reflux~ارتجاع فسيولوجي|Cryptorchidism~خصية غير نازلة|Intussusception~انغلاف|A|Salivary drainage suggests anastomotic leak; urgent assessment.|تصريف لعابي يشير للتسرب؛ تقييم عاجل.
+// LECTURE 4 — UDT — 16 questions ✅
+53|UDT|UDT means testicle has not moved into?|الخصية غير النازلة تعني عدم وصولها إلى؟|Abdomen~البطن|Bladder~المثانة|Scrotum~الصفن|Kidney~الكلى|C|Fails to reach normal scrotal position.|لم تصل للموضع الصفني.
+54|UDT|More common in?|أكثر شيوعًا في؟|Premature babies~الخُدّج|Elderly men~المسنين|Adult women~النساء البالغات|School teachers~المدرسين|A|Prematurity is a major risk factor.|الولادة المبكرة عامل خطر رئيسي.
+55|UDT|Spontaneous descent may occur until?|النزول التلقائي حتى؟|1 month~شهر|3 months~3 أشهر|6 months~6 أشهر|5 years~5 سنوات|C|Most spontaneous descent in first few months.|معظم النزول التلقائي في الأشهر الأولى.
+56|UDT|Most important diagnostic step?|أهم خطوة للتشخيص؟|Physical examination~الفحص السريري|Chest X-ray~أشعة صدر|ECG~تخطيط قلب|Urine culture~مزرعة بول|A|Careful exam; may need repetition.|فحص دقيق؛ قد يحتاج تكرارًا.
+57|UDT|Surgical procedure to bring testis into scrotum?|الإجراء الجراحي للصفن؟|Appendectomy~استئصال زائدة|Orchiopexy~تثبيت الخصية|Nephrectomy~استئصال كلية|Colostomy~فغر قولون|B|Orchiopexy fixes testis in scrotum.|أوركيوبيكسي يثبت الخصية بالصفن.
+58|UDT|Definition of cryptorchidism?|تعريف الخفاء؟|Absence of testicular tissue~غياب نسيج خصوي|Testis not in normal scrotal position~خصية بغير موضعها الصفني|Abnormal enlargement~تضخم غير طبيعي|Cord torsion~التواء حبل منوي|B|May be in abdomen, inguinal canal, or prescrotal.|بطن أو أربية أو قبل صفنية.
+59|UDT|Incidence in full-term newborns?|المعدل في مكتملي الحمل؟|Less than 0.1%~أقل من 0.1%|1%~1%|4-5%~4-5%|20-25%~20-25%|C|Falls to 1-2% by 3 months via spontaneous descent.|ينخفض إلى 1-2% بعمر 3 أشهر.
+60|UDT|Truly ectopic testis?|خصية شاذة حقًا؟|Intra-abdominal~داخل البطن|Canalicular~قنوية|Prescrotal~قبل صفنية|Perineal~عجانية|D|Ectopic testis deviates from normal descent path.|تنحرف عن مسار النزول.
+61|UDT|Most common clinical presentation?|أشيع صورة سريرية؟|Painful scrotal swelling~تورم صفني مؤلم|Empty scrotum ± inguinal mass~صفن فارغ ± كتلة إربية|Hematuria~بيلة دموية|Bilateral hydrocele~قيلة مائية|B|Empty hemiscrotum or bilateral empty scrotum.|نصف صفن فارغ أو صفن فارغ ثنائيًا.
+62|UDT|Important long-term complication?|مضاعفة طويلة الأمد؟|Increased fertility~زيادة خصوبة|Reduced malignancy risk~انخفاض خطر الأورام|Subfertility + increased malignancy risk~ضعف خصوبة + زيادة أورام|Congenital renal failure~فشل كلوي|C|Early orchiopexy improves fertility but not malignancy risk.|التثبيت المبكر يحسن الخصوبة لا الأورام.
+63|UDT|Why does UDT impair fertility?|لماذا تتأثر الخصوبة؟|Scrotal temperature too low~حرارة الصفن منخفضة|Prolonged higher temperatures impair testis~تعرض مستمر لحرارة أعلى يضر الخصية|Excess testosterone~إفراط تستوستيرون|Cord permanently elongated~استطالة دائمة للحبل|B|Abdomen/inguinal warmer than scrotum.|البطن والأربية أدفأ من الصفن.
+64|UDT|Age when spontaneous descent is unlikely?|العمر الذي يصبح فيه النزول غير محتمل؟|At birth~عند الولادة|2 months~شهران|6 months corrected~6 أشهر مصحح|5 years~5 سنوات|C|Refer for orchiopexy 6-12 mo, by 18 mo at latest.|يُحوّل للتثبيت 6-12 شهرًا وحتى 18 شهرًا.
+65|UDT|Hormonal treatment?|العلاج الهرموني؟|Universally successful~ناجح دائمًا|Mandatory pre-op~إلزامي قبل الجراحة|Controversial; surgery is standard~فعاليته جدلية والجراحة معيارية|Only for intra-abdominal~فقط داخل البطن|C|Limited success; not a substitute for surgery.|فعالية محدودة وليس بديلًا للجراحة.
+66|UDT|Approach for palpable inguinal UDT?|الأسلوب للخصية الإربية الملموسة؟|Laparoscopy always~منظار دائمًا|Open inguinal ± scrotal incision~مدخل إربي مفتوح ± شق صفني|Thoracotomy~بضع صدر|Nephrectomy~استئصال كلية|B|Mobilize for tension-free scrotal placement.|تحرير لوضع دون شد.
+67|UDT|10-month-old with nonpalpable right testis: best approach?|طفل 10 أشهر بخصية غير ملموسة؟|Colonoscopy~تنظير قولون|Diagnostic laparoscopy~تنظير بطن تشخيصي|Cystoscopy~تنظير مثانة|Routine CXR~أشعة صدر|B|Identifies intra-abdominal testis; plans orchiopexy.|يحدد الخصية داخل البطن ويخطط التثبيت.
+68|UDT|4-year-old retractile testis that stays in scrotum after fatiguing cremasteric reflex?|طفل 4 سنوات بخصية مرتدة تبقى بالصفن بعد استنفاد المنعكس؟|Immediate orchiopexy~تثبيت فوري|Routine annual exam for secondary ascent~فحص سنوي للصعود الثانوي|Hormonal therapy~علاج هرموني|Diagnostic laparoscopy~تنظير بطن|B|Retractile, not fixed UDT; some may ascend later.|مرتدة وليست غير نازلة؛ بعضها قد يصعد لاحقًا.
+`;
+// TOTAL: 68 ✅
+
+const LECTURES = {
+  CDH:  {id:'CDH',  ar:'فتق الحجاب الحاجز',  en:'CDH',  c1:'#0ea5e9',c2:'#06b6d4',grad:'linear-gradient(135deg,#0ea5e9,#06b6d4)',tint:'rgba(14,165,233,.10)'},
+  INT:  {id:'INT',  ar:'الانغلاف المعوي',     en:'INT',  c1:'#10b981',c2:'#84cc16',grad:'linear-gradient(135deg,#10b981,#84cc16)',tint:'rgba(16,185,129,.10)'},
+  EATEF:{id:'EATEF',ar:'رتق المريء والناسور', en:'EATEF',c1:'#f59e0b',c2:'#f97316',grad:'linear-gradient(135deg,#f59e0b,#f97316)',tint:'rgba(245,158,11,.12)'},
+  UDT:  {id:'UDT',  ar:'الخصية غير النازلة',  en:'UDT',  c1:'#8b5cf6',c2:'#d946ef',grad:'linear-gradient(135deg,#8b5cf6,#d946ef)',tint:'rgba(139,92,246,.10)'}
+};
+const LEC_ORDER = ['CDH','INT','EATEF','UDT'];
+
+const QUESTIONS = RAW.split('\n').map(l=>l.trim()).filter(l=>l && !l.startsWith('//')).map(line=>{
+  const p = line.split('|');
+  const L = LECTURES[p[1]];
+  return {
+    id:+p[0], lectureId:p[1], lectureNameAr:L.ar, lectureNameEn:L.en, gradient:L.grad,
+    questionEn:p[2], questionAr:p[3],
+    options:[p[4],p[5],p[6],p[7]].map(o=>{const s=o.split('~');return {en:s[0],ar:s[1]||''};}),
+    correctIndex:'ABCD'.indexOf(p[8]),
+    expEn:p[9], expAr:p[10]
+  };
+});
+const QBYID = {}; QUESTIONS.forEach(q=>QBYID[q.id]=q);
+
+// ═══════════════════ I18N ═══════════════════
+const I18N = {
+  ar:{title:'اختبار جراحة الأطفال',sub:'Pediatric Surgery Quiz · 68 سؤالاً · 4 محاضرات',
+    p1:'⚡ تصحيح فوري',p2:'🌏 ترجمة فورية',p3:'🔊 مؤثرات صوتية',
+    f1:'68 سؤالاً · 4 محاضرات',f2:'تصحيح فوري مع شرح مبسط',f3:'ترجمة عربية بضغطة',f4:'مؤثرات صوتية للصح والخطأ',
+    chooseLec:'اختر المحاضرات:',shuffleQ:'خلط الأسئلة:',shuffleO:'خلط الخيارات:',sounds:'🔊 الأصوات:',lang:'🌏 اللغة:',theme:'🌙 المظهر:',
+    light:'فاتح',dark:'داكن',start:'▶ ابدأ الاختبار',hint:'اختصارات: 1-4 للاختيار · Enter للتالي · R للترجمة · M للصوت',
+    best:'🏆 أفضل نتيجة:',auto:'استئناف تلقائي عند تحديث الصفحة',noLec:'اختر محاضرة واحدة على الأقل',
+    next:'السؤال التالي ←',finish:'عرض النتيجة ←',ok:'✓ إجابة صحيحة',no:'✗ إجابة خاطئة',tr:'🌏 الترجمة',
+    q:'سؤال',home:'الرئيسية',again:'🔁 إعادة',homeB:'🏠 الرئيسية',
+    c:'صحيحة',w:'خاطئة',pct:'النسبة',dur:'المدة',all:'الكل',wo:'الخطأ فقط',co:'الصحيح فقط',un:'لم يُجب',
+    your:'إجابتك',corr:'الإجابة الصحيحة',none:'لم تُجب',res:'النتيجة',byLec:'النتيجة حسب المحاضرة',
+    exit:'هل تريد إنهاء الاختبار والعودة للرئيسية؟',yes:'نعم',cancel:'إلغاء',empty:'لا توجد عناصر',expl:'الشرح'},
+  en:{title:'Pediatric Surgery Quiz',sub:'Pediatric Surgery Quiz · 68 Questions · 4 Lectures',
+    p1:'⚡ Instant feedback',p2:'🌏 Instant translation',p3:'🔊 Sound effects',
+    f1:'68 questions · 4 lectures',f2:'Instant feedback with explanations',f3:'Arabic translation in one tap',f4:'Sounds for right and wrong',
+    chooseLec:'Choose lectures:',shuffleQ:'Shuffle questions:',shuffleO:'Shuffle options:',sounds:'🔊 Sounds:',lang:'🌏 Language:',theme:'🌙 Theme:',
+    light:'Light',dark:'Dark',start:'▶ Start Quiz',hint:'Shortcuts: 1-4 select · Enter next · R translate · M mute',
+    best:'🏆 Best score:',auto:'Auto-resume on page refresh',noLec:'Select at least one lecture',
+    next:'Next question →',finish:'See results →',ok:'✓ Correct',no:'✗ Incorrect',tr:'🌏 Translate',
+    q:'Question',home:'Home',again:'🔁 Retry',homeB:'🏠 Home',
+    c:'Correct',w:'Wrong',pct:'Score',dur:'Time',all:'All',wo:'Wrong only',co:'Correct only',un:'Unanswered',
+    your:'Your answer',corr:'Correct answer',none:'Not answered',res:'Results',byLec:'Score by lecture',
+    exit:'End the quiz and return home?',yes:'Yes',cancel:'Cancel',empty:'Nothing here',expl:'Explanation'}
+};
+const t = k => (I18N[S.lang]||I18N.ar)[k];
+
+// ═══════════════════ STATE ═══════════════════
+const LS = {
+  get(k,d){try{const v=localStorage.getItem(k);return v===null?d:JSON.parse(v);}catch(e){return d;}},
+  set(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
+};
+const S = {
+  lang:'ar', theme:'light', soundOn:true,
+  settings:{lectures:[...LEC_ORDER],shuffleQ:true,shuffleO:true},
+  screen:'welcome',
+  quiz:null, showAr:false, filter:'all'
+};
+
+function loadSettings(){
+  S.lang = LS.get('pedsQuiz.lang','ar');
+  S.theme = LS.get('pedsQuiz.theme','light');
+  S.soundOn = LS.get('pedsQuiz.soundOn',true);
+  const st = LS.get('pedsQuiz.settings',null);
+  if(st && Array.isArray(st.lectures)) S.settings = Object.assign(S.settings, st);
+}
+function saveSettings(){
+  LS.set('pedsQuiz.lang',S.lang);LS.set('pedsQuiz.theme',S.theme);
+  LS.set('pedsQuiz.soundOn',S.soundOn);LS.set('pedsQuiz.settings',S.settings);
+}
+function applyTheme(th){S.theme=th;document.documentElement.setAttribute('data-theme',th);saveSettings();}
+function applyLanguage(lg){
+  S.lang=lg;
+  document.documentElement.lang = lg;
+  document.documentElement.dir = lg==='ar'?'rtl':'ltr';
+  saveSettings();
+}
+function saveProgress(){
+  try{ if(S.quiz) sessionStorage.setItem('pedsQuiz.progress',JSON.stringify(S.quiz)); }catch(e){}
+}
+function loadProgress(){
+  try{const v=sessionStorage.getItem('pedsQuiz.progress');if(!v)return null;
+    const q=JSON.parse(v);
+    if(q && Array.isArray(q.order) && q.order.every(id=>QBYID[id])) return q;
+  }catch(e){}
+  return null;
+}
+function clearProgress(){try{sessionStorage.removeItem('pedsQuiz.progress');}catch(e){}}
+
+function shuffleArray(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+const esc = s => String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const $ = s => document.querySelector(s);
+const app = $('#app');
+function announce(m){const l=$('#live');l.textContent=m;}
+
+// ═══════════════════ SOUND ═══════════════════
+let AC=null;
+function initAudio(){
+  if(!AC){try{AC=new (window.AudioContext||window.webkitAudioContext)();}catch(e){}}
+  if(AC && AC.state==='suspended') AC.resume();
+}
+function tone(type,f0,f1,dur,vol,wobble){
+  if(!S.soundOn||!AC) return;
+  const o=AC.createOscillator(),g=AC.createGain(),now=AC.currentTime;
+  o.type=type;o.frequency.setValueAtTime(f0,now);
+  if(f1!==f0) o.frequency.exponentialRampToValueAtTime(f1,now+dur);
+  if(wobble){
+    const lfo=AC.createOscillator(),lg=AC.createGain();
+    lfo.frequency.value=28;lg.gain.value=18;lfo.connect(lg);lg.connect(o.frequency);lfo.start(now);lfo.stop(now+dur);
+  }
+  g.gain.setValueAtTime(vol,now);g.gain.exponentialRampToValueAtTime(0.0001,now+dur);
+  o.connect(g);g.connect(AC.destination);o.start(now);o.stop(now+dur+0.02);
+}
+function playCorrect(){tone('sine',880,1320,.32,.15,false);}
+function playWrong(){tone('sawtooth',220,220,.26,.15,true);}
+function playClick(){tone('sine',600,600,.06,.08,false);}
+
+// ═══════════════════ WELCOME ═══════════════════
+function bestScore(){return LS.get('pedsQuiz.best',null);}
+function renderWelcome(){
+  S.screen='welcome';
+  const st=S.settings, b=bestScore();
+  app.innerHTML = `
+  <div class="wrap">
+    <div class="hero">
+      <div class="badge">🩺</div>
+      <h1>${t('title')}</h1>
+      <div class="sub">${t('sub')}</div>
+      <div class="pills"><span class="pill">${t('p1')}</span><span class="pill">${t('p2')}</span><span class="pill">${t('p3')}</span></div>
+    </div>
+    <div class="sacred">
+      <div class="ic">🕌</div>
+      <div class="main ar">«اللهم صلِّ وسلِّم على نبينا محمد ﷺ»</div>
+      <hr>
+      <div class="dua ar">🤲 دعواتكم لنستمر</div>
+    </div>
+    <div class="grid">
+      <div class="feat"><span class="e">📚</span>${t('f1')}</div>
+      <div class="feat"><span class="e">⚡</span>${t('f2')}</div>
+      <div class="feat"><span class="e">🌏</span>${t('f3')}</div>
+      <div class="feat"><span class="e">🔊</span>${t('f4')}</div>
+    </div>
+    <div class="setup">
+      <h3>${t('chooseLec')}</h3>
+      <div class="lecs">
+        ${LEC_ORDER.map(id=>{const L=LECTURES[id];const n=QUESTIONS.filter(q=>q.lectureId===id).length;
+          return `<label class="lec"><input type="checkbox" data-lec="${id}" ${st.lectures.includes(id)?'checked':''}>
+          <span class="chip" style="background:${L.grad}">${L.en} · ${n}</span><span>${L.ar}</span></label>`;}).join('')}
+      </div>
+      <div class="row"><label class="t" for="swQ">${t('shuffleQ')}</label><span class="sw"><input type="checkbox" id="swQ" ${st.shuffleQ?'checked':''}><i></i></span></div>
+      <div class="row"><label class="t" for="swO">${t('shuffleO')}</label><span class="sw"><input type="checkbox" id="swO" ${st.shuffleO?'checked':''}><i></i></span></div>
+      <div class="row"><label class="t" for="swS">${t('sounds')}</label><span class="sw"><input type="checkbox" id="swS" ${S.soundOn?'checked':''}><i></i></span></div>
+      <div class="row"><span class="t">${t('lang')}</span><div class="seg"><button data-lg="ar" class="${S.lang==='ar'?'on':''}">AR</button><button data-lg="en" class="${S.lang==='en'?'on':''}">EN</button></div></div>
+      <div class="row"><span class="t">${t('theme')}</span><div class="seg"><button data-th="light" class="${S.theme==='light'?'on':''}">☀️ ${t('light')}</button><button data-th="dark" class="${S.theme==='dark'?'on':''}">🌙 ${t('dark')}</button></div></div>
+      <div class="err hidden" id="werr">${t('noLec')}</div>
+    </div>
+    <div class="cta"><button class="start" id="startBtn">${t('start')}</button>
+      <div class="hint">${t('hint')}</div></div>
+    <div class="foot"><div>${t('best')} <b>${b===null?'—':b+'%'}</b></div><div>${t('auto')}</div></div>
+  </div>`;
+}
+
+// ═══════════════════ QUIZ ═══════════════════
+function startQuiz(){
+  initAudio();
+  const sel = S.settings.lectures;
+  if(!sel.length){$('#werr').classList.remove('hidden');return;}
+  let ids = QUESTIONS.filter(q=>sel.includes(q.lectureId)).map(q=>q.id);
+  if(S.settings.shuffleQ) ids = shuffleArray(ids);
+  const optOrder={};
+  ids.forEach(id=>{optOrder[id]=S.settings.shuffleO?shuffleArray([0,1,2,3]):[0,1,2,3];});
+  S.quiz={order:ids,optOrder,idx:0,answers:{},start:Date.now(),elapsed:0};
+  S.showAr=false;
+  saveProgress();
+  renderQuestion(true);
+}
+function curQ(){return QBYID[S.quiz.order[S.quiz.idx]];}
+function counts(){
+  let c=0,w=0;
+  S.quiz.order.forEach(id=>{const a=S.quiz.answers[id];if(a===undefined)return;if(a===QBYID[id].correctIndex)c++;else w++;});
+  return {c,w};
+}
+function setLectureVars(q){
+  const L=LECTURES[q.lectureId],r=document.documentElement.style;
+  r.setProperty('--grad',L.grad);r.setProperty('--g1',L.c1);r.setProperty('--g2',L.c2);r.setProperty('--tint',L.tint);
+}
+function resetLectureVars(){
+  const r=document.documentElement.style;['--grad','--g1','--g2','--tint'].forEach(p=>r.removeProperty(p));
+}
+function renderQuestion(anim){
+  S.screen='quiz';
+  const Z=S.quiz,q=curQ(),L=LECTURES[q.lectureId];
+  setLectureVars(q);
+  const perm=Z.optOrder[q.id], ans=Z.answers[q.id], answered=ans!==undefined;
+  const {c,w}=counts(), total=Z.order.length;
+  const optsHtml = perm.map((orig,p)=>{
+    const o=q.options[orig]; let cls='',mk='';
+    if(answered){
+      if(orig===q.correctIndex){cls = ans===orig?'right':'reveal';mk='✓';}
+      else if(orig===ans){cls='wrong';mk='✗';}
+      else cls='dim';
+    }
+    return `<button class="opt ${cls}" data-p="${p}" ${answered?'disabled':''} aria-label="${'ABCD'[p]}: ${esc(o.en)}">
+      <span class="l">${'ABCD'[p]}</span>
+      <span class="b">${esc(o.en)}${S.showAr&&o.ar?`<span class="oar">${esc(o.ar)}</span>`:''}</span>
+      <span class="mk">${mk}</span></button>`;
+  }).join('');
+  let exp='';
+  if(answered){
+    const ok=ans===q.correctIndex, last=Z.idx===total-1;
+    exp = `<div class="exp"><div class="hd ${ok?'ok':'no'}">${ok?I18N.ar.ok:I18N.ar.no}</div>
+      <div class="eb en">${esc(q.expEn)}</div>
+      <div class="eb ar">${esc(q.expAr)}</div>
+      <button class="nextbtn" id="nextBtn">${I18N.ar.next.replace(I18N.ar.next,last?I18N.ar.finish:I18N.ar.next)}</button></div>`;
+  }
+  app.innerHTML = `
+  <div class="top"><div class="topin">
+    <span class="ttl">${I18N.ar.title}</span>
+    <span class="mid"><span class="chip" style="background:${L.grad}">${L.en}</span><span>${I18N.ar.q} ${Z.idx+1} / ${total}</span></span>
+    <span class="end"><span>✓ ${c} · ✗ ${w}</span>
+      <button class="ib" id="sndBtn" aria-label="sound">${S.soundOn?'🔊':'🔇'}</button>
+      <button class="ib" id="homeBtn" aria-label="home">🏠</button></span>
+  </div><div class="prog"><div style="width:${(Z.idx+(answered?1:0))/total*100}%"></div></div></div>
+  <div class="qwrap"><div class="qcard ${anim?'anim':''}">
+    <div class="ribbon"></div>
+    <div class="qhead"><span class="qchip">Q${q.id}</span>
+      <button class="trbtn ${S.showAr?'on':''}" id="trBtn" aria-pressed="${S.showAr}">${I18N.ar.tr}</button></div>
+    <div class="qtext">${esc(q.questionEn)}</div>
+    ${S.showAr?`<div class="qar">${esc(q.questionAr)}</div>`:''}
+    <div class="opts" role="group">${optsHtml}</div>
+    ${exp}
+  </div></div>`;
+  if(answered) setTimeout(()=>{const n=$('#nextBtn');if(n){n.scrollIntoView({block:'nearest',behavior:'smooth'});}},60);
+}
+function toggleTranslation(){S.showAr=!S.showAr;renderQuestion(false);}
+function selectOption(p){
+  const Z=S.quiz,q=curQ();
+  if(Z.answers[q.id]!==undefined) return;
+  initAudio();
+  const orig=Z.optOrder[q.id][p];
+  Z.answers[q.id]=orig;
+  Z.elapsed=Date.now()-Z.start;
+  const ok=orig===q.correctIndex;
+  ok?playCorrect():playWrong();
+  saveProgress();
+  announce(ok?I18N.ar.ok:I18N.ar.no);
+  renderQuestion(false);
+}
+function renderExplanation(){renderQuestion(false);}
+function nextQuestion(){
+  const Z=S.quiz;
+  if(Z.answers[curQ().id]===undefined) return;
+  if(Z.idx>=Z.order.length-1){endQuiz();return;}
+  Z.idx++;S.showAr=false;saveProgress();
+  playClickSilent();
+  renderQuestion(true);window.scrollTo(0,0);
+}
+function playClickSilent(){/* click sound only on answer per spec */}
+
+// ═══════════════════ RESULTS ════════
+function endQuiz(){
+  const Z=S.quiz;
+  Z.finished=true;
+  Z.duration=Date.now()-Z.start;
+  const {c}=counts();
+  const pct=Math.round(c/Z.order.length*100);
+  const best=bestScore();
+  if(best===null||pct>best) LS.set('pedsQuiz.best',pct);
+  clearProgress();
+  S.filter='all';
+  renderResults();
+}
+function gradeOf(p){return p>=85?'A':p>=75?'B':p>=65?'C':p>=50?'D':'F';}
+function fmtTime(ms){const s=Math.max(0,Math.round(ms/1000));return Math.floor(s/60)+':'+String(s%60).padStart(2,'0');}
+function renderResults(){
+  S.screen='results';resetLectureVars();
+  const Z=S.quiz,total=Z.order.length,{c,w}=counts(),un=total-c-w;
+  const pct=Math.round(c/total*100),R=70,C=2*Math.PI*R;
+  const per=LEC_ORDER.map(id=>{
+    const ids=Z.order.filter(i=>QBYID[i].lectureId===id);if(!ids.length)return null;
+    const ok=ids.filter(i=>Z.answers[i]===QBYID[i].correctIndex).length;
+    return {id,n:ids.length,ok,p:Math.round(ok/ids.length*100)};
+  }).filter(Boolean);
+  const flt = (id)=>{const a=Z.answers[id],q=QBYID[id];
+    if(S.filter==='all')return true;
+    if(S.filter==='wrong')return a!==undefined&&a!==q.correctIndex;
+    if(S.filter==='right')return a===q.correctIndex;
+    return a===undefined;};
+  const items=Z.order.filter(flt);
+  app.innerHTML = `
+  <div class="wrap res">
+    <h1>${t('res')}</h1>
+    <div class="ring">
+      <svg width="200" height="200" viewBox="0 0 200 200">
+        <defs><linearGradient id="rg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0ea5e9"/><stop offset="1" stop-color="#8b5cf6"/></linearGradient></defs>
+        <circle cx="100" cy="100" r="${R}" fill="none" stroke="var(--border)" stroke-width="16"/>
+        <circle id="arc" cx="100" cy="100" r="${R}" fill="none" stroke="url(#rg)" stroke-width="16" stroke-linecap="round" stroke-dasharray="${C}" stroke-dashoffset="${C}" style="transition:stroke-dashoffset 1.2s cubic-bezier(.4,0,.2,1)"/>
+      </svg><div class="n" id="cnt">0%</div></div>
+    <div class="gradeL">${gradeOf(pct)}</div>
+    <div class="stats">
+      <div class="stat"><b style="color:var(--ok)">${c}</b><span>✓ ${t('c')}</span></div>
+      <div class="stat"><b style="color:var(--err)">${w+un}</b><span>✗ ${t('w')}</span></div>
+      <div class="stat"><b>${pct}%</b><span>${t('pct')}</span></div>
+      <div class="stat"><b>${fmtTime(Z.duration||0)}</b><span>${t('dur')}</span></div>
+    </div>
+    <div class="bars"><b>${t('byLec')}</b>
+      ${per.map(x=>`<div class="bar"><div class="bt"><span>${LECTURES[x.id].en} · ${LECTURES[x.id].ar}</span><span class="en">${x.ok}/${x.n} · ${x.p}%</span></div>
+        <div class="tr"><div style="width:0;background:${LECTURES[x.id].grad}" data-w="${x.p}"></div></div></div>`).join('')}
+    </div>
+    <div class="filters">
+      ${[['all','all'],['wrong','wo'],['right','co'],['un','un']].map(([k,l])=>`<button class="fc ${S.filter===k?'on':''}" data-f="${k}">${t(l)}</button>`).join('')}
+    </div>
+    <div id="rlist">${items.length?items.map(id=>reviewItem(id)).join(''):`<p style="color:var(--muted)">${t('empty')}</p>`}</div>
+    <div class="btns"><button class="btn a" id="againBtn">${t('again')}</button><button class="btn b" id="homeBtn2">${t('homeB')}</button></div>
+  </div>`;
+  requestAnimationFrame(()=>{
+    const arc=$('#arc');if(arc)arc.style.strokeDashoffset=C*(1-pct/100);
+    document.querySelectorAll('.bar .tr>div').forEach(d=>d.style.width=d.dataset.w+'%');
+    const el=$('#cnt'),t0=performance.now(),D=1200;
+    (function step(now){const k=Math.min(1,(now-t0)/D);el.textContent=Math.round(pct*k)+'%';if(k<1)requestAnimationFrame(step);})(t0);
+  });
+}
+function reviewItem(id){
+  const q=QBYID[id],a=q.id&&S.quiz.answers[id];
+  const ans=S.quiz.answers[id];
+  const cls=ans===undefined?'na':ans===q.correctIndex?'ok':'no';
+  const mk=ans===undefined?'–':ans===q.correctIndex?'✓':'✗';
+  const you=ans===undefined?t('none'):q.options[ans].en;
+  const youAr=ans===undefined?'':q.options[ans].ar;
+  return `<details class="rv ${cls}"><summary><span class="st">${mk}</span><span class="qq">Q${q.id} · ${esc(q.questionEn)}</span></summary>
+    <div class="rvb">
+      <p class="ar" style="font-weight:600">${esc(q.questionAr)}</p>
+      <p><b>${t('your')}:</b> <span class="en">${esc(you)}</span>${youAr?` <span class="ar">— ${esc(youAr)}</span>`:''}</p>
+      <p><b>${t('corr')}:</b> <span class="en">${esc(q.options[q.correctIndex].en)}</span> <span class="ar">— ${esc(q.options[q.correctIndex].ar)}</span></p>
+      <div class="eb en">${esc(q.expEn)}</div><div class="eb ar">${esc(q.expAr)}</div>
+    </div></details>`;
+}
+
+// ═══════════════════ NAV / EXIT ═══════════════════
+function goHome(){
+  clearProgress();S.quiz=null;resetLectureVars();renderWelcome();window.scrollTo(0,0);
+}
+function confirmExit(){
+  if(document.getElementById('modal')) return;
+  const m=document.createElement('div');m.className='modal';m.id='modal';
+  m.innerHTML=`<div class="mbox" role="dialog" aria-modal="true"><p style="font-weight:700">${I18N.ar.exit}</p>
+    <div class="btns"><button class="btn a" id="mYes">${I18N.ar.yes}</button><button class="btn b" id="mNo" style="background:#64748b">${I18N.ar.cancel}</button></div></div>`;
+  document.body.appendChild(m);
+  $('#mYes').onclick=()=>{m.remove();goHome();};
+  $('#mNo').onclick=()=>m.remove();
+  $('#mNo').focus();
+}
+
+// ═══════════════════ EVENTS ═══════════════════
+document.addEventListener('click',e=>{
+  const T=e.target;
+  const opt=T.closest('.opt');
+  if(opt && S.screen==='quiz'){selectOption(+opt.dataset.p);return;}
+  if(T.closest('#nextBtn')){nextQuestion();return;}
+  if(T.closest('#trBtn')){toggleTranslation();return;}
+  if(T.closest('#sndBtn')){S.soundOn=!S.soundOn;saveSettings();initAudio();renderQuestion(false);return;}
+  if(T.closest('#homeBtn')){confirmExit();return;}
+  if(T.closest('#homeBtn2')){goHome();return;}
+  if(T.closest('#againBtn')){startQuiz();return;}
+  if(T.closest('#startBtn')){startQuiz();return;}
+  const lg=T.closest('[data-lg]');if(lg){applyLanguage(lg.dataset.lg);renderWelcome();return;}
+  const th=T.closest('[data-th]');if(th){applyTheme(th.dataset.th);renderWelcome();return;}
+  const f=T.closest('[data-f]');if(f){S.filter=f.dataset.f;renderResults();return;}
+});
+document.addEventListener('change',e=>{
+  const T=e.target;
+  if(T.dataset && T.dataset.lec){
+    const set=new Set(S.settings.lectures);T.checked?set.add(T.dataset.lec):set.delete(T.dataset.lec);
+    S.settings.lectures=LEC_ORDER.filter(x=>set.has(x));saveSettings();
+    const er=$('#werr');if(er)er.classList.toggle('hidden',S.settings.lectures.length>0);
+  }else if(T.id==='swQ'){S.settings.shuffleQ=T.checked;saveSettings();}
+  else if(T.id==='swO'){S.settings.shuffleO=T.checked;saveSettings();}
+  else if(T.id==='swS'){S.soundOn=T.checked;saveSettings();initAudio();}
+});
+document.addEventListener('keydown',e=>{
+  if(e.ctrlKey||e.metaKey||e.altKey) return;
+  const k=e.key;
+  if(k==='Escape'){if(S.screen==='quiz')confirmExit();else{const m=$('#modal');if(m)m.remove();}return;}
+  if(k==='m'||k==='M'||k==='ة'){if(S.screen!=='welcome'){S.soundOn=!S.soundOn;saveSettings();if(S.screen==='quiz')renderQuestion(false);}return;}
+  if(S.screen!=='quiz'||$('#modal')) return;
+  const q=curQ(),answered=S.quiz.answers[q.id]!==undefined;
+  if(k==='r'||k==='R'||k==='ق'){toggleTranslation();return;}
+  if(!answered){
+    let p=-1;
+    if('1234'.includes(k)&&k.length===1)p=+k-1;
+    else{const u=k.toUpperCase();if('ABCD'.includes(u)&&u.length===1)p='ABCD'.indexOf(u);}
+    if(p>=0){e.preventDefault();selectOption(p);}
+  }else if(k==='Enter'||k===' '){
+    e.preventDefault();nextQuestion();
+  }
+});
+
+// ═══════════════════ INIT ═══════════════════
+function init(){
+  loadSettings();
+  applyTheme(S.theme);applyLanguage(S.lang);
+  const pr=loadProgress();
+  if(pr && !pr.finished){S.quiz=pr;S.showAr=false;renderQuestion(true);}
+  else renderWelcome();
+}
+init();
+
+console.assert(QUESTIONS.length === 68, "❌ Expected 68, got " + QUESTIONS.length);
+console.log("✅ Loaded " + QUESTIONS.length + " questions");
+console.log("📚 CDH=22 · INT=13 · EATEF=17 · UDT=16");
+</script>
+</body>
+</html>

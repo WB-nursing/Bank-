@@ -1,0 +1,120 @@
+<!--
+🩺 Pediatric Surgery Interactive Quiz
+68 questions · 4 lectures · English content · Arabic UI
+Instant feedback · Bilingual explanations · Sound effects
+-->
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>اختبار جراحة الأطفال · Pediatric Surgery Quiz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@700&family=Cairo:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f8fafc;--card:#ffffff;--text:#0f172a;--muted:#64748b;--border:#e5e7eb;--soft:#f1f5f9;
+  --shadow:0 4px 24px rgba(15,23,42,.06);--ok:#22c55e;--err:#ef4444;--warn:#f59e0b;
+  --g1:#0ea5e9;--g2:#06b6d4;--grad:linear-gradient(135deg,#0ea5e9,#06b6d4);--tint:rgba(14,165,233,.08);
+  --ease:cubic-bezier(.4,0,.2,1);
+}
+[data-theme="dark"]{
+  --bg:#0f172a;--card:#1e293b;--text:#f1f5f9;--muted:#94a3b8;--border:#334155;--soft:#0f172a;
+  --shadow:0 4px 24px rgba(0,0,0,.4);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{font-family:'Cairo','Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;line-height:1.6;transition:background .28s var(--ease),color .28s var(--ease)}
+body::before{content:"";position:fixed;inset:0;z-index:-1;background:radial-gradient(600px 400px at 90% -5%,rgba(14,165,233,.14),transparent),radial-gradient(500px 400px at 5% 105%,rgba(139,92,246,.12),transparent)}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+:focus-visible{outline:3px solid #3b82f6;outline-offset:2px}
+.en{font-family:'Inter',system-ui,sans-serif;direction:ltr;text-align:left}
+.ar{font-family:'Cairo',sans-serif;direction:rtl;text-align:right}
+.wrap{max-width:720px;margin:0 auto;padding:20px 16px 60px}
+.hidden{display:none!important}
+
+/* ---------- Welcome ---------- */
+.hero{text-align:center;padding:24px 0 8px;animation:rise .6s var(--ease) both}
+.badge{width:64px;height:64px;border-radius:50%;margin:0 auto 12px;display:grid;place-items:center;font-size:30px;background:linear-gradient(135deg,#0ea5e9,#8b5cf6);box-shadow:0 0 0 6px rgba(14,165,233,.15),0 8px 30px rgba(14,165,233,.45)}
+h1{font-size:32px;font-weight:700}
+.sub{color:var(--muted);margin-top:4px;font-size:15px}
+.pills{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:14px}
+.pill{padding:6px 14px;border-radius:999px;font-size:13px;font-weight:600;background:var(--card);border:1px solid var(--border);backdrop-filter:blur(8px);box-shadow:var(--shadow)}
+.sacred{margin:22px 0;text-align:center;padding:24px 18px;border-radius:24px;background:linear-gradient(135deg,#fef3c7,#fde68a,#fcd34d);border:2px solid rgba(245,158,11,.25);box-shadow:0 10px 40px rgba(245,158,11,.28);animation:rise .7s .1s var(--ease) both}
+.sacred .ic{font-size:30px}
+.sacred .main{font-family:'Amiri',serif;font-size:26px;font-weight:700;color:#92400e;margin:6px 0 10px;line-height:1.8}
+.sacred hr{border:none;height:1px;background:rgba(146,64,14,.25);width:60%;margin:0 auto 10px}
+.sacred .dua{font-size:14px;font-style:italic;color:#b45309;opacity:.85}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:22px}
+.feat{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:16px;text-align:center;font-weight:600;font-size:14px;box-shadow:var(--shadow);transition:transform .28s var(--ease),box-shadow .28s var(--ease);animation:rise .6s .2s var(--ease) both}
+.feat:hover{transform:translateY(-4px);box-shadow:0 12px 30px rgba(15,23,42,.12)}
+.feat .e{display:block;font-size:26px;margin-bottom:4px}
+.setup{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:20px;box-shadow:var(--shadow);animation:rise .6s .3s var(--ease) both}
+.setup h3{font-size:16px;margin-bottom:10px}
+.lecs{display:grid;gap:8px;margin-bottom:16px}
+.lec{display:flex;align-items:center;gap:10px;min-height:44px;padding:8px 12px;border-radius:12px;border:2px solid var(--border);cursor:pointer;user-select:none}
+.lec input{width:20px;height:20px;accent-color:#10b981}
+.chip{display:inline-block;padding:2px 12px;border-radius:999px;color:#fff;font-weight:700;font-size:13px;font-family:'Inter',sans-serif;direction:ltr}
+.row{display:flex;justify-content:space-between;align-items:center;min-height:44px;gap:12px;border-top:1px dashed var(--border)}
+.row label.t{font-weight:600;font-size:15px}
+.sw{position:relative;width:52px;height:30px;flex:none}
+.sw input{opacity:0;position:absolute;inset:0;width:100%;height:100%;cursor:pointer;z-index:2;margin:0}
+.sw i{position:absolute;inset:0;background:#cbd5e1;border-radius:999px;transition:.28s var(--ease)}
+.sw i::after{content:"";position:absolute;top:3px;inset-inline-start:3px;width:24px;height:24px;border-radius:50%;background:#fff;transition:.28s var(--ease);box-shadow:0 1px 4px rgba(0,0,0,.3)}
+.sw input:checked+i{background:#10b981}
+.sw input:checked+i::after{inset-inline-start:25px}
+.sw input:focus-visible+i{outline:3px solid #3b82f6;outline-offset:2px}
+.seg{display:flex;border:2px solid var(--border);border-radius:12px;overflow:hidden}
+.seg button{padding:8px 16px;min-height:40px;font-weight:600;font-size:14px}
+.seg button.on{background:linear-gradient(135deg,#0ea5e9,#06b6d4);color:#fff}
+.cta{text-align:center;margin:24px 0 8px}
+.start{width:100%;max-width:420px;height:60px;border-radius:16px;background:linear-gradient(135deg,#10b981,#059669);color:#fff;font-size:20px;font-weight:700;box-shadow:0 8px 24px rgba(16,185,129,.4);animation:pulse 2s infinite;transition:transform .28s var(--ease)}
+.start:hover{transform:translateY(-2px)}
+.hint{margin-top:10px;font-size:12px;color:var(--muted)}
+.foot{margin-top:22px;text-align:center;color:var(--muted);font-size:13px}
+.foot b{color:var(--text);font-size:15px}
+.err{color:var(--err);font-size:13px;margin-top:8px;text-align:center}
+
+/* ---------- Quiz ---------- */
+.top{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--border)}
+.topin{max-width:780px;margin:0 auto;padding:8px 14px;display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.topin .ttl{font-weight:700;font-size:14px}
+.topin .mid{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:600}
+.topin .end{display:flex;align-items:center;gap:6px;font-weight:700;font-size:14px}
+.ib{width:44px;height:44px;border-radius:12px;font-size:18px;display:grid;place-items:center;background:var(--card);border:1px solid var(--border)}
+.prog{height:5px;background:var(--border)}
+.prog>div{height:100%;width:0;background:var(--grad);transition:width .4s var(--ease)}
+.qwrap{max-width:780px;margin:0 auto;padding:18px 14px 80px}
+.qcard{position:relative;background:var(--card);border-radius:20px;box-shadow:var(--shadow);padding:26px 18px 18px;overflow:hidden;border:1px solid var(--border)}
+.qcard.anim{animation:rise .35s var(--ease) both}
+.ribbon{position:absolute;top:0;left:0;right:0;height:6px;background:var(--grad)}
+.qhead{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:10px}
+.qchip{background:var(--tint);color:var(--g1);font-weight:700;padding:3px 12px;border-radius:999px;font-family:'Inter',sans-serif;font-size:13px}
+.trbtn{min-height:44px;padding:6px 14px;border-radius:12px;border:2px solid var(--border);font-weight:600;font-size:14px;background:var(--soft)}
+.trbtn.on{border-color:var(--g1);background:var(--tint)}
+.qtext{font-size:1.25rem;font-weight:600;line-height:1.7;font-family:'Inter',sans-serif;direction:ltr;text-align:left}
+.qar{margin-top:10px;padding:10px 14px;border-radius:12px;background:var(--tint);font-size:1.05rem;direction:rtl;text-align:right;animation:slide .3s var(--ease) both}
+.opts{display:grid;gap:10px;margin-top:18px}
+.opt{display:flex;align-items:center;gap:12px;width:100%;min-height:64px;padding:10px 14px;border-radius:14px;border:2px solid var(--border);background:var(--card);text-align:left;direction:ltr;transition:transform .28s var(--ease),border-color .28s var(--ease),box-shadow .28s var(--ease);position:relative}
+.opt:not(:disabled):hover{transform:translateY(-2px);border-color:var(--g1);box-shadow:0 6px 18px rgba(15,23,42,.1)}
+.opt .l{flex:none;width:34px;height:34px;border-radius:50%;background:var(--grad);color:#fff;font-weight:700;display:grid;place-items:center;font-family:'Inter',sans-serif}
+.opt .b{flex:1;font-family:'Inter',sans-serif;font-size:16px}
+.opt .oar{display:block;margin-top:6px;padding-top:6px;border-top:1px dotted var(--muted);font-size:13px;color:var(--muted);direction:rtl;text-align:right;font-family:'Cairo',sans-serif}
+.opt .mk{flex:none;font-size:20px;font-weight:700;width:24px;text-align:center}
+.opt:disabled{cursor:default}
+.opt.right{background:linear-gradient(135deg,#22c55e,#16a34a);border-color:#16a34a;color:#fff}
+.opt.right .oar{color:#dcfce7;border-color:#bbf7d0}
+.opt.wrong{background:linear-gradient(135deg,#ef4444,#dc2626);border-color:#dc2626;color:#fff}
+.opt.wrong .oar{color:#fee2e2;border-color:#fecaca}
+.opt.right .l,.opt.wrong .l{background:rgba(255,255,255,.25)}
+.opt.reveal{border-color:#22c55e;box-shadow:0 0 0 3px rgba(34,197,94,.3)}
+.opt.reveal .mk{color:#22c55e}
+.opt.dim{opacity:.6}
+.exp{margin-top:18px;animation:slide .35s var(--ease) both}
+.exp .hd{font-weight:700;font-size:17px;margin-bottom:8px}
+.exp .hd.ok{color:var(--ok)}.exp .hd.no{color:var(--err)}
+.eb{padding:12px 14px;border-radius:12px;background:var(--card);border:1px solid var(--border);font-size:15px;line-height:1.7;margin-bottom:8px}
+.eb.en{font-family:'Inter',sans-serif}
+.eb.ar{background:var(--tint);border-color:transparent}
+.nextbtn{display:block;margin-inline-start:0;min-height:50px;padding:10px 28px;border-radius:14px;background:var(--grad);color:#fff;font

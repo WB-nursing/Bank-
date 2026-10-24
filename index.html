@@ -1,210 +1,396 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
 <meta charset="UTF-8">
-<title>Pediatric Surgery | The Coding Nurse (A&M)🩺💉</title>
+<title>Pediatric Surgery 👶 | The Coding Nurse(Ŵ)</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
-:root{
-  --primary:#0f4c81;
-  --secondary:#0ea5e9;
-  --success:#22c55e;
-  --danger:#dc2626;
-  --bg:#f1f5f9;
-  --soft:#f8fafc;
-  --text:#0f172a;
+:root[data-theme="light"] {
+  --primary: #0f4c81;
+  --secondary: #0ea5e9;
+  --success: #22c55e;
+  --danger: #dc2626;
+  --bg: #f1f5f9;
+  --card-bg: #ffffff;
+  --soft: #f8fafc;
+  --text: #0f172a;
+  --border: #e5e7eb;
+  --shadow: rgba(0,0,0,.06);
 }
-*{box-sizing:border-box;font-family:"Segoe UI",system-ui,sans-serif}
-body{margin:0;background:var(--bg);color:var(--text)}
-.container{max-width:1000px;margin:auto;padding:16px}
+:root[data-theme="dark"] {
+  --primary: #38bdf8;
+  --secondary: #0ea5e9;
+  --success: #4ade80;
+  --danger: #f87171;
+  --bg: #0f172a;
+  --card-bg: #1e293b;
+  --soft: #0f172a;
+  --text: #f8fafc;
+  --border: #334155;
+  --shadow: rgba(0,0,0,.3);
+}
 
-/* Header */
+*{box-sizing:border-box; font-family:"Segoe UI", system-ui, sans-serif; transition: background 0.3s, color 0.3s;}
+body{margin:0; background:var(--bg); color:var(--text)}
+.container{max-width:1000px; margin:auto; padding:16px; position: relative;}
+
+.top-bar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  margin-top: -36px;
+  margin-bottom: 26px;
+  position: relative;
+  z-index: 10;
+  width: 100%;
+}
+
+.settings-bar {
+  display: flex;
+  gap: 6px;
+}
+
+.setting-btn, .theme-toggle {
+  background: var(--card-bg);
+  border: 2px solid var(--border);
+  padding: 8px 12px;
+  border-radius: 50px;
+  cursor: pointer;
+  font-weight: bold;
+  color: var(--text);
+  box-shadow: 0 4px 12px var(--shadow);
+  font-size: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+@keyframes popIn {
+  0% { transform: scale(0.95); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-6px); }
+  40%, 80% { transform: translateX(6px); }
+}
+.shake-anim { animation: shake 0.3s ease-in-out; }
+
 .hero{
   text-align:center;
-  padding:36px 20px;
-  border-radius:22px;
-  background:linear-gradient(135deg,#0f4c81,#0ea5e9);
+  padding:40px 20px 50px 20px;
+  border-radius:24px;
+  background: linear-gradient(135deg, #0f4c81, #0ea5e9);
   color:#fff;
   margin-bottom: 20px;
+  animation: popIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 10px 25px rgba(15, 76, 129, 0.2);
 }
-.hero h1{margin:0;font-size:34px;font-weight:800}
-.hero h2{
-  margin-top:6px;
-  font-size:18px;
-  letter-spacing:2px;
-  text-transform:uppercase;
-  color:#bbf7d0;
-}
+.hero h1{margin:0; font-size:36px; font-weight:800}
+.hero h2{ margin-top:6px; font-size:18px; letter-spacing:2px; text-transform:uppercase; color:#bbf7d0;}
 
-/* Middle Nav */
-.mid-nav{
-  display:flex;
-  gap:10px;
-  margin:24px 0;
-  padding:6px 4px;
-  overflow-x:auto;
-}
+.mid-nav{ display:flex; gap:10px; margin:24px 0; padding:6px 4px; overflow-x:auto;}
 .q-btn{
-  min-width:44px;
-  padding:10px 0;
-  border-radius:12px;
-  border:2px solid #e5e7eb;
-  background:#fff;
-  font-weight:700;
-  cursor:pointer;
+  min-width:44px; padding:10px 0; border-radius:12px; border:2px solid var(--border);
+  background:var(--card-bg); color: var(--text); font-weight:700; cursor:pointer; transition: all 0.2s ease;
 }
-.q-btn.active{background:#dbeafe;border-color:var(--secondary)}
-.q-btn.correct{background:#dcfce7;border-color:var(--success)}
-.q-btn.wrong{background:#fee2e2;border-color:var(--danger)}
+.q-btn.active{background:#dbeafe; border-color:var(--secondary); color:#0f4c81; transform: scale(1.1); box-shadow: 0 4px 10px rgba(14, 165, 233, 0.2);}
+.q-btn.correct{background:#dcfce7 !important; border-color:var(--success) !important; color: #16a34a !important;}
+.q-btn.wrong{background:#fee2e2 !important; border-color:var(--danger) !important; color: #dc2626 !important;}
+.q-btn.flagged{border-color: #f59e0b !important; background: #fef3c7 !important; color: #b45309 !important;}
+.q-btn.answered-exam { background: #e2e8f0; border-color: #94a3b8; color: #475569; }
 
-/* Card */
 .card{
-  background:#fff;
-  border-radius:22px;
-  padding:24px;
-  box-shadow:0 14px 35px rgba(0,0,0,.08);
-  text-align: center;
+  background:var(--card-bg); border-radius:22px; padding:28px;
+  box-shadow:0 14px 35px var(--shadow); text-align: center;
+  animation: popIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  border: 1px solid var(--border);
 }
 
-/* Welcome Screen */
 .welcome-msg { font-size: 24px; color: var(--primary); font-weight: 700; margin-bottom: 20px; }
-.start-btn {
-  padding: 16px 40px;
-  font-size: 18px;
-  font-weight: 700;
-  color: #fff;
-  background: linear-gradient(135deg, var(--success), #16a34a);
-  border: none;
-  border-radius: 16px;
+.mode-selector {
+  margin: 20px 0 25px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
+}
+.mode-option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--soft);
+  padding: 14px 20px;
+  border-radius: 14px;
+  border: 2px solid var(--border);
   cursor: pointer;
-  transition: transform 0.2s;
+  width: 100%;
+  max-width: 450px;
+  text-align: right;
+  direction: rtl;
+  font-weight: 600;
+  transition: all 0.2s;
 }
-.start-btn:hover { transform: scale(1.05); }
+.mode-option input { scale: 1.3; cursor: pointer; margin-left: 10px; }
+.mode-option:hover { border-color: var(--secondary); }
+.mode-option:has(input:checked) {
+  border-color: var(--secondary);
+  background: rgba(14, 165, 233, 0.08);
+}
+.start-btn {
+  padding: 16px 50px; font-size: 18px; font-weight: 700; color: #fff;
+  background: linear-gradient(135deg, var(--success), #16a34a); border: none; border-radius: 16px;
+  cursor: pointer; transition: all 0.2s ease; width: 100%; max-width: 450px;
+}
+.start-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(34, 197, 94, 0.35); }
 
-/* Progress Bar */
-.progress{
-  height:8px;
-  background:#e5e7eb;
-  border-radius:999px;
-  overflow:hidden;
-  margin-bottom:18px;
+.resume-btn {
+  padding: 14px 30px; font-size: 16px; font-weight: 700; color: var(--primary);
+  background: transparent; border: 2px solid var(--primary); border-radius: 16px;
+  cursor: pointer; transition: all 0.2s ease; display: none; margin-top: 5px; width: 100%; max-width: 450px;
 }
+.resume-btn:hover { background: var(--primary); color: #fff; }
+
+.timer-box {
+  display: none;
+  background: var(--card-bg);
+  border: 2px solid var(--border);
+  padding: 8px 20px;
+  border-radius: 50px;
+  font-weight: 800;
+  color: var(--danger);
+  box-shadow: 0 4px 12px var(--shadow);
+  text-align: center;
+  margin: 10px auto 20px auto;
+  width: fit-content;
+  font-size: 18px;
+  letter-spacing: 1px;
+}
+
+.progress{ height:10px; background:var(--border); border-radius:999px; overflow:hidden; margin-bottom:18px;}
 .progress span{
-  display:block;
-  height:100%;
-  width:0%;
-  background:linear-gradient(90deg,var(--secondary),var(--success));
+  display:block; height:100%; width:0%;
+  background:linear-gradient(90deg, var(--secondary), var(--success));
+  transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Question Section */
 .question-box{
-  background:linear-gradient(135deg,#ffffff,#f0f7ff);
-  border-left:6px solid var(--secondary);
-  border-radius:18px;
-  padding:22px;
-  text-align: left;
-}
-.question{
-  font-size:18px;
-  font-weight:600;
-  margin-bottom:20px;
+  background: var(--soft);
+  border-left:6px solid var(--secondary); border-radius:18px; padding:22px; text-align: left;
 }
 
-/* Options */
+.q-tools-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  padding-bottom: 10px;
+  border-bottom: 1px dashed var(--border);
+}
+.q-badge {
+  background: var(--primary);
+  color: #fff;
+  padding: 4px 12px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: bold;
+}
+.q-actions {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+
+.question { font-size:19px; font-weight:600; line-height: 1.5; width: 100%; display: block; word-wrap: break-word; }
+
+#speakBtn, #stopSpeakBtn, #translateBtn { background: none; border: none; font-size: 20px; cursor: pointer; padding: 0; line-height: 1; transition: transform 0.2s; }
+#speakBtn:hover, #stopSpeakBtn:hover, #translateBtn:hover { transform: scale(1.2); }
+
+#flagBtn { background: none; border: none; font-size: 22px; cursor: pointer; padding: 0; line-height: 1; transition: transform 0.2s; filter: grayscale(1); }
+#flagBtn:hover { transform: scale(1.2); }
+#flagBtn.active { filter: grayscale(0) drop-shadow(0 0 4px #f59e0b) !important; transform: scale(1.1); }
+
+.translation-box {
+  display: none;
+  margin-top: 18px;
+  padding: 16px;
+  background: var(--card-bg);
+  border-right: 4px solid var(--secondary);
+  border-radius: 12px;
+  direction: rtl;
+  text-align: right;
+  box-shadow: inset 0 2px 6px var(--shadow), 0 2px 8px var(--shadow);
+  animation: popIn 0.3s ease;
+}
+.trans-title { font-weight: bold; color: var(--secondary); margin-bottom: 8px; font-size: 14px; }
+.trans-q { font-size: 16px; font-weight: 600; margin-bottom: 12px; line-height: 1.5; color: var(--text); }
+.trans-o-list { margin: 0; padding-right: 20px; font-size: 15px; color: #475569; line-height: 1.7; }
+
 .options button{
-  width:100%;
-  padding:15px;
-  margin-bottom:12px;
-  border-radius:14px;
-  border:2px solid #e5e7eb;
-  background:var(--soft);
-  font-size:16px;
-  cursor:pointer;
-  transition: 0.2s;
+  width:100%; padding:16px; margin-bottom:12px; border-radius:14px;
+  border:2px solid var(--border); background:var(--card-bg); color: var(--text);
+  font-size:16px; text-align: left; cursor:pointer; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
-.options button.correct{background:#ecfdf5;border-color:var(--success)}
-.options button.wrong{background:#fef2f2;border-color:var(--danger)}
+.options button:not(:disabled):hover {
+  transform: translateY(-2px); border-color: var(--secondary);
+  box-shadow: 0 6px 16px rgba(14, 165, 233, 0.15);
+}
+.options button.correct{background:#ecfdf5 !important; border-color:var(--success) !important; color: #065f46 !important; font-weight: 700;}
+.options button.wrong{background:#fef2f2 !important; border-color:var(--danger) !important; color: #991b1b !important; font-weight: 700;}
+.options button.selected-exam { background: #e0f2fe !important; border-color: var(--secondary) !important; color: #0369a1 !important; font-weight: 700; }
 
-/* Navigation Buttons */
-.nav{
-  display:flex;
-  gap:12px;
-  margin-top:26px;
-}
+.nav{ display:flex; gap:12px; margin-top:26px;}
 .nav button{
-  flex:1;
-  padding:14px;
-  border-radius:14px;
-  font-size:15px;
-  font-weight:700;
-  cursor:pointer;
+  flex:1; padding:14px; border-radius:14px; font-size:15px; font-weight:700; cursor:pointer; transition: all 0.2s;
 }
-.prev{background:#fff;border:2px solid #e5e7eb}
-.next{
-  border:none;
-  color:#fff;
-  background:linear-gradient(135deg,var(--primary),var(--secondary));
-}
+.prev{background:var(--card-bg); border:2px solid var(--border); color: var(--text);}
+.prev:hover{background: var(--soft); transform: translateY(-1px);}
+.next{ border:none; color:#fff; background:linear-gradient(135deg,var(--primary),var(--secondary));}
+.next:hover{opacity: 0.95; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(15, 76, 129, 0.2);}
 
-/* Topic tag & Explanation */
-.topic{display:inline-block;font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--primary);background:#dbeafe;padding:4px 12px;border-radius:999px;margin-bottom:12px}
-.options button{text-align:left}
-.expl{display:none;margin-top:16px;padding:16px;border-radius:14px;background:#f0fdf4;border:1px solid #bbf7d0}
-.expl.show{display:block}
-.expl .ar{direction:rtl;text-align:right;font-weight:600;margin-bottom:10px;line-height:1.7}
-.expl .en{direction:ltr;text-align:left;color:#334155;line-height:1.6;font-size:15px}
-.mid-nav{flex-wrap:wrap;overflow-x:visible}
-.review{text-align:left;margin-top:10px}
-/* Result Screen */
+.extra-nav { display: flex; gap: 12px; margin-top: 12px; }
+.extra-nav button { flex: 1; padding: 12px; border-radius: 14px; font-size: 14px; font-weight: 700; cursor: pointer; transition: all 0.2s; }
+.home-btn { background: var(--card-bg); border: 2px solid var(--border); color: var(--text); }
+.home-btn:hover { background: var(--soft); transform: translateY(-1px); }
+.finish-btn { background: linear-gradient(135deg, var(--danger), #b91c1c); border: none; color: #fff; }
+.finish-btn:hover { opacity: 0.95; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(220, 38, 38, 0.2); }
+
 .result-msg { font-size: 18px; margin-bottom: 10px; line-height: 1.6; }
-.duck-msg { 
-  display: block; 
-  margin-top: 15px; 
-  font-weight: 800; 
-  color: var(--primary);
-  font-size: 20px;
+.duck-msg { display: block; margin-top: 15px; font-weight: 800; color: var(--primary); font-size: 20px;}
+.stats-container {
+  display: flex; justify-content: space-around; background: var(--soft);
+  padding: 16px; border-radius: 16px; margin: 20px 0; border: 1px solid var(--border);
 }
-.score{font-size:40px;font-weight:800;color:var(--success); margin: 15px 0;}
+.stat-box { text-align: center; }
+.stat-val { font-size: 24px; font-weight: 800; }
+.stat-lbl { font-size: 13px; color: #64748b; margin-top: 4px; }
+.score{ font-size:48px; font-weight:900; color:var(--success); margin: 10px 0; text-shadow: 0 4px 12px rgba(34, 197, 94, 0.2);}
+.badge-title { font-size: 22px; font-weight: 800; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 0.5px; }
+
+.result-actions-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 400px;
+  margin: 20px auto 0 auto;
+}
 .restart{
-  margin-top:20px;
-  padding:14px 24px;
-  border:none;
-  border-radius:16px;
-  font-size:16px;
-  font-weight:700;
-  cursor:pointer;
-  color:#fff;
-  background:linear-gradient(135deg,#0f4c81,#0ea5e9);
+  padding:14px 28px; border:none; border-radius:16px; font-size:16px; font-weight:700;
+  cursor:pointer; color:#fff; background:linear-gradient(135deg,#0f4c81,#0ea5e9); transition: all 0.2s;
+  width: 100%;
 }
+.restart:hover{transform: translateY(-2px); box-shadow: 0 6px 18px rgba(15, 76, 129, 0.35);}
+
+.review-btn {
+  padding: 14px 28px; border: 2px solid var(--success); border-radius: 16px; font-size: 16px; font-weight: 700;
+  cursor: pointer; color: var(--success); background: transparent; transition: all 0.2s;
+  width: 100%; display: none;
+}
+.review-btn:hover { background: var(--success); color: #fff; transform: translateY(-2px); }
+
+.download-btn {
+  padding: 14px 28px; border: 2px solid var(--primary); border-radius: 16px; font-size: 16px; font-weight: 700;
+  cursor: pointer; color: var(--primary); background: transparent; transition: all 0.2s;
+  width: 100%;
+}
+.download-btn:hover { background: var(--primary); color: #fff; transform: translateY(-2px); }
+
+.explain-box{display:none;margin-top:16px;padding:14px 16px;border-radius:14px;background:rgba(14,165,233,.08);border:1px dashed var(--secondary);text-align:left;font-size:14px;line-height:1.6;animation:popIn .3s ease}
+.explain-box .ex-title{font-weight:800;color:var(--primary);margin-bottom:6px}
+.explain-box .ex-ar{direction:rtl;text-align:right;margin-bottom:6px;font-weight:600}
+.explain-box .ex-en{direction:ltr;text-align:left;opacity:.9}
+.topic-tag{display:inline-block;font-size:12px;font-weight:700;color:var(--primary);background:rgba(14,165,233,.12);padding:3px 10px;border-radius:50px;margin-bottom:10px}
 </style>
 </head>
 <body>
 
 <div class="container">
+    
     <div class="hero">
-        <h1>👶 Pediatric Surgery 🩺</h1>
-        <h2>Question Bank 1</h2>
-        <p>Prepared by <strong>The Coding Nurse (A&M)🩺💉</strong></p>
+        <h1>Pediatric Surgery 👶</h1>
+        <h2>Question Bank app</h2>
+        <p>Prepared by <strong>The Coding Nurse(Ŵ)</strong></p>
+    </div>
+
+    <div class="top-bar">
+        <div class="settings-bar">
+            <button class="setting-btn" id="soundToggle" onclick="toggleSound()"><span>🔊</span> Sound On</button>
+            <button class="setting-btn" id="vibeToggle" onclick="toggleVibration()"><span>📳</span> Vibe On</button>
+        </div>
+        <button class="theme-toggle" onclick="toggleTheme()"><span>🌓</span> Dark Mode</button>
     </div>
 
     <div class="card" id="startCard">
         <div class="welcome-msg">✨🤍🐣 صلي علي النبي ✨</div>
+        
+        <div id="highScoreView" style="display:none; font-weight:bold; margin:0 auto 16px auto; color:var(--success); font-size:14px; background:rgba(34, 197, 94, 0.08); padding:8px 16px; border-radius:50px; border:1px dashed var(--success); width:fit-content; direction:rtl;">
+            🏆 أعلى سكور: <span id="highScoreVal">0%</span>
+        </div>
+
+        <div class="mode-selector">
+            <label class="mode-option">
+                <input type="radio" name="quizMode" value="sequential" onchange="setMode('sequential')">
+                <span>🔢 وضع الترتيب (أسئلة واختيارات مرتبة بدون عشوائية)</span>
+            </label>
+            <label class="mode-option">
+                <input type="radio" name="quizMode" value="study" checked onchange="setMode('study')">
+                <span>📖 وضع المذاكرة (عشوائي + تصحيح فوري للمعلومات)</span>
+            </label>
+            <label class="mode-option">
+                <input type="radio" name="quizMode" value="exam" onchange="setMode('exam')">
+                <span>⏳ وضع الامتحان (عشوائي + تايمر وبدون كشف الإجابات)</span>
+            </label>
+            <label class="mode-option">
+                <input type="radio" name="quizMode" value="bookmark" onchange="setMode('bookmark')">
+                <span>🔖 مراجعة الأسئلة المميزة فقط</span>
+            </label>
+            <button class="resume-btn" id="resumeBtn" onclick="resumeQuiz()">استكمال محاولة الحل السابقة 🔄</button>
+        </div>
+
         <button class="start-btn" onclick="startQuiz()">Start 🚀</button>
     </div>
 
     <div id="quizContainer" style="display:none">
+        <div class="timer-box" id="timerBox">⏳ المتبقي: <span id="timerDisplay">00:00</span></div>
         <div class="mid-nav" id="midNav"></div>
         <div class="card" id="quizCard">
             <div class="progress"><span id="progressBar"></span></div>
             <div class="question-box">
-                <span class="topic" id="topic"></span>
+                
+                <div class="q-tools-bar">
+                    <span class="q-badge" id="qIndexBadge">Question</span>
+                    <div class="q-actions">
+                        <button id="translateBtn" onclick="toggleTranslation()" title="ترجمة السؤال للعربية" style="display:none;">🌍</button>
+                        <button id="speakBtn" onclick="speakQuestion()" title="بدء النطق من أول وجديد">🔊</button>
+                        <button id="stopSpeakBtn" onclick="toggleSpeechPause()" title="إيقاف مؤقت" style="display:none;">⏸️</button>
+                        <button id="flagBtn" onclick="toggleFlag()" title="Bookmark Question">🔖</button>
+                    </div>
+                </div>
+
+                <div class="topic-tag" id="topicTag"></div>
                 <div class="question" id="question"></div>
-                <div class="options" id="options"></div>
-                <div class="expl" id="expl"><div class="ar" id="explAr"></div><div class="en" id="explEn"></div></div>
+                
+                <div class="translation-box" id="translationBox">
+                    <div class="trans-title">🎯 الترجمة العربية:</div>
+                    <div class="trans-q" id="transQText"></div>
+                    <ul class="trans-o-list" id="transOList"></ul>
+                </div>
+
+                <div class="options" id="options" style="margin-top: 20px;"></div>
+                <div class="explain-box" id="explainBox"><div class="ex-title">💡 الشرح / Explanation</div><div class="ex-ar" id="exAr"></div><div class="ex-en" id="exEn"></div></div>
             </div>
+            
             <div class="nav">
                 <button class="prev" onclick="prevQ()">⬅ Previous</button>
                 <button class="next" onclick="nextQ()">Next ➡</button>
+            </div>
+            
+            <div class="extra-nav">
+                <button class="home-btn" onclick="goToHome()">🏠 الرئيسية (حفظ)</button>
+                <button class="finish-btn" onclick="showResult()">📊 إنهاء وعرض النتيجة</button>
             </div>
         </div>
     </div>
@@ -215,968 +401,1002 @@ body{margin:0;background:var(--bg);color:var(--text)}
             متزعلش لو نتيجة حلك مكنتش أحسن حاجه خليك ديما فاكر ان لسه فيه فرصه تحاول سمي الله وحاول تاني
             <span class="duck-msg">( 🐥 أشطر كتكوت يخواشي )</span>
         </div>
-        <hr style="border: 0; border-top: 1px solid #eee; margin: 20px 0;">
+        
+        <div class="stats-container">
+            <div class="stat-box">
+                <div class="stat-val" id="statCorrect" style="color: var(--success);">0</div>
+                <div class="stat-lbl">Correct ✅</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-val" id="statWrong" style="color: var(--danger);">0</div>
+                <div class="stat-lbl">Wrong ❌</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-val" id="statRatio" style="color: var(--secondary);">0%</div>
+                <div class="stat-lbl">Accuracy 🎯</div>
+            </div>
+        </div>
+
         <h2>Final Result</h2>
         <div class="score" id="scoreText"></div>
-        <button class="restart" onclick="restartQuiz()">🔄 Restart Quiz</button>
+        <div class="badge-title" id="badgeTitle"></div>
+        
+        <div class="result-actions-container">
+            <button class="review-btn" id="reviewBtn" onclick="startReview()">🔁 مراجعة الأخطاء فقط</button>
+            <button class="download-btn" id="downloadBtn" onclick="downloadResultCard()">📸 تحميل النتيجة كصورة</button>
+            <button class="restart" onclick="restartQuiz()">🔄 Restart Quiz</button>
+        </div>
     </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
 <script>
-const quiz = [
+const originalQuiz = [
  {
-  "t": "Congenital Diaphragmatic Hernia (CDH)",
   "q": "What is Congenital Diaphragmatic Hernia (CDH)?",
   "o": [
-   "A. A defect in the diaphragm that allows abdominal organs to move into the chest",
-   "B. A lung infection",
-   "C. A heart defect",
-   "D. A kidney problem"
+   "A defect in the diaphragm that allows abdominal organs to move into the chest",
+   "A lung infection",
+   "A heart defect",
+   "A kidney problem"
   ],
   "a": 0,
-  "ar": "لأن CDH عيب خلقي في الحجاب الحاجز يسمح لأعضاء البطن بالانتقال إلى الصدر.",
-  "en": "Because CDH is a congenital diaphragmatic defect allowing abdominal organs to herniate into the chest."
+  "topic": "Congenital Diaphragmatic Hernia (CDH)",
+  "expAr": "لأن CDH عيب خلقي في الحجاب الحاجز يسمح لأعضاء البطن بالانتقال إلى الصدر.",
+  "expEn": "Because CDH is a congenital diaphragmatic defect allowing abdominal organs to herniate into the chest."
  },
  {
-  "t": "Congenital Diaphragmatic Hernia (CDH)",
   "q": "Which side of the diaphragm is most commonly affected in CDH?",
   "o": [
-   "A. Right side",
-   "B. Left side",
-   "C. Both sides equally",
-   "D. Middle part"
+   "Right side",
+   "Left side",
+   "Both sides equally",
+   "Middle part"
   ],
   "a": 1,
-  "ar": "لأن أكثر من 80% من حالات CDH تحدث في الجانب الأيسر.",
-  "en": "Because more than 80% of CDH cases occur on the left side."
+  "topic": "Congenital Diaphragmatic Hernia (CDH)",
+  "expAr": "لأن أكثر من 80% من حالات CDH تحدث في الجانب الأيسر.",
+  "expEn": "Because more than 80% of CDH cases occur on the left side."
  },
  {
-  "t": "Congenital Diaphragmatic Hernia (CDH)",
   "q": "Which of the following is a common symptom of CDH in newborns?",
   "o": [
-   "A. Cyanosis",
-   "B. High blood sugar",
-   "C. Skin rash",
-   "D. Jaundice only"
+   "Cyanosis",
+   "High blood sugar",
+   "Skin rash",
+   "Jaundice only"
   ],
   "a": 0,
-  "ar": "لأن ضيق التنفس ونقص الأكسجين يؤديان إلى الزرقة.",
-  "en": "Because respiratory distress and hypoxia cause cyanosis."
+  "topic": "Congenital Diaphragmatic Hernia (CDH)",
+  "expAr": "لأن ضيق التنفس ونقص الأكسجين يؤديان إلى الزرقة.",
+  "expEn": "Because respiratory distress and hypoxia cause cyanosis."
  },
  {
-  "t": "Congenital Diaphragmatic Hernia (CDH)",
   "q": "What is the recommended immediate respiratory management for a newborn with CDH?",
   "o": [
-   "A. Give oral feeding",
-   "B. Use mask ventilation",
-   "C. Intubate the trachea and avoid mask ventilation",
-   "D. Send home for observation"
+   "Give oral feeding",
+   "Use mask ventilation",
+   "Intubate the trachea and avoid mask ventilation",
+   "Send home for observation"
   ],
   "a": 2,
-  "ar": "لأن التنبيب يسمح بتهوية مضبوطة وتجنب نفخ المعدة والأمعاء.",
-  "en": "Because intubation provides controlled ventilation and avoids inflating herniated bowel."
+  "topic": "Congenital Diaphragmatic Hernia (CDH)",
+  "expAr": "لأن التنبيب يسمح بتهوية مضبوطة وتجنب نفخ المعدة والأمعاء.",
+  "expEn": "Because intubation provides controlled ventilation and avoids inflating herniated bowel."
  },
  {
-  "t": "Congenital Diaphragmatic Hernia (CDH)",
   "q": "When is surgery for CDH usually performed?",
   "o": [
-   "A. Immediately at birth in all cases",
-   "B. After stabilization of the infant's condition",
-   "C. After one year",
-   "D. Before diagnosis"
+   "Immediately at birth in all cases",
+   "After stabilization of the infant's condition",
+   "After one year",
+   "Before diagnosis"
   ],
   "a": 1,
-  "ar": "لأن الإصلاح الجراحي يُؤجل حتى تستقر الحالة التنفسية والدورة الدموية.",
-  "en": "Because repair is delayed until respiratory and hemodynamic stabilization."
+  "topic": "Congenital Diaphragmatic Hernia (CDH)",
+  "expAr": "لأن الإصلاح الجراحي يُؤجل حتى تستقر الحالة التنفسية والدورة الدموية.",
+  "expEn": "Because repair is delayed until respiratory and hemodynamic stabilization."
  },
  {
-  "t": "Congenital Diaphragmatic Hernia (CDH)",
   "q": "What is the definition of congenital diaphragmatic hernia (CDH)?",
   "o": [
-   "A. Congenital absence of the abdominal wall",
-   "B. Congenital defect in the diaphragm allowing abdominal viscera to herniate into the thorax",
-   "C. Acquired weakness of the diaphragm",
-   "D. Congenital defect in the pleura"
+   "Congenital absence of the abdominal wall",
+   "Congenital defect in the diaphragm allowing abdominal viscera to herniate into the thorax",
+   "Acquired weakness of the diaphragm",
+   "Congenital defect in the pleura"
   ],
   "a": 1,
-  "ar": "لأن التعريف الصحيح هو عيب خلقي في الحجاب الحاجز مع فتق أحشاء البطن إلى الصدر.",
-  "en": "Because CDH is a congenital diaphragmatic defect with abdominal viscera herniating into the thorax."
+  "topic": "Congenital Diaphragmatic Hernia (CDH)",
+  "expAr": "لأن التعريف الصحيح هو عيب خلقي في الحجاب الحاجز مع فتق أحشاء البطن إلى الصدر.",
+  "expEn": "Because CDH is a congenital diaphragmatic defect with abdominal viscera herniating into the thorax."
  },
  {
-  "t": "Congenital Diaphragmatic Hernia (CDH)",
   "q": "Which side is most commonly affected by congenital diaphragmatic hernia?",
   "o": [
-   "A. Right side",
-   "B. Left side",
-   "C. Both sides equally",
-   "D. Bilateral involvement"
+   "Right side",
+   "Left side",
+   "Both sides equally",
+   "Bilateral involvement"
   ],
   "a": 1,
-  "ar": "لأن الجانب الأيسر هو الأكثر إصابة، وغالبًا عبر عيب Bochdalek.",
-  "en": "Because the left side is most commonly affected, usually through a Bochdalek defect."
+  "topic": "Congenital Diaphragmatic Hernia (CDH)",
+  "expAr": "لأن الجانب الأيسر هو الأكثر إصابة، وغالبًا عبر عيب Bochdalek.",
+  "expEn": "Because the left side is most commonly affected, usually through a Bochdalek defect."
  },
  {
-  "t": "Congenital Diaphragmatic Hernia (CDH)",
   "q": "What is the major cause of respiratory distress in newborns with CDH?",
   "o": [
-   "A. Surfactant deficiency alone",
-   "B. Pulmonary hypoplasia and pulmonary hypertension",
-   "C. Upper airway obstruction",
-   "D. Congenital pneumonia"
+   "Surfactant deficiency alone",
+   "Pulmonary hypoplasia and pulmonary hypertension",
+   "Upper airway obstruction",
+   "Congenital pneumonia"
   ],
   "a": 1,
-  "ar": "لأن نقص تنسج الرئة وارتفاع ضغط الشريان الرئوي هما السبب الرئيسي لضيق التنفس.",
-  "en": "Because pulmonary hypoplasia and pulmonary hypertension are the main causes of distress."
+  "topic": "Congenital Diaphragmatic Hernia (CDH)",
+  "expAr": "لأن نقص تنسج الرئة وارتفاع ضغط الشريان الرئوي هما السبب الرئيسي لضيق التنفس.",
+  "expEn": "Because pulmonary hypoplasia and pulmonary hypertension are the main causes of distress."
  },
  {
-  "t": "Congenital Diaphragmatic Hernia (CDH)",
   "q": "Which of the following organs may herniate into the thoracic cavity in left-sided CDH?",
   "o": [
-   "A. Stomach",
-   "B. Spleen",
-   "C. Small and large intestines",
-   "D. All of the above"
+   "Stomach",
+   "Spleen",
+   "Small and large intestines",
+   "All of the above"
   ],
   "a": 3,
-  "ar": "لأن المعدة والطحال والأمعاء قد تفتق جميعها في CDH الأيسر.",
-  "en": "Because stomach, spleen, and bowel may all herniate in left-sided CDH."
+  "topic": "Congenital Diaphragmatic Hernia (CDH)",
+  "expAr": "لأن المعدة والطحال والأمعاء قد تفتق جميعها في CDH الأيسر.",
+  "expEn": "Because stomach, spleen, and bowel may all herniate in left-sided CDH."
  },
  {
-  "t": "Congenital Diaphragmatic Hernia (CDH)",
   "q": "How are most cases of congenital diaphragmatic hernia currently diagnosed?",
   "o": [
-   "A. During routine antenatal ultrasonography",
-   "B. By postnatal bronchoscopy",
-   "C. During exploratory laparotomy",
-   "D. By neonatal abdominal examination alone"
+   "During routine antenatal ultrasonography",
+   "By postnatal bronchoscopy",
+   "During exploratory laparotomy",
+   "By neonatal abdominal examination alone"
   ],
   "a": 0,
-  "ar": "لأن معظم الحالات تُكتشف قبل الولادة بالسونار.",
-  "en": "Because most cases are detected antenatally by ultrasonography."
+  "topic": "Congenital Diaphragmatic Hernia (CDH)",
+  "expAr": "لأن معظم الحالات تُكتشف قبل الولادة بالسونار.",
+  "expEn": "Because most cases are detected antenatally by ultrasonography."
  },
  {
-  "t": "Congenital Diaphragmatic Hernia (CDH)",
   "q": "A newborn presents immediately after birth with severe respiratory distress, a scaphoid abdomen, and diminished breath sounds on the left side. What is the most likely diagnosis?",
   "o": [
-   "A. Neonatal pneumonia",
-   "B. Congenital diaphragmatic hernia",
-   "C. Esophageal atresia",
-   "D. Congenital lobar emphysema"
+   "Neonatal pneumonia",
+   "Congenital diaphragmatic hernia",
+   "Esophageal atresia",
+   "Congenital lobar emphysema"
   ],
   "a": 1,
-  "ar": "لأن ضيق التنفس الشديد والبطن المنخمص ونقص أصوات التنفس الأيسر تميز CDH.",
-  "en": "Because severe distress, scaphoid abdomen, and diminished left breath sounds are characteristic of CDH."
+  "topic": "Congenital Diaphragmatic Hernia (CDH)",
+  "expAr": "لأن ضيق التنفس الشديد والبطن المنخمص ونقص أصوات التنفس الأيسر تميز CDH.",
+  "expEn": "Because severe distress, scaphoid abdomen, and diminished left breath sounds are characteristic of CDH."
  },
  {
-  "t": "Congenital Diaphragmatic Hernia (CDH)",
   "q": "Why does a newborn with CDH typically have a scaphoid abdomen?",
   "o": [
-   "A. Due to abdominal muscle weakness",
-   "B. Due to displacement of abdominal viscera into the thoracic cavity",
-   "C. Due to intestinal obstruction",
-   "D. Due to excessive loss of abdominal fluid"
+   "Due to abdominal muscle weakness",
+   "Due to displacement of abdominal viscera into the thoracic cavity",
+   "Due to intestinal obstruction",
+   "Due to excessive loss of abdominal fluid"
   ],
   "a": 1,
-  "ar": "لأن انتقال أحشاء البطن إلى الصدر يقلل امتلاء البطن فيظهر منخمصًا.",
-  "en": "Because herniation of abdominal viscera into the thorax reduces abdominal fullness."
+  "topic": "Congenital Diaphragmatic Hernia (CDH)",
+  "expAr": "لأن انتقال أحشاء البطن إلى الصدر يقلل امتلاء البطن فيظهر منخمصًا.",
+  "expEn": "Because herniation of abdominal viscera into the thorax reduces abdominal fullness."
  },
  {
-  "t": "Congenital Diaphragmatic Hernia (CDH)",
   "q": "Which auscultatory finding is particularly suggestive of CDH?",
   "o": [
-   "A. Bilateral wheezing",
-   "B. Loud bronchial breathing",
-   "C. Bowel sounds heard over the affected hemithorax",
-   "D. Bilateral basal crepitations"
+   "Bilateral wheezing",
+   "Loud bronchial breathing",
+   "Bowel sounds heard over the affected hemithorax",
+   "Bilateral basal crepitations"
   ],
   "a": 2,
-  "ar": "لأن أصوات الأمعاء قد تُسمع في الصدر بسبب وجود الأمعاء المفتقّة.",
-  "en": "Because bowel sounds may be heard over the chest due to herniated bowel loops."
+  "topic": "Congenital Diaphragmatic Hernia (CDH)",
+  "expAr": "لأن أصوات الأمعاء قد تُسمع في الصدر بسبب وجود الأمعاء المفتقّة.",
+  "expEn": "Because bowel sounds may be heard over the chest due to herniated bowel loops."
  },
  {
-  "t": "Congenital Diaphragmatic Hernia (CDH)",
   "q": "In a newborn with a large left-sided CDH, the trachea is most likely deviated toward which side?",
   "o": [
-   "A. Left side",
-   "B. Right side",
-   "C. No deviation occurs",
-   "D. The direction varies with respiration"
+   "Left side",
+   "Right side",
+   "No deviation occurs",
+   "The direction varies with respiration"
   ],
   "a": 1,
-  "ar": "لأن الأحشاء المفتقّة تدفع المنصف والقصبة الهوائية بعيدًا عن الجانب المصاب.",
-  "en": "Because herniated viscera shift the mediastinum and trachea away from the affected side."
+  "topic": "Congenital Diaphragmatic Hernia (CDH)",
+  "expAr": "لأن الأحشاء المفتقّة تدفع المنصف والقصبة الهوائية بعيدًا عن الجانب المصاب.",
+  "expEn": "Because herniated viscera shift the mediastinum and trachea away from the affected side."
  },
  {
-  "t": "Congenital Diaphragmatic Hernia (CDH)",
   "q": "Which radiological finding is most characteristic of CDH on a plain chest radiograph?",
   "o": [
-   "A. Bilateral ground-glass appearance",
-   "B. Air-filled bowel loops within the thoracic cavity with mediastinal shift",
-   "C. Enlarged cardiac silhouette",
-   "D. Bilateral hyperinflation without mediastinal shift"
+   "Bilateral ground-glass appearance",
+   "Air-filled bowel loops within the thoracic cavity with mediastinal shift",
+   "Enlarged cardiac silhouette",
+   "Bilateral hyperinflation without mediastinal shift"
   ],
   "a": 1,
-  "ar": "لأن الأشعة تُظهر حلقات معوية مملوءة بالهواء داخل الصدر مع انحراف المنصف.",
-  "en": "Because chest X-ray shows air-filled bowel loops in the thorax with mediastinal shift."
+  "topic": "Congenital Diaphragmatic Hernia (CDH)",
+  "expAr": "لأن الأشعة تُظهر حلقات معوية مملوءة بالهواء داخل الصدر مع انحراف المنصف.",
+  "expEn": "Because chest X-ray shows air-filled bowel loops in the thorax with mediastinal shift."
  },
  {
-  "t": "Congenital Diaphragmatic Hernia (CDH)",
   "q": "What is the preferred initial airway management for a newborn with severe respiratory distress due to CDH?",
   "o": [
-   "A. Bag-mask ventilation",
-   "B. Immediate endotracheal intubation",
-   "C. Nasal CPAP",
-   "D. High-flow nasal oxygen alone"
+   "Bag-mask ventilation",
+   "Immediate endotracheal intubation",
+   "Nasal CPAP",
+   "High-flow nasal oxygen alone"
   ],
   "a": 1,
-  "ar": "لأن التنبيب الفوري يسمح بتهوية مضبوطة ويقلل انتفاخ المعدة.",
-  "en": "Because immediate intubation provides controlled ventilation and minimizes gastric distension."
+  "topic": "Congenital Diaphragmatic Hernia (CDH)",
+  "expAr": "لأن التنبيب الفوري يسمح بتهوية مضبوطة ويقلل انتفاخ المعدة.",
+  "expEn": "Because immediate intubation provides controlled ventilation and minimizes gastric distension."
  },
  {
-  "t": "Congenital Diaphragmatic Hernia (CDH)",
   "q": "Why is bag-mask ventilation contraindicated in newborns with CDH?",
   "o": [
-   "A. It causes pulmonary infection",
-   "B. It increases surfactant deficiency",
-   "C. It may cause intestinal distension and worsen pulmonary compression",
-   "D. It causes diaphragmatic paralysis"
+   "It causes pulmonary infection",
+   "It increases surfactant deficiency",
+   "It may cause intestinal distension and worsen pulmonary compression",
+   "It causes diaphragmatic paralysis"
   ],
   "a": 2,
-  "ar": "لأن التهوية بالماسك قد تدخل هواء للمعدة والأمعاء وتزيد ضغطها على الرئة.",
-  "en": "Because mask ventilation may inflate stomach and bowel, worsening lung compression."
+  "topic": "Congenital Diaphragmatic Hernia (CDH)",
+  "expAr": "لأن التهوية بالماسك قد تدخل هواء للمعدة والأمعاء وتزيد ضغطها على الرئة.",
+  "expEn": "Because mask ventilation may inflate stomach and bowel, worsening lung compression."
  },
  {
-  "t": "Congenital Diaphragmatic Hernia (CDH)",
   "q": "What is the primary purpose of inserting a nasogastric tube in a newborn with CDH?",
   "o": [
-   "A. To initiate early enteral feeding",
-   "B. To decompress the stomach and intestines",
-   "C. To prevent gastroesophageal reflux",
-   "D. To assess intestinal motility"
+   "To initiate early enteral feeding",
+   "To decompress the stomach and intestines",
+   "To prevent gastroesophageal reflux",
+   "To assess intestinal motility"
   ],
   "a": 1,
-  "ar": "لأن الأنبوب المعدي يزيل الضغط عن المعدة والأمعاء داخل الصدر.",
-  "en": "Because a nasogastric tube decompresses the stomach and intestines."
+  "topic": "Congenital Diaphragmatic Hernia (CDH)",
+  "expAr": "لأن الأنبوب المعدي يزيل الضغط عن المعدة والأمعاء داخل الصدر.",
+  "expEn": "Because a nasogastric tube decompresses the stomach and intestines."
  },
  {
-  "t": "Congenital Diaphragmatic Hernia (CDH)",
   "q": "Which investigation is most important for evaluating cardiovascular abnormalities and pulmonary hypertension in newborns with CDH?",
   "o": [
-   "A. Electrocardiography",
-   "B. Echocardiography",
-   "C. Chest radiography",
-   "D. Abdominal ultrasonography"
+   "Electrocardiography",
+   "Echocardiography",
+   "Chest radiography",
+   "Abdominal ultrasonography"
   ],
   "a": 1,
-  "ar": "لأن الإيكو يقيّم القلب ووظيفة البطينين وارتفاع ضغط الرئة.",
-  "en": "Because echocardiography assesses cardiac anatomy, ventricular function, and pulmonary hypertension."
+  "topic": "Congenital Diaphragmatic Hernia (CDH)",
+  "expAr": "لأن الإيكو يقيّم القلب ووظيفة البطينين وارتفاع ضغط الرئة.",
+  "expEn": "Because echocardiography assesses cardiac anatomy, ventricular function, and pulmonary hypertension."
  },
  {
-  "t": "Congenital Diaphragmatic Hernia (CDH)",
   "q": "Which of the following is an essential component of preoperative stabilization in CDH?",
   "o": [
-   "A. Immediate oral feeding",
-   "B. Correction of electrolyte and acid-base disturbances",
-   "C. Routine administration of excessive intravenous fluids",
-   "D. Immediate surgery without cardiovascular assessment"
+   "Immediate oral feeding",
+   "Correction of electrolyte and acid-base disturbances",
+   "Routine administration of excessive intravenous fluids",
+   "Immediate surgery without cardiovascular assessment"
   ],
   "a": 1,
-  "ar": "لأن تصحيح الاضطرابات الأيضية والحمضية القاعدية جزء أساسي من الاستقرار قبل الجراحة.",
-  "en": "Because correcting electrolyte and acid-base disturbances is essential preoperative stabilization."
+  "topic": "Congenital Diaphragmatic Hernia (CDH)",
+  "expAr": "لأن تصحيح الاضطرابات الأيضية والحمضية القاعدية جزء أساسي من الاستقرار قبل الجراحة.",
+  "expEn": "Because correcting electrolyte and acid-base disturbances is essential preoperative stabilization."
  },
  {
-  "t": "Congenital Diaphragmatic Hernia (CDH)",
   "q": "When should surgical repair of congenital diaphragmatic hernia generally be performed?",
   "o": [
-   "A. Immediately after birth in all cases",
-   "B. Before obtaining a chest radiograph",
-   "C. After adequate cardiopulmonary stabilization",
-   "D. Only after complete resolution of pulmonary hypoplasia"
+   "Immediately after birth in all cases",
+   "Before obtaining a chest radiograph",
+   "After adequate cardiopulmonary stabilization",
+   "Only after complete resolution of pulmonary hypoplasia"
   ],
   "a": 2,
-  "ar": "لأن الجراحة تُجرى بعد استقرار القلب والرئة وليس فور الولادة.",
-  "en": "Because repair is performed after adequate cardiopulmonary stabilization."
+  "topic": "Congenital Diaphragmatic Hernia (CDH)",
+  "expAr": "لأن الجراحة تُجرى بعد استقرار القلب والرئة وليس فور الولادة.",
+  "expEn": "Because repair is performed after adequate cardiopulmonary stabilization."
  },
  {
-  "t": "Congenital Diaphragmatic Hernia (CDH)",
   "q": "Which factor is most important when selecting the surgical approach for CDH repair?",
   "o": [
-   "A. Patient's sex",
-   "B. Type and size of the defect and the infant's clinical condition",
-   "C. Mode of delivery",
-   "D. Birth weight alone"
+   "Patient's sex",
+   "Type and size of the defect and the infant's clinical condition",
+   "Mode of delivery",
+   "Birth weight alone"
   ],
   "a": 1,
-  "ar": "لأن اختيار الطريقة يعتمد على حجم ونوع العيب وحالة الطفل.",
-  "en": "Because approach depends on defect type/size and the infant's condition."
+  "topic": "Congenital Diaphragmatic Hernia (CDH)",
+  "expAr": "لأن اختيار الطريقة يعتمد على حجم ونوع العيب وحالة الطفل.",
+  "expEn": "Because approach depends on defect type/size and the infant’s condition."
  },
  {
-  "t": "Congenital Diaphragmatic Hernia (CDH)",
   "q": "What is the first major reconstructive step during surgical repair of CDH?",
   "o": [
-   "A. Resection of the affected lung",
-   "B. Reduction of herniated abdominal viscera into the abdominal cavity",
-   "C. Routine removal of the spleen",
-   "D. Division of the phrenic nerve"
+   "Resection of the affected lung",
+   "Reduction of herniated abdominal viscera into the abdominal cavity",
+   "Routine removal of the spleen",
+   "Division of the phrenic nerve"
   ],
   "a": 1,
-  "ar": "لأن الخطوة الأولى هي إعادة الأحشاء المفتقّة إلى البطن ثم إصلاح الحجاب.",
-  "en": "Because the first step is reducing herniated viscera into the abdomen before repair."
+  "topic": "Congenital Diaphragmatic Hernia (CDH)",
+  "expAr": "لأن الخطوة الأولى هي إعادة الأحشاء المفتقّة إلى البطن ثم إصلاح الحجاب.",
+  "expEn": "Because the first step is reducing herniated viscera into the abdomen before repair."
  },
  {
-  "t": "Congenital Diaphragmatic Hernia (CDH)",
   "q": "A term neonate with a prenatally diagnosed left congenital diaphragmatic hernia develops marked respiratory distress immediately after delivery. Which initial management strategy is most appropriate?",
   "o": [
-   "A. Begin vigorous bag-mask ventilation to recruit the compressed lung.",
-   "B. Intubate, insert an orogastric tube for continuous decompression, and use gentle ventilation.",
-   "C. Arrange immediate thoracoscopic repair before any cardiac assessment.",
-   "D. Initiate nasogastric feeding to prevent hypoglycemia."
+   "Begin vigorous bag-mask ventilation to recruit the compressed lung.",
+   "Intubate, insert an orogastric tube for continuous decompression, and use gentle ventilation.",
+   "Arrange immediate thoracoscopic repair before any cardiac assessment.",
+   "Initiate nasogastric feeding to prevent hypoglycemia."
   ],
   "a": 1,
-  "ar": "لأن التنبيب والتهوية اللطيفة وتفريغ المعدة هي الأولوية قبل الجراحة.",
-  "en": "Because intubation, gentle ventilation, and gastric decompression are initial priorities."
+  "topic": "Congenital Diaphragmatic Hernia (CDH)",
+  "expAr": "لأن التنبيب والتهوية اللطيفة وتفريغ المعدة هي الأولوية قبل الجراحة.",
+  "expEn": "Because intubation, gentle ventilation, and gastric decompression are initial priorities."
  },
  {
-  "t": "Congenital Diaphragmatic Hernia (CDH)",
   "q": "A neonate with severe CDH is ventilated with high peak pressures to normalize PaCO2. Oxygenation remains poor and the blood pressure falls. Which approach is most consistent with lung-protective management?",
   "o": [
-   "A. Increase airway pressure further until PaCO2 falls below 35 mmHg.",
-   "B. Accept carefully monitored permissive hypercapnia while limiting ventilator-induced lung injury.",
-   "C. Immediately extubate to nasal CPAP.",
-   "D. Discontinue evaluation of pulmonary hypertension until after repair."
+   "Increase airway pressure further until PaCO2 falls below 35 mmHg.",
+   "Accept carefully monitored permissive hypercapnia while limiting ventilator-induced lung injury.",
+   "Immediately extubate to nasal CPAP.",
+   "Discontinue evaluation of pulmonary hypertension until after repair."
   ],
   "a": 1,
-  "ar": "لأن الرئة ناقصة التنسج وتحتاج تهوية لطيفة مع قبول فرط ثاني أكسيد الكربون المسموح به.",
-  "en": "Because hypoplastic lungs need gentle ventilation with permissive hypercapnia."
+  "topic": "Congenital Diaphragmatic Hernia (CDH)",
+  "expAr": "لأن الرئة ناقصة التنسج وتحتاج تهوية لطيفة مع قبول فرط ثاني أكسيد الكربون المسموح به.",
+  "expEn": "Because hypoplastic lungs need gentle ventilation with permissive hypercapnia."
  },
  {
-  "t": "Congenital Diaphragmatic Hernia (CDH)",
   "q": "A newborn with left CDH has persistent pulmonary hypertension and unstable systemic perfusion 12 hours after birth. The bowel is visibly present in the thorax on radiography. What is the best justification for deferring the operation?",
   "o": [
-   "A. The diaphragmatic defect will usually close spontaneously.",
-   "B. Anesthesia and surgical stress during severe cardiopulmonary instability may worsen outcome; stabilize first.",
-   "C. Every CDH repair must be postponed until 30 days of age.",
-   "D. Surgery is unnecessary if an orogastric tube is in place."
+   "The diaphragmatic defect will usually close spontaneously.",
+   "Anesthesia and surgical stress during severe cardiopulmonary instability may worsen outcome; stabilize first.",
+   "Every CDH repair must be postponed until 30 days of age.",
+   "Surgery is unnecessary if an orogastric tube is in place."
   ],
   "a": 1,
-  "ar": "لأن الجراحة أثناء عدم الاستقرار القلبي الرئوي قد تزيد سوء الحالة، لذا يُستقر المريض أولًا.",
-  "en": "Because surgery during cardiopulmonary instability may worsen outcome; stabilize first."
+  "topic": "Congenital Diaphragmatic Hernia (CDH)",
+  "expAr": "لأن الجراحة أثناء عدم الاستقرار القلبي الرئوي قد تزيد سوء الحالة، لذا يُستقر المريض أولًا.",
+  "expEn": "Because surgery during cardiopulmonary instability may worsen outcome; stabilize first."
  },
  {
-  "t": "Intussusception",
   "q": "What is intussusception?",
   "o": [
-   "A. Inflammation of the stomach",
-   "B. A segment of bowel telescopes into a more distal bowel segment",
-   "C. Infection of the intestine",
-   "D. Congenital absence of bowel"
+   "Inflammation of the stomach",
+   "A segment of bowel telescopes into a more distal bowel segment",
+   "Infection of the intestine",
+   "Congenital absence of bowel"
   ],
   "a": 1,
-  "ar": "لأن الانغلاف هو تداخل جزء من الأمعاء داخل جزء أبعد منها.",
-  "en": "Because intussusception is bowel telescoping into a distal segment."
+  "topic": "Intussusception",
+  "expAr": "لأن الانغلاف هو تداخل جزء من الأمعاء داخل جزء أبعد منها.",
+  "expEn": "Because intussusception is bowel telescoping into a distal segment."
  },
  {
-  "t": "Intussusception",
   "q": "What is the most common type of intussusception?",
   "o": [
-   "A. Colo-colic",
-   "B. Ileo-ileal",
-   "C. Ileo-colic",
-   "D. Gastric"
+   "Colo-colic",
+   "Ileo-ileal",
+   "Ileo-colic",
+   "Gastric"
   ],
   "a": 2,
-  "ar": "لأن النوع الأكثر شيوعًا هو ileo-colic.",
-  "en": "Because ileo-colic is the most common type."
+  "topic": "Intussusception",
+  "expAr": "لأن النوع الأكثر شيوعًا هو ileo-colic.",
+  "expEn": "Because ileo-colic is the most common type."
  },
  {
-  "t": "Intussusception",
   "q": "Which of the following is a typical symptom of intussusception?",
   "o": [
-   "A. Currant jelly stool",
-   "B. Skin rash",
-   "C. Increased urination",
-   "D. Ear pain"
+   "Currant jelly stool",
+   "Skin rash",
+   "Increased urination",
+   "Ear pain"
   ],
   "a": 0,
-  "ar": "لأن براز currant jelly من العلامات المميزة للانغلاف.",
-  "en": "Because currant jelly stool is a typical sign of intussusception."
+  "topic": "Intussusception",
+  "expAr": "لأن براز currant jelly من العلامات المميزة للانغلاف.",
+  "expEn": "Because currant jelly stool is a typical sign of intussusception."
  },
  {
-  "t": "Intussusception",
   "q": "What is the preferred imaging test for diagnosing intussusception?",
   "o": [
-   "A. Abdominal ultrasound (Target sign)",
-   "B. Chest X-ray",
-   "C. MRI brain",
-   "D. ECG"
+   "Abdominal ultrasound (Target sign)",
+   "Chest X-ray",
+   "MRI brain",
+   "ECG"
   ],
   "a": 0,
-  "ar": "لأن السونار يُظهر علامة الهدف target sign وهو الفحص المفضل.",
-  "en": "Because ultrasound shows the target sign and is preferred."
+  "topic": "Intussusception",
+  "expAr": "لأن السونار يُظهر علامة الهدف target sign وهو الفحص المفضل.",
+  "expEn": "Because ultrasound shows the target sign and is preferred."
  },
  {
-  "t": "Intussusception",
   "q": "Which of the following is a nursing intervention for a child with intussusception?",
   "o": [
-   "A. Start oral feeding immediately",
-   "B. Maintain NPO status as ordered",
-   "C. Avoid monitoring vital signs",
-   "D. Encourage activity"
+   "Start oral feeding immediately",
+   "Maintain NPO status as ordered",
+   "Avoid monitoring vital signs",
+   "Encourage activity"
   ],
   "a": 1,
-  "ar": "لأن الطفل غالبًا يُمنع من الفم NPO حتى يتم التقييم والعلاج.",
-  "en": "Because the child is kept NPO as ordered until evaluation/treatment."
+  "topic": "Intussusception",
+  "expAr": "لأن الطفل غالبًا يُمنع من الفم NPO حتى يتم التقييم والعلاج.",
+  "expEn": "Because the child is kept NPO as ordered until evaluation/treatment."
  },
  {
-  "t": "Intussusception",
   "q": "What is the peak age of incidence of intussusception in children?",
   "o": [
-   "A. First month of life",
-   "B. 5-9 months",
-   "C. 4-6 years",
-   "D. 10-12 years"
+   "First month of life",
+   "5-9 months",
+   "4-6 years",
+   "10-12 years"
   ],
   "a": 1,
-  "ar": "لأن ذروة الحدوث بين 5 و9 أشهر.",
-  "en": "Because peak incidence is between 5 and 9 months."
+  "topic": "Intussusception",
+  "expAr": "لأن ذروة الحدوث بين 5 و9 أشهر.",
+  "expEn": "Because peak incidence is between 5 and 9 months."
  },
  {
-  "t": "Intussusception",
   "q": "Which of the following constitutes the classic triad of intussusception?",
   "o": [
-   "A. Fever, vomiting, and diarrhea",
-   "B. Abdominal distension, constipation, and fever",
-   "C. Bilious vomiting, jaundice, and abdominal tenderness",
-   "D. Intermittent abdominal pain, currant jelly stool, and palpable abdominal mass"
+   "Fever, vomiting, and diarrhea",
+   "Abdominal distension, constipation, and fever",
+   "Bilious vomiting, jaundice, and abdominal tenderness",
+   "Intermittent abdominal pain, currant jelly stool, and palpable abdominal mass"
   ],
   "a": 3,
-  "ar": "لأن الثلاثي الكلاسيكي هو ألم متقطع + براز currant jelly + كتلة بطنية.",
-  "en": "Because classic triad is intermittent pain, currant jelly stool, and palpable mass."
+  "topic": "Intussusception",
+  "expAr": "لأن الثلاثي الكلاسيكي هو ألم متقطع + براز currant jelly + كتلة بطنية.",
+  "expEn": "Because classic triad is intermittent pain, currant jelly stool, and palpable mass."
  },
  {
-  "t": "Intussusception",
   "q": "What is the characteristic ultrasonographic finding in intussusception?",
   "o": [
-   "A. Double bubble sign",
-   "B. Coffee bean sign",
-   "C. Target sign",
-   "D. String sign"
+   "Double bubble sign",
+   "Coffee bean sign",
+   "Target sign",
+   "String sign"
   ],
   "a": 2,
-  "ar": "لأن علامة الهدف target/doughnut sign هي المميزة في السونار.",
-  "en": "Because the target/doughnut sign is characteristic on ultrasound."
+  "topic": "Intussusception",
+  "expAr": "لأن علامة الهدف target/doughnut sign هي المميزة في السونار.",
+  "expEn": "Because the target/doughnut sign is characteristic on ultrasound."
  },
  {
-  "t": "Intussusception",
   "q": "Which of the following is a serious complication of untreated intussusception?",
   "o": [
-   "A. Intestinal ischemia and perforation",
-   "B. Hypertrophic pyloric stenosis",
-   "C. Acute appendiceal obstruction",
-   "D. Gastroesophageal reflux"
+   "Intestinal ischemia and perforation",
+   "Hypertrophic pyloric stenosis",
+   "Acute appendiceal obstruction",
+   "Gastroesophageal reflux"
   ],
   "a": 0,
-  "ar": "لأن الانغلاف غير المعالج قد يسبب نقص تروية الأمعاء وانثقابها.",
-  "en": "Because untreated intussusception can cause ischemia and perforation."
+  "topic": "Intussusception",
+  "expAr": "لأن الانغلاف غير المعالج قد يسبب نقص تروية الأمعاء وانثقابها.",
+  "expEn": "Because untreated intussusception can cause ischemia and perforation."
  },
  {
-  "t": "Intussusception",
   "q": "A 7-month-old infant presents with intermittent colicky abdominal pain and vomiting. Ultrasonography confirms ileo-colic intussusception. The infant is hemodynamically stable, with no evidence of perforation or peritonitis. What is the most appropriate initial definitive treatment?",
   "o": [
-   "A. Immediate bowel resection",
-   "B. Emergency laparotomy in all cases",
-   "C. Oral antibiotics and observation",
-   "D. Image-guided enema reduction"
+   "Immediate bowel resection",
+   "Emergency laparotomy in all cases",
+   "Oral antibiotics and observation",
+   "Image-guided enema reduction"
   ],
   "a": 3,
-  "ar": "لأن الطفل المستقر بدون انثقاب أو التهاب بريتوني يُعالج أولًا بردّ الانغلاف بالحقنة تحت التوجيه التصويري.",
-  "en": "Because a stable child without perforation/peritonitis is treated first by image-guided enema reduction."
+  "topic": "Intussusception",
+  "expAr": "لأن الطفل المستقر بدون انثقاب أو التهاب بريتوني يُعالج أولًا بردّ الانغلاف بالحقنة تحت التوجيه التصويري.",
+  "expEn": "Because a stable child without perforation/peritonitis is treated first by image-guided enema reduction."
  },
  {
-  "t": "Intussusception",
   "q": "Which of the following is an accepted method of non-surgical reduction of intussusception?",
   "o": [
-   "A. Endoscopic balloon dilatation",
-   "B. Pneumatic reduction under fluoroscopic guidance",
-   "C. Manual abdominal compression",
-   "D. Oral administration of contrast material"
+   "Endoscopic balloon dilatation",
+   "Pneumatic reduction under fluoroscopic guidance",
+   "Manual abdominal compression",
+   "Oral administration of contrast material"
   ],
   "a": 1,
-  "ar": "لأن الرد الهوائي pneumatic تحت الفلوروسكوبي طريقة معتمدة.",
-  "en": "Because pneumatic reduction under fluoroscopy is an accepted method."
+  "topic": "Intussusception",
+  "expAr": "لأن الرد الهوائي pneumatic تحت الفلوروسكوبي طريقة معتمدة.",
+  "expEn": "Because pneumatic reduction under fluoroscopy is an accepted method."
  },
  {
-  "t": "Intussusception",
   "q": "Following successful hydrostatic reduction of intussusception, which nursing intervention is most important?",
   "o": [
-   "A. Monitoring vital signs, abdominal tenderness, bowel sounds, and recurrence of symptoms",
-   "B. Immediately discontinuing all monitoring",
-   "C. Restricting fluids for 48 hours in every patient",
-   "D. Encouraging vigorous abdominal massage"
+   "Monitoring vital signs, abdominal tenderness, bowel sounds, and recurrence of symptoms",
+   "Immediately discontinuing all monitoring",
+   "Restricting fluids for 48 hours in every patient",
+   "Encouraging vigorous abdominal massage"
   ],
   "a": 0,
-  "ar": "لأن المراقبة تكشف التكرار أو المضاعفات بعد الرد.",
-  "en": "Because monitoring detects recurrence or complications after reduction."
+  "topic": "Intussusception",
+  "expAr": "لأن المراقبة تكشف التكرار أو المضاعفات بعد الرد.",
+  "expEn": "Because monitoring detects recurrence or complications after reduction."
  },
  {
-  "t": "Intussusception",
   "q": "An 8-month-old has 30 hours of intermittent abdominal pain and vomiting. Ultrasound confirms ileocolic intussusception. After IV resuscitation, the child is stable, has a soft abdomen, and shows no perforation or peritonitis. What is the best next step?",
   "o": [
-   "A. Proceed directly to laparotomy because the symptoms have lasted more than 24 hours.",
-   "B. Attempt image-guided pneumatic or hydrostatic enema reduction with surgical backup.",
-   "C. Give an oral laxative and observe without further intervention.",
-   "D. Perform routine CT before considering reduction."
+   "Proceed directly to laparotomy because the symptoms have lasted more than 24 hours.",
+   "Attempt image-guided pneumatic or hydrostatic enema reduction with surgical backup.",
+   "Give an oral laxative and observe without further intervention.",
+   "Perform routine CT before considering reduction."
   ],
   "a": 1,
-  "ar": "لأن مدة الأعراض أكثر من 24 ساعة ليست مانعًا مطلقًا إذا كان الطفل مستقرًا بدون انثقاب أو التهاب بريتوني.",
-  "en": "Because >24 hours is not an absolute contraindication if stable without perforation/peritonitis."
+  "topic": "Intussusception",
+  "expAr": "لأن مدة الأعراض أكثر من 24 ساعة ليست موانع مطلقة إذا كان الطفل مستقرًا بدون انثقاب أو التهاب بريتوني.",
+  "expEn": "Because >24 hours is not an absolute contraindication if stable without perforation/peritonitis."
  },
  {
-  "t": "Intussusception",
   "q": "A 9-month-old with ultrasound-confirmed ileocolic intussusception becomes hypotensive and develops generalized guarding. An upright radiograph shows free intraperitoneal gas. Which management is most appropriate?",
   "o": [
-   "A. Urgent resuscitation, antibiotics, and operative exploration.",
-   "B. Repeat pneumatic enema until the mass disappears.",
-   "C. Delay intervention for a contrast-enhanced CT.",
-   "D. Discharge after an oral fluid challenge."
+   "Urgent resuscitation, antibiotics, and operative exploration.",
+   "Repeat pneumatic enema until the mass disappears.",
+   "Delay intervention for a contrast-enhanced CT.",
+   "Discharge after an oral fluid challenge."
   ],
   "a": 0,
-  "ar": "لأن الصدمة والتهاب البريتون وانثقاب الأمعاء يمنعون الحقنة ويستلزمون إنعاشًا واستكشافًا جراحيًا عاجلًا.",
-  "en": "Because shock, peritonitis, and pneumoperitoneum require resuscitation and urgent surgery."
+  "topic": "Intussusception",
+  "expAr": "لأن الصدمة والتهاب البريتون وانثقاب الأمعاء يمنعون الحقنة ويستلزمون إنعاشًا واستكشافًا جراحيًا عاجلًا.",
+  "expEn": "Because shock, peritonitis, and pneumoperitoneum require resuscitation and urgent surgery."
  },
  {
-  "t": "Esophageal Atresia with TEF",
   "q": "Which of the following is a common presentation of TEF?",
   "o": [
-   "A. Constipation",
-   "B. Choking and drooling",
-   "C. Leg swelling",
-   "D. Headache"
+   "Constipation",
+   "Choking and drooling",
+   "Leg swelling",
+   "Headache"
   ],
   "a": 1,
-  "ar": "لأن الشرقة وسيلان اللعاب من الأعراض الشائعة بسبب الناسور الرغامي المريئي.",
-  "en": "Because choking and drooling are common due to the tracheoesophageal fistula."
+  "topic": "Esophageal Atresia with TEF",
+  "expAr": "لأن الشرقة وسيلان اللعاب من الأعراض الشائعة بسبب الناسور الرغامي المريئي.",
+  "expEn": "Because choking and drooling are common due to the tracheoesophageal fistula."
  },
  {
-  "t": "Esophageal Atresia with TEF",
   "q": "Which investigation can help confirm the diagnosis of TEF?",
   "o": [
-   "A. ECG",
-   "B. CXR with NG tube",
-   "C. Urine analysis",
-   "D. CT brain"
+   "ECG",
+   "CXR with NG tube",
+   "Urine analysis",
+   "CT brain"
   ],
   "a": 1,
-  "ar": "لأن أشعة الصدر مع أنبوب أنفي معدي تُظهر التفاف الأنبوب في الجيب المريئي العلوي.",
-  "en": "Because CXR with an NG tube shows coiling in the upper esophageal pouch."
+  "topic": "Esophageal Atresia with TEF",
+  "expAr": "لأن أشعة الصدر مع أنبوب أنفي معدي تُظهر التفاف الأنبوب في الجيب المريئي العلوي.",
+  "expEn": "Because CXR with an NG tube shows coiling in the upper esophageal pouch."
  },
  {
-  "t": "Esophageal Atresia with TEF",
   "q": "Before surgery, oral feeding in a baby with TEF should be:",
   "o": [
-   "A. Increased",
-   "B. Continued normally",
-   "C. Stopped",
-   "D. Given every hour"
+   "Increased",
+   "Continued normally",
+   "Stopped",
+   "Given every hour"
   ],
   "a": 2,
-  "ar": "لأن إيقاف التغذية الفموية يمنع الشفط والاختناق قبل الجراحة.",
-  "en": "Because oral feeding is stopped to prevent aspiration before surgery."
+  "topic": "Esophageal Atresia with TEF",
+  "expAr": "لأن إيقاف التغذية الفموية يمنع الشفط والاختناق قبل الجراحة.",
+  "expEn": "Because oral feeding is stopped to prevent aspiration before surgery."
  },
  {
-  "t": "Esophageal Atresia with TEF",
   "q": "Which congenital abnormality is commonly associated with TEF?",
   "o": [
-   "A. Cardiac defects",
-   "B. Cataract",
-   "C. Clubfoot only",
-   "D. Appendicitis"
+   "Cardiac defects",
+   "Cataract",
+   "Clubfoot only",
+   "Appendicitis"
   ],
   "a": 0,
-  "ar": "لأن العيوب القلبية من أكثر العيوب المصاحبة لـ TEF.",
-  "en": "Because cardiac defects are commonly associated with TEF."
+  "topic": "Esophageal Atresia with TEF",
+  "expAr": "لأن العيوب القلبية من أكثر العيوب المصاحبة لـ TEF.",
+  "expEn": "Because cardiac defects are commonly associated with TEF."
  },
  {
-  "t": "Esophageal Atresia with TEF",
   "q": "Surgical treatment of TEF includes:",
   "o": [
-   "A. Removal of the stomach",
-   "B. Ligation of the fistula",
-   "C. Removal of the trachea",
-   "D. Tonsillectomy"
+   "Removal of the stomach",
+   "Ligation of the fistula",
+   "Removal of the trachea",
+   "Tonsillectomy"
   ],
   "a": 1,
-  "ar": "لأن العلاج الجراحي يشمل ربط الناسور ثم إصلاح المريء.",
-  "en": "Because surgery includes ligation of the fistula and esophageal repair."
+  "topic": "Esophageal Atresia with TEF",
+  "expAr": "لأن العلاج الجراحي يشمل ربط الناسور ثم إصلاح المريء.",
+  "expEn": "Because surgery includes ligation of the fistula and esophageal repair."
  },
  {
-  "t": "Esophageal Atresia with TEF",
   "q": "What is the definition of esophageal atresia (EA)?",
   "o": [
-   "A. Congenital narrowing of the esophagus",
-   "B. Interruption in the continuity of the esophagus, with or without a tracheoesophageal fistula",
-   "C. Abnormal dilatation of the esophagus",
-   "D. Congenital obstruction of the stomach"
+   "Congenital narrowing of the esophagus",
+   "Interruption in the continuity of the esophagus, with or without a tracheoesophageal fistula",
+   "Abnormal dilatation of the esophagus",
+   "Congenital obstruction of the stomach"
   ],
   "a": 1,
-  "ar": "لأن رتق المريء هو انقطاع في استمرارية المريء مع أو بدون ناسور رغامي مريئي.",
-  "en": "Because EA is interruption of esophageal continuity, with or without TEF."
+  "topic": "Esophageal Atresia with TEF",
+  "expAr": "لأن رتق المريء هو انقطاع في استمرارية المريء مع أو بدون ناسور رغامي مريئي.",
+  "expEn": "Because EA is interruption of esophageal continuity, with or without TEF."
  },
  {
-  "t": "Esophageal Atresia with TEF",
   "q": "Which is the most common anatomical type of esophageal atresia?",
   "o": [
-   "A. Pure esophageal atresia without fistula",
-   "B. Esophageal atresia with proximal tracheoesophageal fistula",
-   "C. Esophageal atresia with distal tracheoesophageal fistula",
-   "D. Isolated H-type tracheoesophageal fistula"
+   "Pure esophageal atresia without fistula",
+   "Esophageal atresia with proximal tracheoesophageal fistula",
+   "Esophageal atresia with distal tracheoesophageal fistula",
+   "Isolated H-type tracheoesophageal fistula"
   ],
   "a": 2,
-  "ar": "لأن النوع الأكثر شيوعًا هو رتق المريء مع ناسور distal TEF.",
-  "en": "Because EA with distal TEF is the most common type."
+  "topic": "Esophageal Atresia with TEF",
+  "expAr": "لأن النوع الأكثر شيوعًا هو رتق المريء مع ناسور distal TEF.",
+  "expEn": "Because EA with distal TEF is the most common type."
  },
  {
-  "t": "Esophageal Atresia with TEF",
   "q": "Which antenatal finding is commonly associated with esophageal atresia?",
   "o": [
-   "A. Oligohydramnios",
-   "B. Polyhydramnios",
-   "C. Fetal ascites",
-   "D. Placental calcification"
+   "Oligohydramnios",
+   "Polyhydramnios",
+   "Fetal ascites",
+   "Placental calcification"
   ],
   "a": 1,
-  "ar": "لأن الجنين لا يبلع السائل الأمنيوسي طبيعيًا فيحدث polyhydramnios.",
-  "en": "Because the fetus cannot swallow amniotic fluid normally, causing polyhydramnios."
+  "topic": "Esophageal Atresia with TEF",
+  "expAr": "لأن الجنين لا يبلع السائل الأمنيوسي طبيعيًا فيحدث polyhydramnios.",
+  "expEn": "Because the fetus cannot swallow amniotic fluid normally, causing polyhydramnios."
  },
  {
-  "t": "Esophageal Atresia with TEF",
   "q": "A newborn presents with excessive salivation, choking, coughing, and cyanotic attacks during attempted feeding. What is the most likely diagnosis?",
   "o": [
-   "A. Hypertrophic pyloric stenosis",
-   "B. Congenital diaphragmatic hernia",
-   "C. Esophageal atresia with or without tracheoesophageal fistula",
-   "D. Duodenal atresia"
+   "Hypertrophic pyloric stenosis",
+   "Congenital diaphragmatic hernia",
+   "Esophageal atresia with or without tracheoesophageal fistula",
+   "Duodenal atresia"
   ],
   "a": 2,
-  "ar": "لأن سيلان اللعاب والشرقة والسعال والزرقة أثناء التغذية مميزة لرتق المريء.",
-  "en": "Because drooling, choking, coughing, and cyanosis during feeding suggest EA."
+  "topic": "Esophageal Atresia with TEF",
+  "expAr": "لأن سيلان اللعاب والشرقة والسعال والزرقة أثناء التغذية مميزة لرتق المريء.",
+  "expEn": "Because drooling, choking, coughing, and cyanosis during feeding suggest EA."
  },
  {
-  "t": "Esophageal Atresia with TEF",
   "q": "Which radiological finding is most characteristic of esophageal atresia?",
   "o": [
-   "A. Double bubble sign",
-   "B. Coiling of a nasogastric tube in the upper esophageal pouch",
-   "C. Multiple air-fluid levels throughout the abdomen",
-   "D. Free air under the diaphragm"
+   "Double bubble sign",
+   "Coiling of a nasogastric tube in the upper esophageal pouch",
+   "Multiple air-fluid levels throughout the abdomen",
+   "Free air under the diaphragm"
   ],
   "a": 1,
-  "ar": "لأن التفاف الأنبوب الأنفي المعدي في الجيب العلوي علامة مميزة.",
-  "en": "Because coiling of the NG tube in the upper pouch is characteristic."
+  "topic": "Esophageal Atresia with TEF",
+  "expAr": "لأن التفاف الأنبوب الأنفي المعدي في الجيب العلوي علامة مميزة.",
+  "expEn": "Because coiling of the NG tube in the upper pouch is characteristic."
  },
  {
-  "t": "Esophageal Atresia with TEF",
   "q": "Which of the following is the most common category of associated congenital anomalies in patients with esophageal atresia?",
   "o": [
-   "A. Cardiac anomalies",
-   "B. Craniofacial anomalies",
-   "C. Pulmonary malformations",
-   "D. Central nervous system anomalies"
+   "Cardiac anomalies",
+   "Craniofacial anomalies",
+   "Pulmonary malformations",
+   "Central nervous system anomalies"
   ],
   "a": 0,
-  "ar": "لأن العيوب القلبية هي أكثر العيوب المصاحبة شيوعًا.",
-  "en": "Because cardiac anomalies are the most common associated anomalies."
+  "topic": "Esophageal Atresia with TEF",
+  "expAr": "لأن العيوب القلبية هي أكثر العيوب المصاحبة شيوعًا.",
+  "expEn": "Because cardiac anomalies are the most common associated anomalies."
  },
  {
-  "t": "Esophageal Atresia with TEF",
   "q": "Which of the following is the most appropriate preoperative management for a newborn diagnosed with esophageal atresia?",
   "o": [
-   "A. Immediate oral feeding",
-   "B. Continuous suction of the upper esophageal pouch and withholding oral feeding",
-   "C. Repeated forceful attempts to advance a nasogastric tube",
-   "D. Routine administration of oral contrast"
+   "Immediate oral feeding",
+   "Continuous suction of the upper esophageal pouch and withholding oral feeding",
+   "Repeated forceful attempts to advance a nasogastric tube",
+   "Routine administration of oral contrast"
   ],
   "a": 1,
-  "ar": "لأن الشفط المستمر وإيقاف التغذية الفموية يمنعان الشفط الرئوي.",
-  "en": "Because continuous suction and NPO prevent aspiration."
+  "topic": "Esophageal Atresia with TEF",
+  "expAr": "لأن الشفط المستمر وإيقاف التغذية الفموية يمنعان الشفط الرئوي.",
+  "expEn": "Because continuous suction and NPO prevent aspiration."
  },
  {
-  "t": "Esophageal Atresia with TEF",
   "q": "Which investigation is particularly important before surgical repair of esophageal atresia to identify associated cardiac anomalies?",
   "o": [
-   "A. Electrocardiography alone",
-   "B. Echocardiography",
-   "C. Upper gastrointestinal endoscopy",
-   "D. Barium swallow"
+   "Electrocardiography alone",
+   "Echocardiography",
+   "Upper gastrointestinal endoscopy",
+   "Barium swallow"
   ],
   "a": 1,
-  "ar": "لأن الإيكو يكشف العيوب القلبية ويقيّم قوس الأبهر قبل الجراحة.",
-  "en": "Because echocardiography detects cardiac defects and assesses the aortic arch."
+  "topic": "Esophageal Atresia with TEF",
+  "expAr": "لأن الإيكو يكشف العيوب القلبية ويقيّم قوس الأبهر قبل الجراحة.",
+  "expEn": "Because echocardiography detects cardiac defects and assesses the aortic arch."
  },
  {
-  "t": "Esophageal Atresia with TEF",
   "q": "What is the standard surgical treatment for esophageal atresia with distal tracheoesophageal fistula when primary repair is feasible?",
   "o": [
-   "A. Gastrostomy alone",
-   "B. Esophageal resection without reconstruction",
-   "C. Ligation of the tracheoesophageal fistula followed by end-to-end esophageal anastomosis",
-   "D. Esophageal dilatation alone"
+   "Gastrostomy alone",
+   "Esophageal resection without reconstruction",
+   "Ligation of the tracheoesophageal fistula followed by end-to-end esophageal anastomosis",
+   "Esophageal dilatation alone"
   ],
   "a": 2,
-  "ar": "لأن العلاج يشمل ربط الناسور ثم مفاغرة المريء طرفًا بطرف.",
-  "en": "Because treatment is fistula ligation followed by end-to-end esophageal anastomosis."
+  "topic": "Esophageal Atresia with TEF",
+  "expAr": "لأن العلاج يشمل ربط الناسور ثم مفاغرة المريء طرفًا بطرف.",
+  "expEn": "Because treatment is fistula ligation followed by end-to-end esophageal anastomosis."
  },
  {
-  "t": "Esophageal Atresia with TEF",
   "q": "A newborn undergoes successful repair of esophageal atresia with primary esophageal anastomosis. On the third postoperative day, the transanastomotic nasogastric tube becomes accidentally dislodged. What is the most appropriate action?",
   "o": [
-   "A. Immediately reinsert the tube blindly at the bedside",
-   "B. Start oral feeding immediately",
-   "C. Avoid blind reinsertion and inform the surgical team",
-   "D. Perform vigorous nasopharyngeal suctioning"
+   "Immediately reinsert the tube blindly at the bedside",
+   "Start oral feeding immediately",
+   "Avoid blind reinsertion and inform the surgical team",
+   "Perform vigorous nasopharyngeal suctioning"
   ],
   "a": 2,
-  "ar": "لأن إعادة الإدخال الأعمى قد تؤذي المفاغرة، فيجب إبلاغ الفريق الجراحي.",
-  "en": "Because blind reinsertion may damage the anastomosis; inform the surgical team."
+  "topic": "Esophageal Atresia with TEF",
+  "expAr": "لأن إعادة الإدخال الأعمى قد تؤذي المفاغرة، فيجب إبلاغ الفريق الجراحي.",
+  "expEn": "Because blind reinsertion may damage the anastomosis; inform the surgical team."
  },
  {
-  "t": "Esophageal Atresia with TEF",
   "q": "On postoperative day 2 after primary EA/TEF repair, the transanastomotic nasogastric tube is accidentally removed. The baby is stable. What is the safest next action?",
   "o": [
-   "A. Blindly advance a new tube until gastric aspirate appears.",
-   "B. Ask the bedside nurse to reinsert it several times.",
-   "C. Do not replace it blindly; urgently inform the operating surgical team.",
-   "D. Start unrestricted oral feeding to prevent tube displacement."
+   "Blindly advance a new tube until gastric aspirate appears.",
+   "Ask the bedside nurse to reinsert it several times.",
+   "Do not replace it blindly; urgently inform the operating surgical team.",
+   "Start unrestricted oral feeding to prevent tube displacement."
   ],
   "a": 2,
-  "ar": "لأن الإدخال الأعمى قد يجرح المفاغرة الحديثة، لذا لا يُعاد إلا بتوجيه الجراح.",
-  "en": "Because blind reinsertion may injure the fresh anastomosis; replace only under surgical guidance."
+  "topic": "Esophageal Atresia with TEF",
+  "expAr": "لأن الإدخال الأعمى قد يجرح المفاغرة الحديثة، لذا لا يُعاد إلا بتوجيه الجراح.",
+  "expEn": "Because blind reinsertion may injure the fresh anastomosis; replace only under surgical guidance."
  },
  {
-  "t": "Esophageal Atresia with TEF",
   "q": "On postoperative day 6 after EA/TEF repair, an infant develops increased respiratory distress and new saliva-like fluid draining from the chest tube. Which complication should be suspected first?",
   "o": [
-   "A. Anastomotic leak.",
-   "B. Physiological postoperative reflux without complication.",
-   "C. Cryptorchidism.",
-   "D. Intestinal intussusception."
+   "Anastomotic leak.",
+   "Physiological postoperative reflux without complication.",
+   "Cryptorchidism.",
+   "Intestinal intussusception."
   ],
   "a": 0,
-  "ar": "لأن سائل يشبه اللعاب من أنبوب الصدر مع تدهور تنفسي يوحي بتسرب المفاغرة.",
-  "en": "Because saliva-like chest drainage with respiratory deterioration suggests anastomotic leak."
+  "topic": "Esophageal Atresia with TEF",
+  "expAr": "لأن سائل يشبه اللعاب من أنبوب الصدر مع تدهور تنفسي يوحي بتسرب المفاغرة.",
+  "expEn": "Because saliva-like chest drainage with respiratory deterioration suggests anastomotic leak."
  },
  {
-  "t": "Undescended Testis (UDT)",
   "q": "Undescended testis means that the testicle has not moved into the:",
   "o": [
-   "A. Abdomen",
-   "B. Bladder",
-   "C. Scrotum",
-   "D. Kidney"
+   "Abdomen",
+   "Bladder",
+   "Scrotum",
+   "Kidney"
   ],
   "a": 2,
-  "ar": "لأن الخصية لم تصل إلى موضعها الطبيعي داخل كيس الصفن.",
-  "en": "Because the testis has not reached its normal position in the scrotum."
+  "topic": "Undescended Testis (UDT)",
+  "expAr": "لأن الخصية لم تصل إلى موضعها الطبيعي داخل كيس الصفن.",
+  "expEn": "Because the testis has not reached its normal position in the scrotum."
  },
  {
-  "t": "Undescended Testis (UDT)",
   "q": "Undescended testis is more common in:",
   "o": [
-   "A. Premature babies",
-   "B. Elderly men",
-   "C. Adult women",
-   "D. School teachers"
+   "Premature babies",
+   "Elderly men",
+   "Adult women",
+   "School teachers"
   ],
   "a": 0,
-  "ar": "لأن الخصية غير النازلة أكثر شيوعًا في الأطفال المبتسرين.",
-  "en": "Because UDT is more common in premature infants."
+  "topic": "Undescended Testis (UDT)",
+  "expAr": "لأن الخصية غير النازلة أكثر شيوعًا في الأطفال المبتسرين.",
+  "expEn": "Because UDT is more common in premature infants."
  },
  {
-  "t": "Undescended Testis (UDT)",
   "q": "Spontaneous testicular descent may occur until approximately:",
   "o": [
-   "A. 1 month",
-   "B. 3 months",
-   "C. 6 months",
-   "D. 5 years"
+   "1 month",
+   "3 months",
+   "6 months",
+   "5 years"
   ],
   "a": 2,
-  "ar": "لأن النزول التلقائي قد يحدث حتى حوالي 6 أشهر.",
-  "en": "Because spontaneous descent may occur until about 6 months."
+  "topic": "Undescended Testis (UDT)",
+  "expAr": "لأن النزول التلقائي قد يحدث حتى حوالي 6 أشهر.",
+  "expEn": "Because spontaneous descent may occur until about 6 months."
  },
  {
-  "t": "Undescended Testis (UDT)",
   "q": "The most important step in diagnosing UDT is:",
   "o": [
-   "A. Physical examination",
-   "B. Chest X-ray",
-   "C. ECG",
-   "D. Urine culture"
+   "Physical examination",
+   "Chest X-ray",
+   "ECG",
+   "Urine culture"
   ],
   "a": 0,
-  "ar": "لأن الفحص السريري هو الأساس في تشخيص الخصية غير النازلة.",
-  "en": "Because physical examination is the main diagnostic step."
+  "topic": "Undescended Testis (UDT)",
+  "expAr": "لأن الفحص السريري هو الأساس في تشخيص الخصية غير النازلة.",
+  "expEn": "Because physical examination is the main diagnostic step."
  },
  {
-  "t": "Undescended Testis (UDT)",
   "q": "The surgical procedure used to bring an undescended testis into the scrotum is called:",
   "o": [
-   "A. Appendectomy",
-   "B. Orchiopexy",
-   "C. Nephrectomy",
-   "D. Colostomy"
+   "Appendectomy",
+   "Orchiopexy",
+   "Nephrectomy",
+   "Colostomy"
   ],
   "a": 1,
-  "ar": "لأن orchiopexy هو تثبيت الخصية داخل كيس الصفن.",
-  "en": "Because orchiopexy fixes the testis into the scrotum."
+  "topic": "Undescended Testis (UDT)",
+  "expAr": "لأن orchiopexy هو تثبيت الخصية داخل كيس الصفن.",
+  "expEn": "Because orchiopexy fixes the testis into the scrotum."
  },
  {
-  "t": "Undescended Testis (UDT)",
   "q": "What is the definition of an undescended testis (cryptorchidism)?",
   "o": [
-   "A. Absence of testicular tissue",
-   "B. A testis that is not located in its normal position within the scrotum",
-   "C. Abnormal enlargement of the testis",
-   "D. Twisting of the spermatic cord"
+   "Absence of testicular tissue",
+   "A testis that is not located in its normal position within the scrotum",
+   "Abnormal enlargement of the testis",
+   "Twisting of the spermatic cord"
   ],
   "a": 1,
-  "ar": "لأن cryptorchidism يعني خصية لم تصل لموضعها الطبيعي في الصفن.",
-  "en": "Because cryptorchidism is a testis not located normally in the scrotum."
+  "topic": "Undescended Testis (UDT)",
+  "expAr": "لأن cryptorchidism يعني خصية لم تصل لموضعها الطبيعي في الصفن.",
+  "expEn": "Because cryptorchidism is a testis not located normally in the scrotum."
  },
  {
-  "t": "Undescended Testis (UDT)",
   "q": "What is the approximate incidence of undescended testis in full-term newborns?",
   "o": [
-   "A. Less than 0.1%",
-   "B. 1%",
-   "C. 4-5%",
-   "D. 20-25%"
+   "Less than 0.1%",
+   "1%",
+   "4-5%",
+   "20-25%"
   ],
   "a": 2,
-  "ar": "لأن نسبة الحدوث في الأطفال مكتملي الحمل حوالي 4–5%.",
-  "en": "Because incidence in full-term newborns is about 4–5%."
+  "topic": "Undescended Testis (UDT)",
+  expAr": "لأن نسبة الحدوث في الأطفال مكتملي الحمل حوالي 4–5%.",
+  "expEn": "Because incidence in full-term newborns is about 4–5%."
  },
  {
-  "t": "Undescended Testis (UDT)",
   "q": "Which of the following is classified as a truly ectopic testis?",
   "o": [
-   "A. Intra-abdominal testis",
-   "B. Canalicular testis",
-   "C. Prescrotal testis",
-   "D. Perineal testis"
+   "Intra-abdominal testis",
+   "Canalicular testis",
+   "Prescrotal testis",
+   "Perineal testis"
   ],
   "a": 3,
-  "ar": "لأن الخصية العجانية perineal تخرج عن مسار النزول الطبيعي.",
-  "en": "Because a perineal testis deviates from the normal descent pathway."
+  "topic": "Undescended Testis (UDT)",
+  "expAr": "لأن الخصية العجانية perineal تخرج عن مسار النزول الطبيعي.",
+  "expEn": "Because a perineal testis deviates from the normal descent pathway."
  },
  {
-  "t": "Undescended Testis (UDT)",
   "q": "What is the most common clinical presentation of undescended testis?",
   "o": [
-   "A. Painful scrotal swelling",
-   "B. Empty scrotum, sometimes associated with an inguinal mass",
-   "C. Hematuria",
-   "D. Bilateral hydrocele in every patient"
+   "Painful scrotal swelling",
+   "Empty scrotum, sometimes associated with an inguinal mass",
+   "Hematuria",
+   "Bilateral hydrocele in every patient"
   ],
   "a": 1,
-  "ar": "لأن كيس الصفن الفارغ مع كتلة إربية أحيانًا هو العرض الشائع.",
-  "en": "Because an empty scrotum with possible inguinal mass is typical."
+  "topic": "Undescended Testis (UDT)",
+  "expAr": "لأن كيس الصفن الفارغ مع كتلة إربية أحيانًا هو العرض الشائع.",
+  "expEn": "Because an empty scrotum with possible inguinal mass is typical."
  },
  {
-  "t": "Undescended Testis (UDT)",
   "q": "Which of the following is an important long-term complication of undescended testis?",
   "o": [
-   "A. Increased fertility",
-   "B. Reduced risk of testicular malignancy",
-   "C. Subfertility and increased risk of testicular malignancy",
-   "D. Congenital renal failure in all patients"
+   "Increased fertility",
+   "Reduced risk of testicular malignancy",
+   "Subfertility and increased risk of testicular malignancy",
+   "Congenital renal failure in all patients"
   ],
   "a": 2,
-  "ar": "لأن الخصية غير النازلة تزيد خطر العقم النسبي وسرطان الخصية.",
-  "en": "Because UDT increases subfertility and testicular malignancy risk."
+  "topic": "Undescended Testis (UDT)",
+  "expAr": "لأن الخصية غير النازلة تزيد خطر العقم النسبي وسرطان الخصية.",
+  "expEn": "Because UDT increases subfertility and testicular malignancy risk."
  },
  {
-  "t": "Undescended Testis (UDT)",
   "q": "Why can undescended testis lead to impaired fertility?",
   "o": [
-   "A. The scrotal temperature is too low",
-   "B. Prolonged exposure to higher temperatures impairs testicular development",
-   "C. The testis produces excessive testosterone",
-   "D. The spermatic cord becomes permanently elongated in every case"
+   "The scrotal temperature is too low",
+   "Prolonged exposure to higher temperatures impairs testicular development",
+   "The testis produces excessive testosterone",
+   "The spermatic cord becomes permanently elongated in every case"
   ],
   "a": 1,
-  "ar": "لأن الحرارة الأعلى في البطن/القناة الإربية تضر بتطور الخصية وتكوين الحيوانات المنوية.",
-  "en": "Because higher temperature impairs testicular development and spermatogenesis."
+  "topic": "Undescended Testis (UDT)",
+  "expAr": "لأن الحرارة الأعلى في البطن/القناة الإربية تضر بتطور الخصية وتكوين الحيوانات المنوية.",
+  "expEn": "Because higher temperature impairs testicular development and spermatogenesis."
  },
  {
-  "t": "Undescended Testis (UDT)",
   "q": "At what age is spontaneous testicular descent unlikely, making surgical management appropriate if the testis remains undescended?",
   "o": [
-   "A. At birth",
-   "B. At 2 months",
-   "C. At 6 months of corrected age",
-   "D. At 5 years"
+   "At birth",
+   "At 2 months",
+   "At 6 months of corrected age",
+   "At 5 years"
   ],
   "a": 2,
-  "ar": "لأن النزول التلقائي بعد 6 أشهر من العمر المصحح غير محتمل.",
-  "en": "Because spontaneous descent is unlikely after 6 months corrected age."
+  "topic": "Undescended Testis (UDT)",
+  "expAr": "لأن النزول التلقائي بعد 6 أشهر من العمر المصحح غير محتمل.",
+  "expEn": "Because spontaneous descent is unlikely after 6 months corrected age."
  },
  {
-  "t": "Undescended Testis (UDT)",
   "q": "Which statement regarding hormonal treatment for undescended testis is correct?",
   "o": [
-   "A. It is universally successful and replaces surgery",
-   "B. It is mandatory in every patient before orchiopexy",
-   "C. Its effectiveness is controversial, and surgery remains the standard treatment",
-   "D. It is effective only for intra-abdominal testes"
+   "It is universally successful and replaces surgery",
+   "It is mandatory in every patient before orchiopexy",
+   "Its effectiveness is controversial, and surgery remains the standard treatment",
+   "It is effective only for intra-abdominal testes"
   ],
   "a": 2,
-  "ar": "لأن فاعلية العلاج الهرموني محدودة وغير مثبتة، والجراحة هي العلاج القياسي.",
-  "en": "Because hormonal therapy has limited/controversial efficacy; surgery is standard."
+  "topic": "Undescended Testis (UDT)",
+  "expAr": "لأن فاعلية العلاج الهرموني محدودة وغير مثبتة، والجراحة هي العلاج القياسي.",
+  "expEn": "Because hormonal therapy has limited/controversial efficacy; surgery is standard."
  },
  {
-  "t": "Undescended Testis (UDT)",
   "q": "What is the usual surgical approach for a palpable undescended testis located in the inguinal canal?",
   "o": [
-   "A. Laparoscopy in every case",
-   "B. Open inguinal approach, often with a scrotal incision",
-   "C. Thoracotomy",
-   "D. Nephrectomy"
+   "Laparoscopy in every case",
+   "Open inguinal approach, often with a scrotal incision",
+   "Thoracotomy",
+   "Nephrectomy"
   ],
   "a": 1,
-  "ar": "لأن الخصية الملموسة في القناة الإربية تُعالج عادةً بجراحة إربية مفتوحة.",
-  "en": "Because a palpable inguinal testis is usually managed by open inguinal approach."
+  "topic": "Undescended Testis (UDT)",
+  "expAr": "لأن الخصية الملموسة في القناة الإربية تُعالج عادةً بجراحة إربية مفتوحة.",
+  "expEn": "Because a palpable inguinal testis is usually managed by open inguinal approach."
  },
  {
-  "t": "Undescended Testis (UDT)",
   "q": "A 10-month-old boy has an empty right hemiscrotum, and the right testis cannot be palpated during examination. Which approach is particularly useful for locating and managing a nonpalpable testis?",
   "o": [
-   "A. Colonoscopy",
-   "B. Diagnostic laparoscopy",
-   "C. Cystoscopy",
-   "D. Routine chest radiography"
+   "Colonoscopy",
+   "Diagnostic laparoscopy",
+   "Cystoscopy",
+   "Routine chest radiography"
   ],
   "a": 1,
-  "ar": "لأن المنظار البطني التشخيصي يساعد في تحديد الخصية غير الملموسة وإدارتها.",
-  "en": "Because diagnostic laparoscopy helps locate and manage a nonpalpable testis."
+  "topic": "Undescended Testis (UDT)",
+  "expAr": "لأن المنظار البطني التشخيصي يساعد في تحديد الخصية غير الملموسة وإدارتها.",
+  "expEn": "Because diagnostic laparoscopy helps locate and manage a nonpalpable testis."
  },
  {
-  "t": "Undescended Testis (UDT)",
   "q": "During examination, a 4-year-old boy's testis can be manipulated into the dependent scrotum and remains there without tension after the cremasteric reflex is fatigued. The testis is normal in size. What is the most appropriate management?",
   "o": [
-   "A. Immediate inguinal orchiopexy.",
-   "B. Routine annual examination to detect possible secondary ascent.",
-   "C. Hormonal therapy to secure descent.",
-   "D. Diagnostic laparoscopy."
+   "Immediate inguinal orchiopexy.",
+   "Routine annual examination to detect possible secondary ascent.",
+   "Hormonal therapy to secure descent.",
+   "Diagnostic laparoscopy."
   ],
   "a": 1,
-  "ar": "لأن هذه خصية مرتدة retractile وليست غير نازلة ثابتة، فلا تحتاج جراحة فورية لكن تحتاج متابعة.",
-  "en": "Because this is a retractile testis, not a fixed UDT; surgery is not indicated, but follow-up is needed."
+  "topic": "Undescended Testis (UDT)",
+  "expAr": "لأن هذه خصية مرتدة retractile وليست غير نازلة ثابتة، فلا تحتاج جراحة فورية لكن تحتاج متابعة.",
+  "expEn": "Because this is a retractile testis, not a fixed UDT; surgery is not indicated, but follow-up is needed."
  }
 ];
 
-let i=0,score=0;
-const answers=new Array(quiz.length).fill(null);
+let quiz = []; 
+let answers = []; 
+let i=0, score=0;
+let currentMode = 'study'; 
+let timerInterval;
+let isReviewMode = false;
+
+let soundEnabled = true;
+let vibrationEnabled = true;
+let autoAdvanceTimeout;
+let audioCtx = null; 
+
 const qDiv=document.getElementById("question"),
       oDiv=document.getElementById("options"),
       progress=document.getElementById("progressBar"),
@@ -1184,85 +1404,527 @@ const qDiv=document.getElementById("question"),
       quizContainer=document.getElementById("quizContainer"),
       startCard=document.getElementById("startCard"),
       resultCard=document.getElementById("resultCard"),
-      scoreText=document.getElementById("scoreText"),
-      topicEl=document.getElementById("topic"),
-      expl=document.getElementById("expl"),
-      explAr=document.getElementById("explAr"),
-      explEn=document.getElementById("explEn");
+      scoreText=document.getElementById("scoreText");
 
-quiz.forEach((_,idx)=>{
-  const b=document.createElement("button");
-  b.textContent=idx+1;
-  b.className="q-btn";
-  b.onclick=()=>{i=idx;load()};
-  midNav.appendChild(b);
-});
+function playAudioTone(type) {
+    if(!soundEnabled) return; 
+    try {
+        if (!audioCtx) {
+            audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        }
+        if (audioCtx.state === 'suspended') {
+            audioCtx.resume();
+        }
 
-function startQuiz(){ startCard.style.display="none"; quizContainer.style.display="block"; load(); }
+        const oscillator = audioCtx.createOscillator();
+        const gainNode = audioCtx.createGain();
+        oscillator.connect(gainNode);
+        gainNode.connect(audioCtx.destination);
+        
+        if(type === 'correct') {
+            oscillator.frequency.setValueAtTime(523.25, audioCtx.currentTime); 
+            oscillator.frequency.setValueAtTime(659.25, audioCtx.currentTime + 0.08); 
+            gainNode.gain.setValueAtTime(0.15, audioCtx.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.25);
+            oscillator.start(); oscillator.stop(audioCtx.currentTime + 0.25);
+        } else if(type === 'wrong') {
+            oscillator.type = 'sawtooth';
+            oscillator.frequency.setValueAtTime(140, audioCtx.currentTime);
+            gainNode.gain.setValueAtTime(0.15, audioCtx.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.35);
+            oscillator.start(); oscillator.stop(audioCtx.currentTime + 0.35);
+        } else if(type === 'click') {
+            oscillator.frequency.setValueAtTime(380, audioCtx.currentTime);
+            gainNode.gain.setValueAtTime(0.08, audioCtx.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.06);
+            oscillator.start(); oscillator.stop(audioCtx.currentTime + 0.06);
+        }
+    } catch(e) { console.log("Audio Context issue handled."); }
+}
+
+function triggerHaptic(type) {
+    if (!vibrationEnabled) return; 
+    if (navigator.vibrate) {
+        if (type === 'correct') navigator.vibrate(70);
+        else if (type === 'wrong') navigator.vibrate([100, 60, 100]);
+        else if (type === 'click') navigator.vibrate(35);
+    }
+}
+
+function toggleSound() {
+    soundEnabled = !soundEnabled;
+    document.getElementById("soundToggle").innerHTML = soundEnabled ? "<span>🔊</span> Sound On" : "<span>🔇</span> Sound Off";
+}
+
+function toggleVibration() {
+    vibrationEnabled = !vibrationEnabled;
+    document.getElementById("vibeToggle").innerHTML = vibrationEnabled ? "<span>📳</span> Vibe On" : "<span>📴</span> Vibe Off";
+    if (vibrationEnabled && navigator.vibrate) { navigator.vibrate(50); }
+}
+
+function setMode(mode) { 
+    currentMode = mode; 
+    showHighScore(); 
+}
+
+function toggleTheme() {
+  const currentTheme = document.documentElement.getAttribute('data-theme');
+  const targetTheme = currentTheme === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', targetTheme);
+  document.querySelector('.theme-toggle').innerHTML = targetTheme === 'dark' ? '<span>☀️</span> Light Mode' : '<span>🌓</span> Dark Mode';
+}
+
+function prepareQuizData(shouldShuffle) {
+    quiz.forEach(q => {
+        q.combinedOptions = q.o.map((enText, idx) => ({
+            en: enText,
+            ar: q.trO && q.trO[idx] ? q.trO[idx] : ""
+        }));
+    });
+    
+    if(shouldShuffle) {
+        for (let currentIdx = quiz.length - 1; currentIdx > 0; currentIdx--) {
+            const randomIdx = Math.floor(Math.random() * (currentIdx + 1));
+            [quiz[currentIdx], quiz[randomIdx]] = [quiz[randomIdx], quiz[currentIdx]];
+        }
+        quiz.forEach(q => {
+            for (let j = q.combinedOptions.length - 1; j > 0; j--) {
+                const r = Math.floor(Math.random() * (j + 1));
+                [q.combinedOptions[j], q.combinedOptions[r]] = [q.combinedOptions[r], q.combinedOptions[j]];
+            }
+        });
+    }
+}
+
+function startTimer() {
+    clearInterval(timerInterval);
+    let totalSeconds = 60 * 60; 
+    const timerDisplay = document.getElementById("timerDisplay");
+    document.getElementById("timerBox").style.display = "block";
+    
+    function refreshTimerView() {
+        let mins = Math.floor(totalSeconds / 60);
+        let secs = totalSeconds % 60;
+        timerDisplay.textContent = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+    }
+    
+    refreshTimerView();
+    timerInterval = setInterval(() => {
+        totalSeconds--;
+        if(totalSeconds <= 0) {
+            clearInterval(timerInterval);
+            showResult();
+        } else { refreshTimerView(); }
+    }, 1000);
+}
+
+function getFlaggedTexts() {
+    return JSON.parse(localStorage.getItem("theCodingNurseW_ped_flagged_questions") || "[]");
+}
+
+function speakQuestion() {
+    if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel(); 
+        
+        let structuredText = `Question number ${i + 1}: ${quiz[i].q}. `;
+        quiz[i].combinedOptions.forEach((opObj, idx) => {
+            structuredText += `Choice number ${idx + 1}: ${opObj.en}. `;
+        });
+
+        const utterance = new SpeechSynthesisUtterance(structuredText);
+        utterance.lang = 'en-US'; 
+        utterance.rate = 0.88; 
+        utterance.pitch = 1.0; 
+        
+        utterance.onstart = () => {
+            const stopBtn = document.getElementById("stopSpeakBtn");
+            stopBtn.style.display = "inline-block";
+            stopBtn.innerHTML = "⏸️"; 
+            stopBtn.title = "إيقاف مؤقت للقرأة";
+        };
+        
+        const resetAudioUI = () => {
+            document.getElementById("stopSpeakBtn").style.display = "none";
+        };
+        
+        utterance.onend = resetAudioUI;
+        utterance.onerror = resetAudioUI;
+
+        window.speechSynthesis.speak(utterance);
+    } else {
+        alert("⚠️ ميزة النطق الصوتي غير مدعومة على متصفحك الحالي.");
+    }
+}
+
+function toggleSpeechPause() {
+    if ('speechSynthesis' in window) {
+        const stopBtn = document.getElementById("stopSpeakBtn");
+        if (window.speechSynthesis.speaking) {
+            if (window.speechSynthesis.paused) {
+                window.speechSynthesis.resume(); 
+                stopBtn.innerHTML = "⏸️";
+                stopBtn.title = "إيقاف مؤقت";
+            } else {
+                window.speechSynthesis.pause(); 
+                stopBtn.innerHTML = "▶️";
+                stopBtn.title = "استئناف النطق الحالي";
+            }
+        }
+    }
+}
+
+function forceStopSpeechEngine() {
+    if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+        const stopBtn = document.getElementById("stopSpeakBtn");
+        if (stopBtn) stopBtn.style.display = "none";
+    }
+}
+
+function toggleTranslation() {
+    const tBox = document.getElementById("translationBox");
+    tBox.style.display = (tBox.style.display === "block") ? "none" : "block";
+}
+
+function startQuiz() {
+    if (currentMode === 'bookmark') {
+        let flagged = getFlaggedTexts();
+        quiz = JSON.parse(JSON.stringify(originalQuiz)).filter(q => flagged.includes(q.q));
+        if (quiz.length === 0) {
+            alert("❌ لا توجد أسئلة مميزة بـ 🔖 حالياً لمراجعتها!");
+            return;
+        }
+        prepareQuizData(false);
+        localStorage.removeItem("theCodingNurseW_ped_quiz_progress");
+    } else if(!isReviewMode) {
+        quiz = JSON.parse(JSON.stringify(originalQuiz));
+        let doShuffle = (currentMode !== 'sequential');
+        prepareQuizData(doShuffle); 
+        localStorage.removeItem("theCodingNurseW_ped_quiz_progress"); 
+    }
+    answers = new Array(quiz.length).fill(null);
+    
+    midNav.innerHTML = "";
+    quiz.forEach((_, idx) => {
+      const b = document.createElement("button");
+      b.textContent = idx + 1; b.className = "q-btn";
+      b.onclick = () => { i = idx; load(); };
+      midNav.appendChild(b);
+    });
+
+    startCard.style.display = "none"; quizContainer.style.display = "block";
+    if(currentMode === 'exam') { startTimer(); } else { document.getElementById("timerBox").style.display = "none"; }
+    load();
+}
 
 function updateMidNav(){
+  let flagged = getFlaggedTexts();
   document.querySelectorAll(".q-btn").forEach((el,idx)=>{
-    el.classList.remove("active","correct","wrong");
+    el.classList.remove("active","correct","wrong","answered-exam","flagged");
     if(idx===i) el.classList.add("active");
-    if(answers[idx]===true) el.classList.add("correct");
-    if(answers[idx]===false) el.classList.add("wrong");
+    if(quiz[idx] && flagged.includes(quiz[idx].q)) el.classList.add("flagged");
+    
+    if(quiz[idx] && quiz[idx].userPick !== undefined) {
+        if(currentMode === 'study' || currentMode === 'sequential' || currentMode === 'bookmark') {
+            if(answers[idx]===true) el.classList.add("correct");
+            if(answers[idx]===false) el.classList.add("wrong");
+        } else { el.classList.add("answered-exam"); }
+    }
   });
 }
 
-function showExpl(){
-  explAr.textContent="💡 "+quiz[i].ar;
-  explEn.textContent=quiz[i].en;
-  expl.classList.add("show");
+function toggleFlag() {
+    if(quiz[i]) {
+        let flagged = getFlaggedTexts();
+        const qText = quiz[i].q;
+        if(flagged.includes(qText)) {
+            flagged = flagged.filter(t => t !== qText);
+            quiz[i].isFlagged = false;
+        } else {
+            flagged.push(qText);
+            quiz[i].isFlagged = true;
+        }
+        localStorage.setItem("theCodingNurseW_ped_flagged_questions", JSON.stringify(flagged));
+        document.getElementById("flagBtn").classList.toggle("active", quiz[i].isFlagged);
+        updateMidNav();
+        saveProgress();
+    }
 }
 
+function renderExplain(){
+  const box=document.getElementById("explainBox");
+  const cur=quiz[i];
+  const reveal=(currentMode==='study'||currentMode==='sequential'||currentMode==='bookmark');
+  if(cur && cur.userPick!==undefined && reveal && (cur.expAr||cur.expEn)){
+    document.getElementById("exAr").textContent=cur.expAr||"";
+    document.getElementById("exEn").textContent=cur.expEn||"";
+    box.style.display="block";
+  } else { box.style.display="none"; }
+}
 function load(){
-  topicEl.textContent=quiz[i].t+"  •  "+(i+1)+" / "+quiz.length;
+  if(quiz.length === 0) return;
+  clearTimeout(autoAdvanceTimeout); 
+  forceStopSpeechEngine(); 
+  
+  const tBox = document.getElementById("translationBox");
+  tBox.style.display = "none";
+
+  const qCard = document.getElementById("quizCard");
+  qCard.style.animation = 'none';
+  qCard.offsetHeight; 
+  qCard.style.animation = 'popIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)';
+
   qDiv.textContent=quiz[i].q;
+  document.getElementById("topicTag").textContent=quiz[i].topic?("📌 "+quiz[i].topic):"";
+  qDiv.style.fontSize = quiz[i].q.length > 130 ? "16px" : "19px";
+  
+  document.getElementById("qIndexBadge").textContent = `Q: ${i + 1} / ${quiz.length}`;
+  
+  const correctIdx = quiz[i].combinedOptions.findIndex(opt => opt.en === quiz[i].o[quiz[i].a]);
+  const transBtn = document.getElementById("translateBtn");
+  
+  if(quiz[i].trQ) {
+      transBtn.style.display = "inline-block";
+      document.getElementById("transQText").textContent = quiz[i].trQ;
+      
+      const transOList = document.getElementById("transOList");
+      transOList.innerHTML = "";
+      quiz[i].combinedOptions.forEach(optObj => {
+          if(optObj.ar) {
+              const li = document.createElement("li");
+              li.textContent = optObj.ar;
+              transOList.appendChild(li);
+          }
+      });
+  } else {
+      transBtn.style.display = "none";
+  }
+  
+  let flagged = getFlaggedTexts();
+  quiz[i].isFlagged = flagged.includes(quiz[i].q);
+  document.getElementById("flagBtn").classList.toggle("active", !!quiz[i].isFlagged);
+  
   oDiv.innerHTML="";
-  expl.classList.remove("show");
   progress.style.width=(i/quiz.length)*100+"%";
   updateMidNav();
-  quiz[i].o.forEach((op,idx)=>{
+  
+  quiz[i].combinedOptions.forEach((opObj,idx)=>{
     const b=document.createElement("button");
-    b.textContent=op;
-    if(answers[i]!==null){
-      b.disabled=true;
-      if(idx===quiz[i].a) b.classList.add("correct");
-      else if(idx===quiz[i].userPick) b.classList.add("wrong");
+    b.textContent=opObj.en;
+    if(quiz[i].userPick !== undefined) {
+        b.disabled=true;
+        if(currentMode === 'study' || currentMode === 'sequential' || currentMode === 'bookmark') {
+            if(idx===correctIdx) b.classList.add("correct");
+            else if(idx === quiz[i].userPick) b.classList.add("wrong");
+        } else {
+            if(idx === quiz[i].userPick) b.classList.add("selected-exam");
+        }
     }
     b.onclick=()=>answer(idx,b);
     oDiv.appendChild(b);
   });
-  if(answers[i]!==null) showExpl();
 }
 
 function answer(idx,btn){
-  if(answers[i]!==null) return;
-  quiz[i].userPick=idx;
+  if(quiz[i].userPick !== undefined) return;
+  quiz[i].userPick = idx;
   document.querySelectorAll(".options button").forEach(b=>b.disabled=true);
-  if(idx===quiz[i].a){ btn.classList.add("correct"); answers[i]=true; score++; }
-  else{ btn.classList.add("wrong"); oDiv.children[quiz[i].a].classList.add("correct"); answers[i]=false; }
-  showExpl();
-  updateMidNav();
+  
+  const correctIdx = quiz[i].combinedOptions.findIndex(opt => opt.en === quiz[i].o[quiz[i].a]);
+  
+  if(currentMode === 'study' || currentMode === 'sequential' || currentMode === 'bookmark') {
+      if(idx===correctIdx){
+        btn.classList.add("correct");
+        answers[i]=true; score++;
+        playAudioTone('correct'); triggerHaptic('correct');
+        autoAdvanceTimeout = setTimeout(() => { nextQ(); }, 4500);
+      }else{
+        btn.classList.add("wrong"); btn.classList.add("shake-anim"); 
+        oDiv.children[correctIdx].classList.add("correct");
+        answers[i]=false;
+        playAudioTone('wrong'); triggerHaptic('wrong');
+      }
+  } else {
+      btn.classList.add("selected-exam");
+      playAudioTone('click'); triggerHaptic('click');
+  }
+  renderExplain(); updateMidNav(); saveProgress();
 }
 
 function nextQ(){ if(i<quiz.length-1){i++;load()} else showResult(); }
 function prevQ(){ if(i>0){i--;load()} }
 
+function goToHome() {
+    clearInterval(timerInterval);
+    forceStopSpeechEngine();
+    saveProgress(); 
+    quizContainer.style.display = "none";
+    startCard.style.display = "block";
+    checkSavedProgress();
+    showHighScore();
+}
+
+function saveProgress() {
+    if(isReviewMode) return; 
+    const dataToSave = { quiz: quiz, answers: answers, i: i, score: score, currentMode: currentMode };
+    localStorage.setItem("theCodingNurseW_ped_quiz_progress", JSON.stringify(dataToSave));
+}
+
+function checkSavedProgress() {
+    const savedData = localStorage.getItem("theCodingNurseW_ped_quiz_progress");
+    if(savedData && originalQuiz.length > 0) {
+        document.getElementById("resumeBtn").style.display = "block";
+    }
+}
+
+function showHighScore() {
+    let modeKey = "theCodingNurseW_ped_high_score_" + currentMode;
+    let highScore = localStorage.getItem(modeKey);
+    const hsView = document.getElementById("highScoreView");
+    
+    if(highScore !== null && originalQuiz.length > 0) {
+        let modeName = "";
+        if(currentMode === 'sequential') modeName = "(الترتيب)";
+        else if(currentMode === 'study') modeName = "(المذاكرة)";
+        else if(currentMode === 'exam') modeName = "(الامتحان)";
+        else if(currentMode === 'bookmark') modeName = "(المميزة)";
+        
+        document.getElementById("highScoreVal").textContent = highScore + "% " + modeName;
+        hsView.style.display = "block";
+    } else {
+        hsView.style.display = "none";
+    }
+}
+
+function resumeQuiz() {
+    const savedData = localStorage.getItem("theCodingNurseW_ped_quiz_progress");
+    if(!savedData) return;
+    const parsedData = JSON.parse(savedData);
+    quiz = parsedData.quiz; answers = parsedData.answers; i = parsedData.i; score = parsedData.score; currentMode = parsedData.currentMode;
+    
+    document.querySelectorAll('input[name="quizMode"]').forEach(radio => {
+        if(radio.value === currentMode) radio.checked = true;
+    });
+    
+    midNav.innerHTML = "";
+    quiz.forEach((_, idx) => {
+      const b = document.createElement("button");
+      b.textContent = idx + 1; b.className = "q-btn";
+      b.onclick = () => { i = idx; load(); };
+      midNav.appendChild(b);
+    });
+
+    startCard.style.display = "none"; quizContainer.style.display = "block";
+    if(currentMode === 'exam') { startTimer(); } else { document.getElementById("timerBox").style.display = "none"; }
+    load();
+}
+
 function showResult(){
-  quizContainer.style.display="none";
-  resultCard.style.display="block";
-  scoreText.textContent=score+" / "+quiz.length;
+  clearInterval(timerInterval);
+  forceStopSpeechEngine();
+  localStorage.removeItem("theCodingNurseW_ped_quiz_progress"); 
+  document.getElementById("timerBox").style.display = "none";
+  quizContainer.style.display="none"; resultCard.style.display="block";
+  
+  if(currentMode === 'exam') {
+      score = 0;
+      quiz.forEach((q) => { 
+          const correctIdx = q.combinedOptions.findIndex(opt => opt.en === q.o[q.a]);
+          if(q.userPick === correctIdx) score++; 
+      });
+  }
+  
+  const wrongCount = quiz.length - score;
+  const accuracyRatio = Math.round((score / quiz.length) * 100);
+  
+  let modeKey = "theCodingNurseW_ped_high_score_" + currentMode;
+  let savedHighScore = parseInt(localStorage.getItem(modeKey)) || 0;
+  if(!isNaN(accuracyRatio) && accuracyRatio > savedHighScore) {
+      localStorage.setItem(modeKey, accuracyRatio);
+  }
+  
+  document.getElementById("statCorrect").textContent = score;
+  document.getElementById("statWrong").textContent = wrongCount;
+  document.getElementById("statRatio").textContent = isNaN(accuracyRatio) ? "0%" : accuracyRatio + "%";
+  scoreText.textContent=`${score} / ${quiz.length}`;
+  
+  const bTitle = document.getElementById("badgeTitle");
+  if(accuracyRatio >= 95) { bTitle.textContent = "👑 Master of Pediatric Surgery"; bTitle.style.color = "#eab308"; } 
+  else if(accuracyRatio >= 80) { bTitle.textContent = "🩺 Clinical Hero"; bTitle.style.color = "var(--primary)"; } 
+  else if(accuracyRatio >= 50) { bTitle.textContent = "💡 Smart Nurse"; bTitle.style.color = "var(--secondary)"; } 
+  else { bTitle.textContent = "💪 Keep Fighting, Future Nurse"; bTitle.style.color = "var(--danger)"; }
+  
+  document.getElementById("reviewBtn").style.display = wrongCount > 0 ? "inline-block" : "none";
+  
+  if(score >= (quiz.length / 2) && quiz.length > 0) {
+    var duration = 4 * 1000; var end = Date.now() + duration;
+    (function frame() {
+      confetti({ particleCount: 4, angle: 60, spread: 55, origin: { x: 0, y: 0.7 } });
+      confetti({ particleCount: 4, angle: 120, spread: 55, origin: { x: 1, y: 0.7 } });
+      if (Date.now() < end) { requestAnimationFrame(frame); }
+    }());
+  }
+}
+
+function startReview() {
+    let wrongQuestions = quiz.filter(q => {
+        const correctIdx = q.combinedOptions.findIndex(opt => opt.en === q.o[q.a]);
+        return q.userPick !== correctIdx;
+    });
+    if(wrongQuestions.length === 0) return;
+    quiz = JSON.parse(JSON.stringify(wrongQuestions));
+    quiz.forEach(q => { delete q.userPick; delete q.isFlagged; }); 
+    isReviewMode = true; i = 0; score = 0;
+    prepareQuizData(false); 
+    resultCard.style.display = "none"; startQuiz();
+}
+
+function downloadResultCard() {
+    const dBtn = document.getElementById("downloadBtn");
+    const containerActionButtons = document.querySelector(".result-actions-container");
+    
+    dBtn.textContent = "⏳ Generating Image..."; dBtn.disabled = true;
+    containerActionButtons.style.display = "none"; 
+    
+    const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+    const bgColor = currentTheme === 'dark' ? '#0f172a' : '#f1f5f9';
+    
+    html2canvas(document.querySelector(".container"), {
+        backgroundColor: bgColor, scale: 2, useCORS: true, allowTaint: true,
+        onclone: (clonedDoc) => {
+            clonedDoc.documentElement.setAttribute('data-theme', currentTheme);
+            const style = clonedDoc.createElement('style');
+            style.innerHTML = `* { transition: none !important; animation: none !important; }`;
+            clonedDoc.head.appendChild(style);
+        }
+    }).then(canvas => {
+        const downloadLink = document.createElement("a");
+        downloadLink.download = `TheCodingNurse_Score.png`;
+        downloadLink.href = canvas.toDataURL("image/png");
+        downloadLink.click();
+        containerActionButtons.style.display = "flex";
+        dBtn.textContent = "📸 تحميل النتيجة كصورة"; dBtn.disabled = false;
+    }).catch(err => {
+        containerActionButtons.style.display = "flex";
+        dBtn.textContent = "📸 تحميل النتيجة كصورة"; dBtn.disabled = false;
+        alert("تعذر حفظ الصورة.");
+    });
 }
 
 function restartQuiz(){
-  i=0;score=0;
-  answers.fill(null);
-  quiz.forEach(q=>delete q.userPick);
-  resultCard.style.display="none";
-  startCard.style.display="block";
+  i=0; score=0; isReviewMode = false; clearInterval(timerInterval);
+  forceStopSpeechEngine();
+  localStorage.removeItem("theCodingNurseW_ped_quiz_progress");
+  document.getElementById("resumeBtn").style.display = "none";
+  resultCard.style.display="none"; startCard.style.display="block";
+  checkSavedProgress();
+  showHighScore();
 }
-</script>
 
+window.onload = function() { 
+    checkSavedProgress(); 
+    showHighScore();
+};
+</script>
 </body>
 </html>

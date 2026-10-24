@@ -431,7 +431,6 @@ body{margin:0; background:var(--bg); color:var(--text)}
 
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-
 <script>
 const originalQuiz = [
  {
@@ -1263,7 +1262,7 @@ const originalQuiz = [
   ],
   "a": 2,
   "topic": "Undescended Testis (UDT)",
-  expAr": "لأن نسبة الحدوث في الأطفال مكتملي الحمل حوالي 4–5%.",
+  "expAr": "لأن نسبة الحدوث في الأطفال مكتملي الحمل حوالي 4–5%.",
   "expEn": "Because incidence in full-term newborns is about 4–5%."
  },
  {
@@ -1391,6 +1390,8 @@ let i=0, score=0;
 let currentMode = 'study'; 
 let timerInterval;
 let isReviewMode = false;
+let reviewOriginalMode = null;
+let remainingSeconds = 3600;
 
 let soundEnabled = true;
 let vibrationEnabled = true;
@@ -1498,20 +1499,19 @@ function prepareQuizData(shouldShuffle) {
 
 function startTimer() {
     clearInterval(timerInterval);
-    let totalSeconds = 60 * 60; 
     const timerDisplay = document.getElementById("timerDisplay");
     document.getElementById("timerBox").style.display = "block";
     
     function refreshTimerView() {
-        let mins = Math.floor(totalSeconds / 60);
-        let secs = totalSeconds % 60;
+        let mins = Math.floor(remainingSeconds / 60);
+        let secs = remainingSeconds % 60;
         timerDisplay.textContent = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
     }
     
     refreshTimerView();
     timerInterval = setInterval(() => {
-        totalSeconds--;
-        if(totalSeconds <= 0) {
+        remainingSeconds--;
+        if(remainingSeconds <= 0) {
             clearInterval(timerInterval);
             showResult();
         } else { refreshTimerView(); }
@@ -1587,20 +1587,23 @@ function toggleTranslation() {
 }
 
 function startQuiz() {
-    if (currentMode === 'bookmark') {
-        let flagged = getFlaggedTexts();
-        quiz = JSON.parse(JSON.stringify(originalQuiz)).filter(q => flagged.includes(q.q));
-        if (quiz.length === 0) {
-            alert("❌ لا توجد أسئلة مميزة بـ 🔖 حالياً لمراجعتها!");
-            return;
+    if (!isReviewMode) {
+        if (currentMode === 'bookmark') {
+            let flagged = getFlaggedTexts();
+            quiz = JSON.parse(JSON.stringify(originalQuiz)).filter(q => flagged.includes(q.q));
+            if (quiz.length === 0) {
+                alert("❌ لا توجد أسئلة مميزة بـ 🔖 حالياً لمراجعتها!");
+                return;
+            }
+            prepareQuizData(false);
+            localStorage.removeItem("theCodingNurseW_ped_quiz_progress");
+        } else {
+            quiz = JSON.parse(JSON.stringify(originalQuiz));
+            let doShuffle = (currentMode !== 'sequential');
+            prepareQuizData(doShuffle); 
+            localStorage.removeItem("theCodingNurseW_ped_quiz_progress"); 
         }
-        prepareQuizData(false);
-        localStorage.removeItem("theCodingNurseW_ped_quiz_progress");
-    } else if(!isReviewMode) {
-        quiz = JSON.parse(JSON.stringify(originalQuiz));
-        let doShuffle = (currentMode !== 'sequential');
-        prepareQuizData(doShuffle); 
-        localStorage.removeItem("theCodingNurseW_ped_quiz_progress"); 
+        remainingSeconds = 3600;
     }
     answers = new Array(quiz.length).fill(null);
     
@@ -1705,7 +1708,7 @@ function load(){
   document.getElementById("flagBtn").classList.toggle("active", !!quiz[i].isFlagged);
   
   oDiv.innerHTML="";
-  progress.style.width=(i/quiz.length)*100+"%";
+  progress.style.width=((i+1)/quiz.length)*100+"%";
   updateMidNav();
   
   quiz[i].combinedOptions.forEach((opObj,idx)=>{
@@ -1758,15 +1761,23 @@ function goToHome() {
     clearInterval(timerInterval);
     forceStopSpeechEngine();
     saveProgress(); 
+    if (isReviewMode && reviewOriginalMode) {
+        currentMode = reviewOriginalMode;
+    }
+    isReviewMode = false;
+    reviewOriginalMode = null;
     quizContainer.style.display = "none";
     startCard.style.display = "block";
+    document.querySelectorAll('input[name="quizMode"]').forEach(radio => {
+        if(radio.value === currentMode) radio.checked = true;
+    });
     checkSavedProgress();
     showHighScore();
 }
 
 function saveProgress() {
     if(isReviewMode) return; 
-    const dataToSave = { quiz: quiz, answers: answers, i: i, score: score, currentMode: currentMode };
+    const dataToSave = { quiz: quiz, answers: answers, i: i, score: score, currentMode: currentMode, remainingSeconds: remainingSeconds };
     localStorage.setItem("theCodingNurseW_ped_quiz_progress", JSON.stringify(dataToSave));
 }
 
@@ -1801,6 +1812,7 @@ function resumeQuiz() {
     if(!savedData) return;
     const parsedData = JSON.parse(savedData);
     quiz = parsedData.quiz; answers = parsedData.answers; i = parsedData.i; score = parsedData.score; currentMode = parsedData.currentMode;
+    remainingSeconds = parsedData.remainingSeconds !== undefined ? parsedData.remainingSeconds : 3600;
     
     document.querySelectorAll('input[name="quizMode"]').forEach(radio => {
         if(radio.value === currentMode) radio.checked = true;
@@ -1837,10 +1849,12 @@ function showResult(){
   const wrongCount = quiz.length - score;
   const accuracyRatio = Math.round((score / quiz.length) * 100);
   
-  let modeKey = "theCodingNurseW_ped_high_score_" + currentMode;
-  let savedHighScore = parseInt(localStorage.getItem(modeKey)) || 0;
-  if(!isNaN(accuracyRatio) && accuracyRatio > savedHighScore) {
-      localStorage.setItem(modeKey, accuracyRatio);
+  if(!isReviewMode) {
+      let modeKey = "theCodingNurseW_ped_high_score_" + currentMode;
+      let savedHighScore = parseInt(localStorage.getItem(modeKey)) || 0;
+      if(!isNaN(accuracyRatio) && accuracyRatio > savedHighScore) {
+          localStorage.setItem(modeKey, accuracyRatio);
+      }
   }
   
   document.getElementById("statCorrect").textContent = score;
@@ -1872,11 +1886,19 @@ function startReview() {
         return q.userPick !== correctIdx;
     });
     if(wrongQuestions.length === 0) return;
+    
+    if (!isReviewMode) {
+        reviewOriginalMode = currentMode;
+    }
+    isReviewMode = true;
+    currentMode = 'study';
+    
     quiz = JSON.parse(JSON.stringify(wrongQuestions));
     quiz.forEach(q => { delete q.userPick; delete q.isFlagged; }); 
-    isReviewMode = true; i = 0; score = 0;
-    prepareQuizData(false); 
-    resultCard.style.display = "none"; startQuiz();
+    i = 0; score = 0;
+    localStorage.removeItem("theCodingNurseW_ped_quiz_progress");
+    resultCard.style.display = "none"; 
+    startQuiz();
 }
 
 function downloadResultCard() {
@@ -1912,11 +1934,21 @@ function downloadResultCard() {
 }
 
 function restartQuiz(){
-  i=0; score=0; isReviewMode = false; clearInterval(timerInterval);
+  i=0; score=0;
+  if (isReviewMode && reviewOriginalMode) {
+    currentMode = reviewOriginalMode;
+  }
+  isReviewMode = false;
+  reviewOriginalMode = null;
+  remainingSeconds = 3600;
+  clearInterval(timerInterval);
   forceStopSpeechEngine();
   localStorage.removeItem("theCodingNurseW_ped_quiz_progress");
   document.getElementById("resumeBtn").style.display = "none";
   resultCard.style.display="none"; startCard.style.display="block";
+  document.querySelectorAll('input[name="quizMode"]').forEach(radio => {
+    if(radio.value === currentMode) radio.checked = true;
+  });
   checkSavedProgress();
   showHighScore();
 }

@@ -1,0 +1,747 @@
+<!--
+🩺 English Midterm Interactive Quiz
+149 questions · 4 categories · English content · Arabic UI
+Instant feedback · Bilingual explanations · Sound effects
+-->
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>اختبار اللغة الإنجليزية - الميد تيرم</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@700&family=Cairo:wght@400;600;700&family=Inter:wght@400;500;600&family=Lalezar&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f8fafc;--card:#ffffff;--text:#0f172a;--muted:#64748b;--border:#e5e7eb;--soft:#f1f5f9;
+  --shadow:0 4px 24px rgba(15,23,42,.06);--ok:#22c55e;--err:#ef4444;--warn:#f59e0b;
+  --g1:#d81b60;--g2:#8e24aa;--grad:linear-gradient(135deg,#d81b60,#8e24aa);--tint:rgba(216,27,96,.08);
+  --ease:cubic-bezier(.4,0,.2,1);
+}
+[data-theme="dark"]{
+  --bg:#0f172a;--card:#1e293b;--text:#f1f5f9;--muted:#94a3b8;--border:#334155;--soft:#0f172a;
+  --shadow:0 4px 24px rgba(0,0,0,.4);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{font-family:'Cairo','Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;line-height:1.6;transition:background .28s var(--ease),color .28s var(--ease)}
+body::before{content:"";position:fixed;inset:0;z-index:-1;background:radial-gradient(600px 400px at 90% -5%,rgba(216,27,96,.14),transparent),radial-gradient(500px 400px at 5% 105%,rgba(142,36,170,.12),transparent)}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+:focus-visible{outline:3px solid #3b82f6;outline-offset:2px}
+.en{font-family:'Inter',system-ui,sans-serif;direction:ltr;text-align:left}
+.ar{font-family:'Cairo',sans-serif;direction:rtl;text-align:right}
+.wrap{max-width:720px;margin:0 auto;padding:20px 16px 60px}
+.hidden{display:none!important}
+
+/* ---------- Welcome ---------- */
+.hero{text-align:center;padding:24px 0 8px;animation:rise .6s var(--ease) both}
+.badge{width:64px;height:64px;border-radius:50%;margin:0 auto 12px;display:grid;place-items:center;font-size:30px;background:linear-gradient(135deg,#d81b60,#8e24aa);box-shadow:0 0 0 6px rgba(216,27,96,.15),0 8px 30px rgba(216,27,96,.45)}
+h1{font-size:32px;font-weight:700}
+.sub{color:var(--muted);margin-top:4px;font-size:15px}
+.pills{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:14px}
+.pill{padding:6px 14px;border-radius:999px;font-size:13px;font-weight:600;background:var(--card);border:1px solid var(--border);backdrop-filter:blur(8px);box-shadow:var(--shadow)}
+.sacred{margin:22px 0;text-align:center;padding:24px 18px;border-radius:24px;background:linear-gradient(135deg,#fef3c7,#fde68a,#fcd34d);border:2px solid rgba(245,158,11,.25);box-shadow:0 10px 40px rgba(245,158,11,.28);animation:rise .7s .1s var(--ease) both}
+.sacred .ic{font-size:30px}
+.sacred .main{font-family:'Amiri',serif;font-size:26px;font-weight:700;color:#92400e;margin:6px 0 10px;line-height:1.8}
+.sacred hr{border:none;height:1px;background:rgba(146,64,14,.25);width:60%;margin:0 auto 10px}
+.sacred .dua{font-size:14px;font-style:italic;color:#b45309;opacity:.85}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:22px}
+.feat{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:16px;text-align:center;font-weight:600;font-size:14px;box-shadow:var(--shadow);transition:transform .28s var(--ease),box-shadow .28s var(--ease);animation:rise .6s .2s var(--ease) both}
+.feat:hover{transform:translateY(-4px);box-shadow:0 12px 30px rgba(15,23,42,.12)}
+.feat .e{display:block;font-size:26px;margin-bottom:4px}
+.setup{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:20px;box-shadow:var(--shadow);animation:rise .6s .3s var(--ease) both}
+.setup h3{font-size:16px;margin-bottom:10px}
+.lecs{display:grid;gap:8px;margin-bottom:16px}
+.lec{display:flex;align-items:center;gap:10px;min-height:44px;padding:8px 12px;border-radius:12px;border:2px solid var(--border);cursor:pointer;user-select:none}
+.lec input{width:20px;height:20px;accent-color:#d81b60}
+.chip{display:inline-block;padding:2px 12px;border-radius:999px;color:#fff;font-weight:700;font-size:13px;font-family:'Inter',sans-serif;direction:ltr}
+.row{display:flex;justify-content:space-between;align-items:center;min-height:44px;gap:12px;border-top:1px dashed var(--border)}
+.row label.t{font-weight:600;font-size:15px}
+.sw{position:relative;width:52px;height:30px;flex:none}
+.sw input{opacity:0;position:absolute;inset:0;width:100%;height:100%;cursor:pointer;z-index:2;margin:0}
+.sw i{position:absolute;inset:0;background:#cbd5e1;border-radius:999px;transition:.28s var(--ease)}
+.sw i::after{content:"";position:absolute;top:3px;inset-inline-start:3px;width:24px;height:24px;border-radius:50%;background:#fff;transition:.28s var(--ease);box-shadow:0 1px 4px rgba(0,0,0,.3)}
+.sw input:checked+i{background:#d81b60}
+.sw input:checked+i::after{inset-inline-start:25px}
+.sw input:focus-visible+i{outline:3px solid #3b82f6;outline-offset:2px}
+.seg{display:flex;border:2px solid var(--border);border-radius:12px;overflow:hidden}
+.seg button{padding:8px 16px;min-height:40px;font-weight:600;font-size:14px}
+.seg button.on{background:linear-gradient(135deg,#d81b60,#8e24aa);color:#fff}
+.cta{text-align:center;margin:24px 0 8px}
+.start{width:100%;max-width:420px;height:60px;border-radius:16px;background:linear-gradient(135deg,#d81b60,#8e24aa);color:#fff;font-size:20px;font-weight:700;box-shadow:0 8px 24px rgba(216,27,96,.4);animation:pulse 2s infinite;transition:transform .28s var(--ease)}
+.start:hover{transform:translateY(-2px)}
+.hint{margin-top:10px;font-size:12px;color:var(--muted)}
+.foot{margin-top:22px;text-align:center;color:var(--muted);font-size:13px}
+.foot b{color:var(--text);font-size:15px}
+.err{color:var(--err);font-size:13px;margin-top:8px;text-align:center}
+
+/* ---------- Quiz ---------- */
+.top{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--border)}
+.topin{max-width:780px;margin:0 auto;padding:8px 14px;display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.topin .ttl{font-weight:700;font-size:14px}
+.topin .mid{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:600}
+.topin .end{display:flex;align-items:center;gap:6px;font-weight:700;font-size:14px}
+.ib{width:44px;height:44px;border-radius:12px;font-size:18px;display:grid;place-items:center;background:var(--card);border:1px solid var(--border)}
+.prog{height:5px;background:var(--border)}
+.prog>div{height:100%;width:0;background:var(--grad);transition:width .4s var(--ease)}
+.qwrap{max-width:780px;margin:0 auto;padding:18px 14px 80px}
+.qcard{position:relative;background:var(--card);border-radius:20px;box-shadow:var(--shadow);padding:26px 18px 18px;overflow:hidden;border:1px solid var(--border)}
+.qcard.anim{animation:rise .35s var(--ease) both}
+.ribbon{position:absolute;top:0;left:0;right:0;height:6px;background:var(--grad)}
+.qhead{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:10px}
+.qchip{background:var(--tint);color:var(--g1);font-weight:700;padding:3px 12px;border-radius:999px;font-family:'Inter',sans-serif;font-size:13px}
+.trbtn{min-height:44px;padding:6px 14px;border-radius:12px;border:2px solid var(--border);font-weight:600;font-size:14px;background:var(--soft)}
+.trbtn.on{border-color:var(--g1);background:var(--tint)}
+.qtext{font-size:1.25rem;font-weight:600;line-height:1.7;font-family:'Inter',sans-serif;direction:ltr;text-align:left}
+.qar{margin-top:10px;padding:10px 14px;border-radius:12px;background:var(--tint);font-size:1.05rem;direction:rtl;text-align:right;animation:slide .3s var(--ease) both}
+.opts{display:grid;gap:10px;margin-top:18px}
+.opt{display:flex;align-items:center;gap:12px;width:100%;min-height:64px;padding:10px 14px;border-radius:14px;border:2px solid var(--border);background:var(--card);text-align:left;direction:ltr;transition:transform .28s var(--ease),border-color .28s var(--ease),box-shadow .28s var(--ease);position:relative}
+.opt:not(:disabled):hover{transform:translateY(-2px);border-color:var(--g1);box-shadow:0 6px 18px rgba(15,23,42,.1)}
+.opt .l{flex:none;width:34px;height:34px;border-radius:50%;background:var(--grad);color:#fff;font-weight:700;display:grid;place-items:center;font-family:'Inter',sans-serif}
+.opt .b{flex:1;font-family:'Inter',sans-serif;font-size:16px}
+.opt .oar{display:block;margin-top:6px;padding-top:6px;border-top:1px dotted var(--muted);font-size:13px;color:var(--muted);direction:rtl;text-align:right;font-family:'Cairo',sans-serif}
+.opt .mk{flex:none;font-size:20px;font-weight:700;width:24px;text-align:center}
+.opt:disabled{cursor:default}
+.opt.right{background:linear-gradient(135deg,#22c55e,#16a34a);border-color:#16a34a;color:#fff}
+.opt.right .oar{color:#dcfce7;border-color:#bbf7d0}
+.opt.wrong{background:linear-gradient(135deg,#ef4444,#dc2626);border-color:#dc2626;color:#fff}
+.opt.wrong .oar{color:#fee2e2;border-color:#fecaca}
+.opt.right .l,.opt.wrong .l{background:rgba(255,255,255,.25)}
+.opt.reveal{border-color:#22c55e;box-shadow:0 0 0 3px rgba(34,197,94,.3)}
+.opt.reveal .mk{color:#22c55e}
+.opt.dim{opacity:.6}
+.exp{margin-top:18px;animation:slide .35s var(--ease) both}
+.exp .hd{font-weight:700;font-size:17px;margin-bottom:8px}
+.exp .hd.ok{color:var(--ok)}.exp .hd.no{color:var(--err)}
+.eb{padding:12px 14px;border-radius:12px;background:var(--card);border:1px solid var(--border);font-size:15px;line-height:1.7;margin-bottom:8px}
+.eb.en{font-family:'Inter',sans-serif}
+.eb.ar{background:var(--tint);border-color:transparent}
+.nextbtn{display:block;margin-inline-start:0;min-height:50px;padding:10px 28px;border-radius:14px;background:var(--grad);color:#fff;font-weight:700;font-size:16px;box-shadow:0 6px 18px rgba(15,23,42,.18);margin-top:6px}
+
+/* ---------- Results ---------- */
+.res{text-align:center;animation:rise .5s var(--ease) both}
+.ring{position:relative;width:200px;height:200px;margin:10px auto}
+.ring svg{transform:rotate(-90deg)}
+.ring .n{position:absolute;inset:0;display:grid;place-items:center;font-size:38px;font-weight:700;font-family:'Inter',sans-serif;direction:ltr}
+.gradeL{font-size:56px;font-weight:700;font-family:'Inter',sans-serif;background:linear-gradient(135deg,#d81b60,#8e24aa);-webkit-background-clip:text;background-clip:text;color:transparent;line-height:1.1}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:16px 0}
+.stat{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:10px 4px;box-shadow:var(--shadow)}
+.stat b{display:block;font-size:20px;font-family:'Inter',sans-serif}
+.stat span{font-size:12px;color:var(--muted)}
+.bars{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:14px;text-align:start;margin-bottom:16px}
+.bar{margin:10px 0}
+.bar .bt{display:flex;justify-content:space-between;font-size:13px;font-weight:600;margin-bottom:4px}
+.bar .tr{height:12px;border-radius:99px;background:var(--border);overflow:hidden}
+.bar .tr>div{height:100%;border-radius:99px;transition:width .9s var(--ease)}
+.filters{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:14px 0}
+.fc{min-height:44px;padding:6px 16px;border-radius:999px;border:2px solid var(--border);font-weight:600;font-size:14px;background:var(--card)}
+.fc.on{background:var(--grad);color:#fff;border-color:transparent}
+.rv{background:var(--card);border:1px solid var(--border);border-radius:14px;margin-bottom:8px;text-align:start;overflow:hidden}
+.rv summary{list-style:none;cursor:pointer;padding:12px 14px;display:flex;gap:10px;align-items:center;min-height:48px}
+.rv summary::-webkit-details-marker{display:none}
+.rv .st{font-size:18px;font-weight:700;flex:none;width:24px;text-align:center}
+.rv.ok .st{color:var(--ok)}.rv.no .st{color:var(--err)}.rv.na .st{color:var(--muted)}
+.rv .qq{font-family:'Inter',sans-serif;direction:ltr;text-align:left;font-size:14px;font-weight:600;flex:1}
+.rvb{padding:0 14px 14px;font-size:14px}
+.rvb p{margin:6px 0}
+.btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:20px}
+.btn{min-height:50px;padding:10px 26px;border-radius:14px;font-weight:700;font-size:16px;color:#fff}
+.btn.a{background:linear-gradient(135deg,#d81b60,#8e24aa)}.btn.b{background:var(--grad)}
+
+.modal{position:fixed;inset:0;background:rgba(15,23,42,.55);display:grid;place-items:center;z-index:50;padding:16px}
+.mbox{background:var(--card);border-radius:20px;padding:22px;max-width:340px;width:100%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.4)}
+.mbox .btns{margin-top:14px}
+
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes slide{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:none}}
+@keyframes pulse{0%,100%{box-shadow:0 8px 24px rgba(216,27,96,.4)}50%{box-shadow:0 8px 36px rgba(216,27,96,.7)}}
+@media (max-width:900px){.grid{grid-template-columns:1fr 1fr}}
+@media (max-width:420px){h1{font-size:26px}.sacred .main{font-size:22px}.qtext{font-size:1.1rem}.stats{grid-template-columns:1fr 1fr}.topin .ttl{display:none}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+@media print{
+  .top,.ib,.trbtn,.nextbtn,.btns,.filters,.start,.hint,#modal{display:none!important}
+  body{background:#fff;color:#000}body::before{display:none}
+  .rv .rvb{display:block}.rv{break-inside:avoid}
+}
+</style>
+</head>
+<body>
+
+<div id="app"></div>
+<div id="live" class="hidden" aria-live="polite"></div>
+
+<script>
+// ═══════════════════ DATA (149 English Questions) ═══════════════════
+const RAW = `
+1|LINK|Which expression is used to introduce an example?|أي تعبير يُستخدم لتقديم مثال؟|In conclusion~في الختام|For example~على سبيل المثال|However~ومع ذلك|Finally~أخيراً|B|For example is used to introduce an example.|تُستخدم هذه العبارة لتقديم مثال يوضح الفكرة السابقة.
+2|LINK|I enjoy outdoor activities, ____ hiking and cycling.|أستمتع بالأنشطة الخارجية، ____ المشي لمسافات طويلة وركوب الدراجات.|although~على الرغم من أن|whereas~بينما|such as~مثل|despite~على الرغم من|C|Such as is used before examples.|تُستخدم قبل أمثلة، ولا تعني بالضرورة ذكر جميع عناصر المجموعة.
+3|LINK|We visited several museums. We ____ took many photographs.|قمنا بزيارة العديد من المتاحف. نحن ____ التقطنا العديد من الصور.|also~أيضاً|despite~على الرغم من|although~على الرغم من أن|whereas~بينما|A|Also adds information.|تُستخدم لإضافة معلومة، وغالبًا تأتي قبل الفعل الرئيسي أو بعد فعل الكينونة.
+4|LINK|She is very intelligent. She is friendly, ____.|إنها ذكية جداً. إنها ودودة، ____.|however~ومع ذلك|too~أيضاً|namely~أي|firstly~أولاً|B|Too is used at the end to mean also.|تأتي عادةً في نهاية الجملة لإضافة معنى «أيضًا».
+5|LINK|Which expression is commonly used at the end of a sentence to mean “also”?|أي تعبير يُستخدم عادةً في نهاية الجملة ليعني "أيضاً"؟|Moreover~علاوة على ذلك|Firstly~أولاً|Too~أيضاً|Namely~أي|C|Too means also.|تأتي عادةً في نهاية الجملة لإضافة معنى «أيضًا».
+6|LINK|He is talented ____ hardworking.|هو موهوب ____ مجتهد.|as well as~بالإضافة إلى|despite~على الرغم من|although~على الرغم من أن|unlike~على عكس|A|As well as means in addition to.|تأتي عادةً في نهاية الجملة بمعنى «كذلك».
+7|LINK|Which expression is used to add another idea in formal writing?|أي تعبير يُستخدم لإضافة فكرة أخرى في الكتابة الرسمية؟|For instance~على سبيل المثال|In addition~بالإضافة إلى ذلك|Although~على الرغم من أن|In short~باختصار|B|In addition adds a new idea.|تُستخدم لإضافة معلومة أو فكرة جديدة إلى ما سبق.
+8|LINK|____, we will discuss the advantages of online learning.|____، سنناقش مزايا التعلم عبر الإنترنت.|Despite~على الرغم من|However~ومع ذلك|Firstly~أولاً|Unlike~على عكس|C|Firstly introduces the first point.|تُستخدم لتقديم أول نقطة في ترتيب الأفكار.
+9|LINK|Which expression signals the final point in a series?|أي تعبير يشير إلى النقطة الأخيرة في سلسلة؟|Finally~أخيراً|For example~على سبيل المثال|Moreover~علاوة على ذلك|Whereas~بينما|A|Finally signals the last point.|تُستخدم لتقديم النقطة الأخيرة في تسلسل أو عرض.
+10|LINK|Which expression introduces a summary?|أي تعبير يقدم ملخصاً؟|Such as~مثل|In conclusion~في الختام|In addition~بالإضافة إلى ذلك|Although~على الرغم من أن|B|In conclusion introduces a summary.|تُستخدم لتقديم الخاتمة أو تلخيص الأفكار الأساسية.
+11|LINK|I wanted to buy the dress, ____ it was too expensive.|أردت شراء الفستان، ____ كان مكلفاً للغاية.|moreover~علاوة على ذلك|but~لكن|namely~أي|such as~مثل|B|But contrasts two ideas.|تربط فكرتين متعارضتين داخل الجملة.
+12|LINK|____ it was raining, the students went to school.|____ كانت تمطر، ذهب الطلاب إلى المدرسة.|Despite~على الرغم من|Although~على الرغم من أن|Unlike~على عكس|Such as~مثل|B|Although is followed by a clause.|تتبعها جملة تحتوي على فاعل وفعل، وظهر التباين دون استخدام معها في الجملة نفسها.
+13|LINK|We won the match ____ having fewer players.|فزنا بالمباراة ____ وجود عدد أقل من اللاعبين.|although~على الرغم من أن|however~ومع ذلك|despite~على الرغم من|whereas~بينما|C|Despite is followed by a noun/gerund.|يَأْتِي بَعْدَهَا أَسْمَ أَوْ عِبَارَةُ أَسْمِيَّةٍ أَوْ مَصْدَرٍ مَوْولٍ مِنَ الْفَعْلِ، وَلَا تَتَّبِعُهَا جَمَلَةٌ كَامِلَةٌ مَبَاشِرَةٌ.
+14|LINK|My brother likes football, ____ I prefer tennis.|أخي يحب كرة القدم، ____ أنا أفضل التنس.|while~بينما|despite~على الرغم من|such as~مثل|in conclusion~في الختام|A|While contrasts two clauses.|يمكن أن تربط جملتين متقابلتين، ويجب أن تكون كل جملة مكتملة نحوياً.
+15|LINK|Which word is used to contrast two people or things and is typically followed by a noun phrase?|أي كلمة تُستخدم لمقارنة شخصين أو شيئين وعادة ما يتبعها عبارة اسمية؟|Moreover~علاوة على ذلك|Unlike~على عكس|Finally~أخيراً|Namely~أي|B|Unlike contrasts nouns.|تَأْتِي قَبْلُ أَسْمَ أَوْ عِبَارَةُ أَسْمِيةٌ لِلْمَقَارِنَةِ وَإِظْهَارِ الْاخْتِلَافِ.
+16|IRR|What is the past simple form of go?|ما هو الماضي البسيط لفعل go؟|Goed~Goed|Gone~Gone|Went~Went|Going~Going|C|Went is the correct past simple.|الإجابة هي صيغة الماضي البسيط الصحيحة للفعل غير المنتظم، ولا تكون بإضافة الحروف المعتادة إلى نهاية الفعل.
+17|IRR|What is the past participle of eat?|ما هو التصريف الثالث لفعل eat؟|Ate~Ate|Eaten~Eaten|Eating~Eating|Eated~Eated|B|Eaten is the correct past participle.|الإجابة هي التصريف الثالث الصحيح للفعل غير المنتظم، ويستخدم بعد الفعلين المساعدين في زمن المضارع التام أو في المبني للمجهول.
+18|IRR|What is the past simple form of write?|ما هو الماضي البسيط لفعل write؟|Wrote~Wrote|Written~Written|Writed~Writed|Writing~Writing|A|Wrote is the correct past simple.|الإجابة هي صيغة الماضي البسيط الصحيحة للفعل غير المنتظم، ولا تكون بإضافة الحروف المعتادة إلى نهاية الفعل.
+19|IRR|What is the past participle of see?|ما هو التصريف الثالث لفعل see؟|Saw~Saw|Seeing~Seeing|Seen~Seen|Seed~Seed|C|Seen is the correct past participle.|الإجابة هي التصريف الثالث الصحيح للفعل غير المنتظم، ويستخدم بعد الفعلين المساعدين في زمن المضارع التام أو في المبني للمجهول.
+20|IRR|What is the past simple form of drink?|ما هو الماضي البسيط لفعل drink؟|Drunk~Drunk|Drinked~Drinked|Drank~Drank|Drunken~Drunken|C|Drank is the correct past simple.|الإجابة هي صيغة الماضي البسيط الصحيحة للفعل غير المنتظم، ولا تكون بإضافة الحروف المعتادة إلى نهاية الفعل.
+21|IRR|Which verb has three identical forms?|أي فعل له ثلاثة أشكال متطابقة؟|Go~Go|Cut~Cut|Write~Write|Take~Take|B|Cut - Cut - Cut.|الإجابة هي الفعل الذي لا يتغير شكله في التصريفات الثلاثة.
+22|IRR|What is the past simple form of buy?|ما هو الماضي البسيط لفعل buy؟|Buyed~Buyed|Bought~Bought|Brought~Brought|Buying~Buying|B|Bought is the correct past simple.|الإجابة هي صيغة الماضي البسيط الصحيحة للفعل غير المنتظم، ولا تكون بإضافة الحروف المعتادة إلى نهاية الفعل.
+23|IRR|What is the past participle of speak?|ما هو التصريف الثالث لفعل speak؟|Spoke~Spoke|Speaking~Speaking|Speak~Speak|Spoken~Spoken|D|Spoken is the correct past participle.|الإجابة هي التصريف الثالث الصحيح للفعل غير المنتظم، ويستخدم بعد الفعلين المساعدين في زمن المضارع التام أو في المبني للمجهول.
+24|IRR|What is the past simple form of come?|ما هو الماضي البسيط لفعل come؟|Came~Came|Come~Come|Comed~Comed|Coming~Coming|A|Came is the correct past simple.|الإجابة هي صيغة الماضي البسيط الصحيحة للفعل غير المنتظم، ولا تكون بإضافة الحروف المعتادة إلى نهاية الفعل.
+25|IRR|What is the past participle of break?|ما هو التصريف الثالث لفعل break؟|Broke~Broke|Breaking~Breaking|Broken~Broken|Broken~Broken|C|Broken is the correct past participle.|الإجابة هي التصريف الثالث الصحيح للفعل غير المنتظم، ويستخدم بعد الفعلين المساعدين في زمن المضارع التام أو في المبني للمجهول.
+26|IRR|What is the past simple form of have?|ما هو الماضي البسيط لفعل have؟|Haved~Haved|Had~Had|Has~Has|Having~Having|B|Had is the correct past simple.|الإجابة هي صيغة الماضي البسيط الصحيحة للفعل غير المنتظم، ولا تكون بإضافة الحروف المعتادة إلى نهاية الفعل.
+27|IRR|What is the past participle of do?|ما هو التصريف الثالث لفعل do؟|Did~Did|Done~Done|Does~Does|Doing~Doing|B|Done is the correct past participle.|الإجابة هي التصريف الثالث الصحيح للفعل غير المنتظم، ويستخدم بعد الفعلين المساعدين في زمن المضارع التام أو في المبني للمجهول.
+28|IRR|What is the past simple form of run?|ما هو الماضي البسيط لفعل run؟|Run~Run|Runned~Runned|Ran~Ran|Running~Running|C|Ran is the correct past simple.|الإجابة هي صيغة الماضي البسيط الصحيحة للفعل غير المنتظم، ولا تكون بإضافة الحروف المعتادة إلى نهاية الفعل.
+29|IRR|Which verb has the forms keep - kept - kept?|أي فعل له الأشكال keep - kept - kept؟|Keep~Keep|Sleep~Sleep|Meet~Meet|Feel~Feel|A|Keep follows this pattern.|الإجابة هي الفعل الذي يتبع هذا النمط من التصريفات.
+30|IRR|What is the past participle of give?|ما هو التصريف الثالث لفعل give؟|Gave~Gave|Given~Given|Giving~Giving|Gived~Gived|B|Given is the correct past participle.|الإجابة هي التصريف الثالث الصحيح للفعل غير المنتظم، ويستخدم بعد الفعلين المساعدين في زمن المضارع التام أو في المبني للمجهول.
+31|IRR|What is the past simple form of teach?|ما هو الماضي البسيط لفعل teach؟|Teached~Teached|Taught~Taught|Teach~Teach|Teaching~Teaching|B|Taught is the correct past simple.|الإجابة هي صيغة الماضي البسيط الصحيحة للفعل غير المنتظم، ولا تكون بإضافة الحروف المعتادة إلى نهاية الفعل.
+32|IRR|What is the past participle of swim?|ما هو التصريف الثالث لفعل swim؟|Swam~Swam|Swimmed~Swimmed|Swum~Swum|Swimming~Swimming|C|Swum is the correct past participle.|الإجابة هي التصريف الثالث الصحيح للفعل غير المنتظم، ويستخدم بعد الفعلين المساعدين في زمن المضارع التام أو في المبني للمجهول.
+33|IRR|Which verb has the forms put - put - put?|أي فعل له الأشكال put - put - put؟|Put~Put|Pat~Pat|Pit~Pit|Pet~Pet|A|Put follows this pattern.|الإجابة هي الفعل الذي يتبع هذا النمط من التصريفات.
+34|IRR|What is the past simple form of fly?|ما هو الماضي البسيط لفعل fly؟|Flown~Flown|Flew~Flew|Flyed~Flyed|Flied~Flied|B|Flew is the correct past simple.|الإجابة هي صيغة الماضي البسيط الصحيحة للفعل غير المنتظم، ولا تكون بإضافة الحروف المعتادة إلى نهاية الفعل.
+35|IRR|What is the past participle of be?|ما هو التصريف الثالث لفعل be؟|Was~Was|Were~Were|Been~Been|Being~Being|C|Been is the correct past participle.|الإجابة هي التصريف الثالث الصحيح للفعل غير المنتظم، ويستخدم بعد الفعلين المساعدين في زمن المضارع التام أو في المبني للمجهول.
+36|LINK|Which expression means “that is” or “in other words”?|أي تعبير يعني "أي" أو "بعبارة أخرى"؟|e.g.~e.g.|i.e.~i.e.|etc.~etc.|vs.~vs.|B|i.e. means that is.|اختصار لاتيني بمعنى «أي» أو «بعبارة أخرى»، ويستخدم للتوضيح وإعادة الصياغة.
+37|LINK|Which abbreviation is used to introduce examples?|أي اختصار يُستخدم لتقديم أمثلة؟|i.e.~i.e.|e.g.~e.g.|i.d.~i.d.|e.a.~e.a.|B|e.g. means for example.|اختصار لاتيني بمعنى «على سبيل المثال»، ويُستخدم لتقديم أمثلة.
+38|LINK|In formal writing, the abbreviations i.e. and e.g. are commonly placed:|في الكتابة الرسمية، الاختصارات i.e. و e.g. توضع عادة:|Inside parentheses~داخل الأقواس|Only at the end of a paragraph~فقط في نهاية الفقرة|In the title~في العنوان|In quotation marks in every case~في علامات اقتباس في كل حالة|A|They are commonly placed inside parentheses.|الاختيار الصحيح يحقق وظيفة الربط المطلوبة في الجملة، مع مراعاة موضع أداة الربط والتركيب الذي يأتي بعدها.
+39|LINK|Which sentence uses namely correctly?|أي جملة تستخدم namely بشكل صحيح؟|I enjoy sports, namely running, for example.~أستمتع بالرياضة، أي الجري، على سبيل المثال.|Three students, namely Ali, Mona, and Sara, won prizes.~ثلاثة طلاب، أي علي ومونا وسارة، فازوا بجوائز.|I like fruits, namely such as apples.~أحب الفواكه، أي مثل التفاح.|Namely, I went to school yesterday.~أي، ذهبت إلى المدرسة أمس.|B|Namely introduces a complete list.|الاختيار الصحيح يحقق وظيفه الربط المطلوبة في الجملة، مع مراعاة موضع أداة الربط والتركيب الذي يأتي بعدها.
+40|LINK|Which expression introduces only some examples, rather than necessarily all the examples?|أي تعبير يقدم بعض الأمثلة فقط، وليس بالضرورة كل الأمثلة؟|Namely~أي|In conclusion~في الختام|Such as~مثل|The latter~الأخير|C|Such as introduces some examples.|تُستخدم قبل أمثلة، ولا تعني بالضرورة ذكر جميع عناصر المجموعة.
+41|LINK|Choose the correct sentence.|اختر الجملة الصحيحة.|She also is at the end of the sentence.~هي أيضاً في نهاية الجملة.|We visited the castle. We also explored the gardens.~زرنا القلعة. استكشفنا الحدائق أيضاً.|We also, visited the gardens.~نحن أيضاً، زرنا الحدائق.|Also we the gardens visited.~أيضاً نحن الحدائق زرنا.|B|Also comes before the main verb.|الاختيار الصحيح يحقق وظيفة الربط المطلوبة في الجملة، مع مراعاة موضع أداة الربط والتركيب الذي يأتي بعدها.
+42|LINK|Choose the correct sentence.|اختر الجملة الصحيحة.|He speaks French as well.~هو يتحدث الفرنسية كذلك.|As well he French speaks.~كذلك هو الفرنسية يتحدث.|He speaks as well French.~هو يتحدث كذلك الفرنسية.|He speaks French as well.~هو يتحدث الفرنسية كذلك.|A|As well comes at the end.|تأتي عادةً في نهاية الجملة بمعنى «كذلك».
+43|LINK|Which expression is normally followed by another word or phrase?|أي تعبير يتبعه عادة كلمة أو عبارة أخرى؟|Too~أيضاً|As well~كذلك|As well as~بالإضافة إلى|In short~باختصار|C|As well as is followed by a noun/verb.|تأتي عادةً في نهاية الجملة بمعنى «كذلك». (Note: Text implies C is the answer for 'as well as')
+44|LINK|The course develops reading skills. ____, it improves vocabulary.|الدورة تنمي مهارات القراءة. ____، إنها تحسن المفردات.|Despite~على الرغم من|Furthermore~علاوة على ذلك|Unlike~على عكس|Although~على الرغم من أن|B|Furthermore adds a point.|أداة ربط رسمية لإضافة نقطة داعمة في الكتابة الأكاديمية.
+45|LINK|Which expression is generally more appropriate in informal conversation?|أي تعبير يكون عادةً أكثر ملاءمة في المحادثة غير الرسمية؟|Furthermore~علاوة على ذلك|Moreover~علاوة على ذلك|Plus~بالإضافة|In conclusion~في الختام|C|Plus is informal.|تعبير غير رسمي لإضافة معلومة أخرى.
+46|LINK|Which sequence correctly organizes a presentation?|أي تسلسل ينظم العرض التقديمي بشكل صحيح؟|Finally, firstly, secondly~أخيراً، أولاً، ثانياً|Firstly, secondly, finally~أولاً، ثانياً، أخيراً|However, despite, namely~ومع ذلك، على الرغم من، أي|In conclusion, firstly, for example~في الختام، أولاً، على سبيل المثال|B|Firstly, secondly, finally is the logical order.|التسلسل الصحيح لتنظيم الأفكار.
+47|LINK|A company has factories in Cairo and Alexandria. Cairo is more productive than Alexandria. Which sentence is correct?|شركة لديها مصانع في القاهرة والإسكندرية. القاهرة أكثر إنتاجية من الإسكندرية. أي جملة صحيحة؟|The former is Alexandria.~الأول هو الإسكندرية.|The former is Cairo.~الأول هو القاهرة.|The latter is Cairo.~الأخير هو القاهرة.|The former refers to both factories.~الأول يشير إلى كلا المصنعين.|B|The former refers to the first mentioned (Cairo).|تشير إلى العنصر الأول الذي ذكر من عنصرين.
+48|LINK|A company has two offices: one in London and one in Paris. Which office does the latter refer to?|شركة لديها مكتبان: واحد في لندن وواحد في باريس. أي مكتب يشير إليه the latter؟|London~لندن|Both offices~كلا المكتبين|Paris~باريس|Neither office~لا هذا ولا ذاك|C|The latter refers to the second mentioned (Paris).|الاختيار الصحيح يحقق وظيفة الربط المطلوبة في الجملة.
+49|LINK|Which expression is more informal when summarizing information?|أي تعبير هو أقل رسمية عند تلخيص المعلومات؟|In a nutshell~باختصار|Furthermore~علاوة على ذلك|In addition~بالإضافة إلى ذلك|Namely~أي|A|In a nutshell is informal.|تعبير أقل رسمية يُستخدم لتلخيص الفكرة بإيجاز.
+50|LINK|Choose the sentence that correctly expresses contrast.|اختر الجملة التي تعبر عن التباين بشكل صحيح.|Although he was tired, he continued working.~على الرغم من أنه كان متعباً، إلا أنه استمر في العمل.|Although he was tired, but he continued working.~على الرغم من أنه كان متعباً، لكنه استمر في العمل.|Despite he was tired, he continued working.~على الرغم من أنه كان متعباً، إلا أنه استمر في العمل.|However he was tired, he continued working.~ومع ذلك كان متعباً، استمر في العمل.|A|Although + clause. No "but".|تتبعها جملة تحتوي على فاعل وفعل، وظهر التباين دون استخدام but معها.
+51|LINK|Which expression is followed by a noun or a gerund?|أي تعبير يتبعه اسم أو مصدر؟|Although~على الرغم من أن|Even though~على الرغم من أن|Despite~على الرغم من|Whereas~بينما|C|Despite + noun/gerund.|يأتي بعدها اسم أو عبارة اسمية أو مصدر مؤول من الفعل، ولا تتبعها جملة كاملة مباشرة.
+52|LINK|Choose the correct sentence.|اختر الجملة الصحيحة.|Despite the rain, we went out.~على الرغم من المطر، خرجنا.|Despite it was raining, we went out.~على الرغم من أنها كانت تمطر، خرجنا.|Despite we were tired, we continued.~على الرغم من أننا كنا متعبين، استمرينا.|Despite he arrived late, he continued.~على الرغم من أنه وصل متأخراً، استمر.|A|Despite + noun.|يَأْتِي بَعْدَهَا أَسْمَ أَوْ عِبَارَةُ أَسْمِيَّةٍ أَوْ مَصْدَرٍ مَوْولٍ مِنَ الْفِعْلِ، وَلَا تَتَّبِعُهَا جَمَلَةٌ كَامِلَةٌ مَبَاشِرَةٌ.
+53|LINK|Which expression is followed by a subject and a verb?|أي تعبير يتبعه فاعل وفعل؟|In spite of~على الرغم من|Despite~على الرغم من|Although~على الرغم من أن|Unlike~على عكس|C|Although + subject + verb.|تَتَّبِعُهَا جَمَلَةٌ تَحْتَوِي عَلَى فَاعِلٍ وَفَعَلٍ.
+54|LINK|Choose the correct sentence.|اختر الجملة الصحيحة.|In spite he was ill, he attended class.~على الرغم من أنه كان مريضاً، حضر الفصل.|In spite of being ill, he attended class.~على الرغم من كونه مريضاً، حضر الفصل.|In spite he was ill, he attended class.~على الرغم من أنه كان مريضاً، حضر الفصل.|In spite of ill, he attended class.~على الرغم من المرض، حضر الفصل.|B|In spite of + gerund/noun.|يَأْتِي بُعْدَهَا أَسْمَ أَوْ مَصْدَرٍ مَوْولٍ مِنَ الْفِعْلِ.
+55|LINK|Which sentence correctly uses despite the fact that?|أي جملة تستخدم despite the fact that بشكل صحيح؟|Despite the fact that he was tired, he finished the task.~على الرغم من حقيقة أنه كان متعباً، إلا أنه أنهى المهمة.|Despite the fact that his tiredness, he finished the task.~على الرغم من حقيقة تعبه، أنهى المهمة.|Despite the fact that being tired, he finished the task.~على الرغم من حقيقة كونه متعباً، أنهى المهمة.|Despite the fact that tired, he finished the task.~على الرغم من حقيقة متعب، أنهى المهمة.|A|Despite the fact that + clause.|يأتي بعدها جملة كاملة تحتوي على فاعل وفعل.
+56|LINK|Tom enjoys reading, ____ his sister prefers watching films.|توم يستمتع بالقراءة، ____ أخته تفضل مشاهدة الأفلام.|despite~على الرغم من|whereas~بينما|such as~مثل|in conclusion~في الختام|B|Whereas contrasts clauses.|تربط بين فكرتين متقابلتين لإظهار الاختلاف بينهما.
+57|LINK|Which sentence correctly uses unlike?|أي جملة تستخدم unlike بشكل صحيح؟|Unlike my brother, I enjoy swimming.~على عكس أخي، أنا أستمتع بالسباحة.|Unlike I enjoy swimming, my brother does not.~على عكسي أنا أستمتع بالسباحة، أخي لا يفعل.|Unlike my brother enjoys swimming.~على عكس أخي يستمتع بالسباحة.|Unlike of my brother, I enjoy swimming.~على عكس من أخي، أنا أستمتع بالسباحة.|A|Unlike + noun.|تَأْتِي قَبْلُ أَسْمَ أَوْ عِبَارَةُ أَسْمِيةٍ لِلْمَقَارِنَةِ وَإِظْهَارِ الْأَخْلَافِ.
+58|LINK|Which word is more formal than but in this example: “I studied hard. ____ I did not pass the exam.”|أي كلمة هي أكثر رسمية من but في هذا المثال: "درست بجد. ____ لم أنجح في الامتحان."|Too~أيضاً|However~ومع ذلك|Such as~مثل|Namely~أي|B|However is formal but.|تُستخدم لإظهار التباين بين جملتين.
+59|LINK|Which sentence correctly introduces a summary?|أي جملة تقدم ملخصاً بشكل صحيح؟|In summary, the project improved students' writing skills.~باختصار، المشروع حسن مهارات الكتابة لدى الطلاب.|In summary the project, improved students' writing skills.~باختصار المشروع، حسن مهارات الكتابة لدى الطلاب.|In summary to improve, students' writing skills.~باختصار لتحسين، مهارات الكتابة لدى الطلاب.|In summary, although the project improved students' writing skills.~باختصار، على الرغم من أن المشروع حسن مهارات الكتابة لدى الطلاب.|A|Correct punctuation and structure.|الاختيار الصحيح يُقدَّم خلاصة أو خاتمة للأفكار السابقة.
+60|LINK|Which connector is most appropriate for adding a further point in formal academic writing?|أي رابط هو الأنسب لإضافة نقطة أخرى في الكتابة الأكاديمية الرسمية؟|Besides, at the end of every sentence~بالإضافة إلى، في نهاية كل جملة|Moreover,~علاوة على ذلك،|Unlike,~على عكس،|Despite,~على الرغم من،|B|Moreover is formal.|الاختيار الصحيح يحقق وظيفة الربط المطلوبة في الجملة.
+61|IRR|Choose the correct sequence: break - ____ - ____.|اختر التسلسل الصحيح: break - ____ - ____.|Breaked - broke~Breaked - broke|Broke - broken~Broke - broken|Broke - broke~Broke - broke|Broken - broke~Broken - broke|B|Break - broke - broken.|هذا الفعل من الأفعال غير المنتظمة؛ لذلك يجب حفظ تسلسل التصريفات كما هو، ولا تكون صيغه بإضافة ed.
+62|IRR|Choose the correct sequence: drive - ____ - ____.|اختر التسلسل الصحيح: drive - ____ - ____.|Drove - driven~Drove - driven|Driven - drove~Driven - drove|Drived - driven~Drived - driven|Drove - drove~Drove - drove|A|Drive - drove - driven.|هذا الفعل من الأفعال غير المنتظمة؛ لذلك يجب حفظ تسلسل التصريفات كما هو.
+63|IRR|What is the past participle of choose?|ما هو التصريف الثالث لفعل choose؟|Chose~Chose|Chosed~Chosed|Chosen~Chosen|Choosing~Choosing|C|Chosen is the correct past participle.|الإجابة هي التصريف الثالث الصحيح للفعل غير المنتظم.
+64|IRR|What is the past simple form of freeze?|ما هو الماضي البسيط لفعل freeze؟|Frozen~Frozen|Froze~Froze|Freezed~Freezed|Freezing~Freezing|B|Froze is the correct past simple.|الإجابة هي صيغة الماضي البسيط الصحيحة للفعل غير المنتظم.
+65|IRR|Which sequence is correct?|أي تسلسل صحيح؟|Know - known - knew~Know - known - knew|Know - knew - known~Know - knew - known|Know - known - known~Know - known - known|Know - knew - knew~Know - knew - knew|B|Know - knew - known.|هذا الفعل من الأفعال غير المنتظمة؛ لذلك يجب حفظ تسلسل التصريفات.
+66|IRR|What is the past participle of throw?|ما هو التصريف الثالث لفعل throw؟|Threw~Threw|Throwed~Throwed|Thrown~Thrown|Throwing~Throwing|C|Thrown is the correct past participle.|الإجابة هي التصريف الثالث الصحيح للفعل غير المنتظم.
+67|IRR|Which verb follows the pattern sing - sang - sung?|أي فعل يتبع نمط sing - sang - sung؟|Begin - began - begun~Begin - began - begun|Bring - brought - brought~Bring - brought - brought|Sleep - slept - slept~Sleep - slept - slept|Sell - sold - sold~Sell - sold - sold|A|Begin - began - begun follows the i-a-u pattern.|الاختيار الصحيح هو الفعل الذي يتبع نفس نمط التغيير.
+68|IRR|What is the past simple form of catch?|ما هو الماضي البسيط لفعل catch؟|Catched~Catched|Caught~Caught|Caught~Caught|Catch~Catch|B|Caught is the correct past simple.|الإجابة هي صيغة الماضي البسيط الصحيحة للفعل غير المنتظم.
+69|IRR|What is the past participle of fall?|ما هو التصريف الثالث لفعل fall؟|Fell~Fell|Fallen~Fallen|Failed~Failed|Falling~Falling|B|Fallen is the correct past participle.|الإجابة هي التصريف الثالث الصحيح للفعل غير المنتظم.
+70|IRR|Which group contains verbs with identical past simple and past participle forms?|أي مجموعة تحتوي على أفعال لها نفس الماضي البسيط والتصريف الثالث؟|Go, do, see~Go, do, see|Write, take, break~Write, take, break|Buy, teach, bring~Buy, teach, bring|Keep, feel, sell~Keep, feel, sell|D|Keep (kept-kept), feel (felt-felt), sell (sold-sold).|الأفعال في هذه المجموعة لها نفس الشكل في الماضي والتصريف الثالث.
+71|LINK|The university introduced new online courses. ____, it provided students with digital learning resources.|الجامعة قدمت دورات إلكترونية جديدة. ____، وفرت للطلاب موارد تعليمية رقمية.|Nevertheless~مع ذلك|In addition~بالإضافة إلى ذلك|Despite~على الرغم من|Unlike~على عكس|B|In addition adds information.|تُستخدم لإضافة معلومة أو فكرة جديدة إلى ما سبق.
+72|LINK|The experiment was successful. ____, the researchers identified some limitations.|كانت التجربة ناجحة. ____، حدد الباحثون بعض القيود.|However~ومع ذلك|For instance~على سبيل المثال|Namely~أي|In addition~بالإضافة إلى ذلك|A|However contrasts.|تُستخدم لإظهار التباين بين جملتين.
+73|LINK|Which sentence correctly uses i.e.?|أي جملة تستخدم i.e. بشكل صحيح؟|I enjoy outdoor activities (i.e. hiking and cycling, for example).~أستمتع بالأنشطة الخارجية (أي المشي وركوب الدراجات، على سبيل المثال).|The meeting was postponed (i.e. it was moved to a later date).~تم تأجيل الاجتماع (أي تم نقله إلى تاريخ لاحق).|I bought some fruit (i.e. apples and oranges as examples).~اشتريت بعض الفاكهة (أي التفاح والبرتقال كأمثلة).|She likes sports (i.e. tennis, football and swimming).~إنها تحب الرياضة (أي التنس وكرة القدم والسباحة).|B|i.e. restates/clarifies.|i.e. تستخدم لإعادة الصياغة أو التوضيح.
+74|LINK|Which sentence correctly uses e.g.?|أي جملة تستخدم e.g. بشكل صحيح؟|The deadline was extended (e.g. it was moved to Friday).~تم تمديد الموعد النهائي (على سبيل المثال تم نقله إلى الجمعة).|We need to improve one skill (e.g. that is, reading comprehension).~نحتاج إلى تحسين مهارة واحدة (على سبيل المثال، أي فهم القراءة).|Several activities develop speaking skills (e.g. role-playing and interviews).~العديد من الأنشطة تنمي مهارات التحدث (على سبيل المثال لعب الأدوار والمقابلات).|The results were disappointing (e.g. in other words they were poor).~كانت النتائج مخيبة للآمال (على سبيل المثال بعبارة أخرى كانت سيئة).|C|e.g. introduces examples.|e.g. تستخدم لتقديم أمثلة.
+75|LINK|Which sentence best illustrates the difference between namely and such as?|أي جملة توضح بشكل أفضل الفرق بين namely و such as؟|Namely introduces all the items referred to, while such as introduces examples must introduce every item in a sentence.~namely تقدم كل العناصر المشار إليها، بينما such as تقدم أمثلة يجب أن تقدم كل عنصر في الجملة.|Namely and such as are always interchangeable.~namely و such as قابلان للتبادل دائماً.|Namely is used only to summarize paragraphs.~namely تستخدم فقط لتلخيص الفقرات.|Namely introduces all the items referred to, while such as introduces examples.~namely تقدم كل العناصر المشار إليها، بينما such as تقدم أمثلة.|A|Namely introduces a complete list, such as introduces examples.|تستخدم namely لتحديد العناصر المقصودة تحديداً وغالباً تقدم قائمة كاملة، بينما such as تقدم أمثلة فقط.
+76|LINK|The school offers three foreign languages, ____ French, German, and Spanish.|المدرسة تقدم ثلاث لغات أجنبية، ____ الفرنسية والألمانية والإسبانية.|such as~مثل|namely~أي|although~على الرغم من أن|whereas~بينما|B|Namely provides the complete list.|تُستخدم لتحديد العناصر المقصودة تحديدًا، وغالبًا تقدّم قائمة كاملة.
+77|LINK|Which sentence uses as well as correctly?|أي جملة تستخدم as well as بشكل صحيح؟|She is talented as well.~إنها موهوبة أيضاً.|She is talented as well as hardworking.~إنها موهوبة بالإضافة إلى كونها مجتهدة.|As well she talented hardworking.~كذلك هي موهوبة مجتهدة.|She as well as talented hardworking.~هي بالإضافة إلى موهوبة مجتهدة.|B|As well as + noun/adj.|الاختيار الصحيح يحقق وظيفة الربط المطلوبة في الجملة.
+78|LINK|Which sentence is most appropriate in formal academic writing?|أي جملة هي الأنسب في الكتابة الأكاديمية الرسمية؟|The intervention improved motivation. Plus, students enjoyed it.~التدخل حسن الدافعية. بالإضافة، استمتع الطلاب بذلك.|The intervention improved motivation. What's more, students enjoyed it.~التدخل حسن الدافعية. والأكثر من ذلك، استمتع الطلاب بذلك.|The intervention improved motivation. Furthermore, students demonstrated greater achievement.~التدخل حسن الدافعية. علاوة على ذلك، أظهر الطلاب إنجازاً أكبر.|The intervention improved motivation. And stuff like that.~التدخل حسن الدافعية. وأشياء من هذا القبيل.|C|Furthermore is formal.|الاختيار الصحيح يحقق وظيفة الربط المطلوبة في الجملة.
+79|LINK|A report discusses two teaching methods: the lecture method first and the discussion method second. The latter is more interactive. What does "the latter" refer to?|تقرير يناقش طريقتين للتدريس: طريقة المحاضرة أولاً وطريقة المناقشة ثانياً. the latter أكثر تفاعلية. إلى ماذا تشير the latter؟|The former is more interactive.~الأول أكثر تفاعلية.|The latter is more interactive.~الأخير أكثر تفاعلية.|Both the former and the latter refer only to the lecture method.~كلاهما يشير فقط إلى طريقة المحاضرة.|The latter refers to the first method.~الأخير يشير إلى الطريقة الأولى.|B|The latter refers to the discussion method (second).|تشير إلى العنصر الثاني الذي ذكر من عنصرين.
+80|LINK|Which sentence contains an error in the use of a contrasting linker?|أي جملة تحتوي على خطأ في استخدام رابط التباين؟|Although she was nervous, she gave a good presentation.~على الرغم من أنها كانت متوترة، إلا أنها قدمت عرضاً جيداً.|Despite feeling nervous, she gave a good presentation.~على الرغم من شعورها بالتوتر، قدمت عرضاً جيداً.|She was nervous. However, she gave a good presentation.~كانت متوترة. ومع ذلك، قدمت عرضاً جيداً.|Despite she felt nervous, she gave a good presentation.~على الرغم من أنها شعرت بالتوتر، قدمت عرضاً جيداً.|D|Despite + clause is incorrect.|يأتي بعدها اسم أو عبارة اسمية، ولا تتبعها جملة كاملة مباشرة.
+81|LINK|____ the students had limited time, they completed the project successfully.|____ كان لدى الطلاب وقت محدود، أكملوا المشروع بنجاح.|Despite~على الرغم من|Although~على الرغم من أن|In spite of~على الرغم من|Unlike~على عكس|B|Although + clause.|تتبعها جملة تحتوي على فاعل وفعل.
+82|LINK|____ having limited resources, the research team completed the study.|____ وجود موارد محدودة، أكمل فريق البحث الدراسة.|Although~على الرغم من أن|Even though~على الرغم من أن|Despite~على الرغم من|Whereas~بينما|C|Despite + gerund.|يَأْتِي بَعْدَهَا أَسْمَ أَوْ عِبَارَةُ أَسْمِيَّةٍ أَوْ مَصْدَرٍ مَوْولٍ مِنَ الْفَعْلِ.
+83|LINK|The first group used traditional instruction, ____ the second group used project-based learning.|المجموعة الأولى استخدمت التعليم التقليدي، ____ المجموعة الثانية استخدمت التعلم القائم على المشاريع.|whereas~بينما|despite~على الرغم من|in conclusion~في الختام|for example~على سبيل المثال|A|Whereas contrasts two clauses.|تربط بين فكرتين متقابلتين لإظهار الاختلاف بينهما.
+84|LINK|Which sentence correctly uses while to contrast two ideas?|أي جملة تستخدم while بشكل صحيح للتباين بين فكرتين؟|While the first task was easy, the second was more challenging.~بينما كانت المهمة الأولى سهلة، كانت الثانية أكثر تحدياً.|While the first task easy, the second was more challenging.~بينما المهمة الأولى سهلة، كانت الثانية أكثر تحدياً.|While the first task was easy, but the second was more challenging.~بينما كانت المهمة الأولى سهلة، لكن الثانية كانت أكثر تحدياً.|While of the first task was easy, the second was more challenging.~بينما من المهمة الأولى كانت سهلة، كانت الثانية أكثر تحدياً.|A|While + clause, clause.|يمكن أن تربط جملتين متقابلتين، ويجب أن تكون كل جملة مكتملة نحوياً.
+85|LINK|Which expression best completes the conclusion of an academic paragraph? “The findings indicate that ____”|أي تعبير يكمل خاتمة فقرة أكاديمية بشكل أفضل؟ "النتائج تشير إلى أن ____"|In conclusion~في الختام|Unlike~على عكس|Despite~على الرغم من|For instance~على سبيل المثال|A|In conclusion introduces a summary/conclusion.|تُستخدم لتقديم الخاتمة أو تلخيص الأفكار الأساسية.
+86|IRR|The students have ____ their assignments.|الطلاب ____ واجباتهم.|wrote~wrote|written~written|writing~writing|write~write|B|Have + past participle (written).|الإجابة هي التصريف الثالث الصحيح للفعل غير المنتظم.
+87|IRR|She ____ the answer correctly yesterday.|هي ____ الإجابة بشكل صحيح أمس.|known~known|knew~knew|know~know|knows~knows|B|Knew is the past simple.|الاختيار الصحيح هو الماضي البسيط.
+88|IRR|The glass has ____ into several pieces.|الزجاج ____ إلى عدة قطع.|broke~broke|break~break|broken~broken|breaking~breaking|C|Has + past participle (broken).|الإجابة هي التصريف الثالث الصحيح للفعل غير المنتظم.
+89|IRR|They ____ to the museum last weekend.|هم ____ إلى المتحف في عطلة نهاية الأسبوع الماضية.|gone~gone|go~go|went~went|going~going|C|Went is the past simple.|الاختيار الصحيح هو الماضي البسيط.
+90|IRR|He has ____ three books this month.|هو ____ ثلاثة كتب هذا الشهر.|read~read|reading~reading|reads~reads|red~red|A|Has + past participle (read).|الإجابة هي التصريف الثالث الصحيح.
+91|IRR|The teacher ____ the students new vocabulary yesterday.|المعلم ____ الطلاب مفردات جديدة أمس.|taught~taught|teach~teach|teaching~teaching|taught~taught|A|Taught is the past simple.|الاختيار الصحيح هو الماضي البسيط.
+92|IRR|I have never ____ such a beautiful place.|لم ____ مكاناً جميلاً كهذا من قبل.|saw~saw|see~see|seen~seen|seeing~seeing|C|Have + past participle (seen).|الاختيار الصحيح هو التصريف الثالث.
+93|IRR|The athlete ____ in the competition last year.|الرياضي ____ في المسابقة العام الماضي.|swim~swim|swam~swam|swum~swum|swimming~swimming|B|Swam is the past simple.|الاختيار الصحيح هو الماضي البسيط.
+94|IRR|The company has ____ a new policy.|الشركة ____ سياسة جديدة.|make~make|made~made|making~making|maked~maked|B|Has + past participle (made).|الإجابة هي التصريف الثالث الصحيح.
+95|IRR|The child ____ asleep during the film.|الطفل ____ أثناء الفيلم.|fallen~fallen|fall~fall|fell~fell|falling~falling|C|Fell is the past simple.|الاختيار الصحيح هو الماضي البسيط.
+96|IRR|Which sentence is grammatically correct?|أي جملة صحيحة نحوياً؟|She has went home.~ذهبت إلى المنزل.|She has gone home.~ذهبت إلى المنزل.|She has go home.~ذهبت إلى المنزل.|She has going home.~ذهبت إلى المنزل.|B|Has + past participle (gone).|هذا الفعل من الأفعال غير المنتظمة؛ لذلك يجب حفظ تسلسل التصريفات كما هو.
+97|IRR|Which sentence uses the past simple and past participle correctly?|أي جملة تستخدم الماضي البسيط والتصريف الثالث بشكل صحيح؟|He has took the book and returned it yesterday.~أخذ الكتاب وأعاده أمس.|He took the book and has returned it.~أخذ الكتاب وأعاده.|He has taken the book and returned it.~أخذ الكتاب وأعاده.|He has taken the book and returned~أخذ الكتاب وأعاد|C|Has taken (past participle), returned (past simple).|الإجابة هي استخدام التصريف الثالث مع has والماضي البسيط بشكل صحيح.
+98|IRR|Which set contains three different vowel sounds in the forms of each verb?|أي مجموعة تحتوي على ثلاثة أصوات متحركة مختلفة في أشكال كل فعل؟|Cut - cut - cut~Cut - cut - cut|Keep - kept - kept~Keep - kept - kept|Begin - began - begun~Begin - began - begun|Buy - bought - bought~Buy - bought - bought|C|Begin (i), began (a), begun (u).|هذا الفعل من الأفعال غير المنتظمة؛ لذلك يجب حفظ تسلسل التصريفات كما هو.
+99|IRR|Which group follows the pattern present - past - past participle, with the past participle ending in -n or -en?|أي مجموعة تتبع النمط: مضارع - ماضي - تصريف ثالث، مع انتهاء التصريف الثالث بـ n أو en؟|Bring - brought - brought~Bring - brought - brought|Sell - sold - sold~Sell - sold - sold|Speak - spoke - spoken~Speak - spoke - spoken|Feel - felt - felt~Feel - felt - felt|C|Spoken ends in -en.|الإجابة هي المجموعة التي ينتهي فيها التصريف الثالث بـ n أو en.
+100|IRR|Which sentence contains an irregular verb used incorrectly?|أي جملة تحتوي على فعل غير منتظم مستخدم بشكل خاطئ؟|They have written a detailed report.~لقد كتبوا تقريراً مفصلاً.|She went to the library yesterday.~ذهبت إلى المكتبة أمس.|He has ate his lunch.~لقد أكل غداءه.|We bought new books last week.~اشترينا كتباً جديدة الأسبوع الماضي.|C|Has ate should be has eaten.|هذا الفعل من الأفعال غير المنتظمة؛ يجب استخدام التصريف الثالث مع has.
+101|REAS|We stayed at home ____ it was raining heavily.|بقينا في المنزل ____ كانت تمطر بغزارة.|because of~بسبب|because~لأن|owing to~بسبب|due to~بسبب|B|Because + clause.|تُستخدم هذه الأداة قبل جملة تحتوي على فاعل وفعل لتوضيح سبب حدوث الفعل.
+102|REAS|The match was cancelled ____ the heavy rain.|تم إلغاء المباراة ____ المطر الغزير.|because~لأن|since~بما أن|because of~بسبب|for~لأن|C|Because of + noun.|تأتي هذه العبارة قبل اسم أو عبارة اسمية.
+103|REAS|____ the road was closed, we had to take a detour.|____ كان الطريق مغلقاً، اضطررنا إلى أخذ منعطف.|Due to~بسبب|Owing to~بسبب|Since~بما أن|Because of~بسبب|C|Since + clause.|تُستخدم هذه الأداة قبل جملة تحتوي على فاعل وفعل.
+104|REAS|The flight was delayed ____ bad weather.|تأخرت الرحلة ____ سوء الأحوال الجوية.|because~لأن|due to~بسبب|since~بما أن|for~لأن|B|Due to + noun.|تأتي هذه العبارة قبل اسم أو عبارة اسمية.
+105|REAS|The students were absent ____ they were ill.|كان الطلاب غائبين ____ كانوا مرضى.|because of~بسبب|due to~بسبب|owing to~بسبب|because~لأن|D|Because + clause.|تُستخدم هذه الأداة قبل جملة تحتوي على فاعل وفعل.
+106|REAS|____ the traffic jam, I arrived late for work.|____ الازدحام المروري، وصلت متأخراً للعمل.|Because~لأن|Since~بما أن|Owing to~بسبب|For~لأن|C|Owing to + noun.|تأتي هذه العبارة قبل اسم أو عبارة اسمية.
+107|REAS|The picnic was cancelled ____ the fact that the weather was bad.|تم إلغاء النزهة ____ حقيقة أن الطقس كان سيئاً.|because~لأن|because of~بسبب|due to~بسبب|due to~بسبب|D|Due to the fact that + clause.|تأتي هذه العبارة قبل حقيقة أو جملة.
+109|REAS|We decided to leave early ____ we wanted to avoid traffic.|قررنا المغادرة مبكراً ____ أردنا تجنب الازدحام المروري.|because~لأن|because of~بسبب|due to~بسبب|owing to~بسبب|A|Because + clause.|تُستخدم هذه الأداة قبل جملة تحتوي على فاعل وفعل.
+110|REAS|____ his hard work, he achieved excellent results.|____ عمله الجاد، حقق نتائج ممتازة.|Because~لأن|Since~بما أن|Because of~بسبب|For~لأن|C|Because of + noun.|تأتي هذه العبارة قبل اسم أو عبارة اسمية.
+111|REAS|The school was closed ____ the extreme heat.|أغلقت المدرسة ____ الحرارة الشديدة.|because~لأن|since~بما أن|due to~بسبب|for~لأن|C|Due to + noun.|تأتي هذه العبارة قبل اسم أو عبارة اسمية.
+112|REAS|____ she was feeling tired, she went to bed early.|____ كانت تشعر بالتعب، ذهبت إلى الفراش مبكراً.|Owing to~بسبب|Because of~بسبب|Since~بما أن|Due to~بسبب|C|Since + clause.|تُستخدم هذه الأداة قبل جملة تحتوي على فاعل وفعل.
+113|REAS|The event was postponed ____ a problem with the venue.|تم تأجيل الحدث ____ مشكلة في المكان.|because~لأن|owing to~بسبب|since~بما أن|for~لأن|B|Owing to + noun.|تأتي هذه العبارة قبل اسم أو عبارة اسمية.
+114|REAS|He couldn't finish the project on time ____ he was ill.|لم يستطع إنهاء المشروع في الوقت المحدد ____ كان مريضاً.|because~لأن|because of~بسبب|due to~بسبب|owing to~بسبب|A|Because + clause.|تُستخدم هذه الأداة قبل جملة تحتوي على فاعل وفعل.
+115|REAS|The train was late ____ a technical problem.|تأخر القطار ____ مشكلة فنية.|because~لأن|since~بما أن|owing to~بسبب|for~لأن|C|Owing to + noun.|تأتي هذه العبارة قبل اسم أو عبارة اسمية.
+116|REAS|____ the fact that she had prepared carefully, she was still nervous.|____ حقيقة أنها استعدت بعناية، كانت لا تزال متوترة.|Because~لأن|Due to~بسبب|Due to the fact that~بسبب حقيقة أن|Because of~بسبب|C|Due to the fact that + clause.|تُستخدم هذه الأداة قبل جملة تحتوي على فاعل وفعل.
+117|REAS|We couldn't go swimming ____ the pool was closed.|لم نستطع الذهاب للسباحة ____ كان المسبح مغلقاً.|because~لأن|because of~بسبب|due to~بسبب|owing to~بسبب|A|Because + clause.|تُستخدم هذه الأداة قبل جملة تحتوي على فاعل وفعل.
+118|REAS|____ the poor road conditions, the journey took longer.|____ ظروف الطريق السيئة، استغرقت الرحلة وقتاً أطول.|Since~بما أن|For~لأن|Because~لأن|Due to~بسبب|D|Due to + noun.|تأتي هذه العبارة قبل اسم أو عبارة اسمية.
+119|REAS|He was unable to attend the conference ____ illness.|لم يتمكن من حضور المؤتمر ____ المرض.|because~لأن|because of~بسبب|since~بما أن|for~لأن|B|Because of + noun.|تأتي هذه العبارة قبل اسم أو عبارة اسمية.
+120|REAS|She wore a coat, ____ it was very cold outside.|ارتدت معطفاً، ____ كان الجو بارداً جداً في الخارج.|because of~بسبب|owing to~بسبب|because~لأن|due to~بسبب|C|Because + clause.|تستخدم هذه الأداة قبل جملة تحتوي على فاعل وفعل.
+121|FUT|I think it ____ rain tomorrow.|أعتقد أنها ____ تمطر غداً.|is going to~سوف|will~سوف|am~أكون|am going to~سوف|B|Will for predictions/opinions.|يُستخدم المستقبل البسيط للتعبير عن التوقع أو الرأي.
+122|FUT|Look at those dark clouds! It ____ rain.|انظر إلى تلك السحب الداكنة! إنها ____ تمطر.|will~سوف|is going to~سوف|is raining~تمطر|rains~تمطر|B|Going to for evidence-based predictions.|تستخدم للتعبير عن توقع تدعمه أدلة واضحة.
+123|FUT|We ____ our grandparents next Friday. We have already made plans.|نحن ____ أجدادنا الجمعة القادمة. لقد وضعنا خططاً بالفعل.|visit~نزور|will visit~سنزور|are visiting~نزور|are going to visit~سنزور|C|Present continuous for fixed arrangements.|يُستخدم المضارع المستمر للتعبير عن ترتيب مستقبلي محدد تم الاتفاق عليه مسبقًا.
+124|FUT|"The phone is ringing." "I ____ answer it."|"الهاتف يرن." "أنا ____ أجيب عليه."|am going to~سوف|am answering~أجيب|will~سوف|answer~أجيب|C|Will for spontaneous decisions.|يُستخدم المستقبل البسيط للتعبير عن القرار اللحظي.
+125|FUT|Sarah has bought a new laptop because she ____ start an online course.|اشترت سارة كمبيوتر محمولاً جديداً لأنها ____ تبدأ دورة عبر الإنترنت.|will~سوف|is going to~سوف|is starting~تبدأ|starts~تبدأ|B|Going to for intentions.|تستخدم للتعبير عن نية أو خطة مسبقة.
+126|FUT|They ____ dinner with us at 8 p.m. tonight. They have already booked the table.|هم ____ عشاء معنا في الساعة 8 مساءً الليلة. لقد حجزوا الطاولة بالفعل.|will have~سيتناولون|are having~يتناولون|are going to have~سيتناولون|have~يتناولون|B|Present continuous for arrangements.|يُستخدم المضارع المستمر للتعبير عن ترتيب مستقبلي محدد.
+127|FUT|"I'm thirsty." "I ____ get you some water."|"أنا عطشان." "أنا ____ أحضر لك بعض الماء."|am going to~سوف|am getting~أحضر|will~سوف|get~أحضر|C|Will for offers.|يُستخدم المستقبل البسيط للتعبير عن العرض.
+128|FUT|Look at that boy on the bicycle! He ____ fall.|انظر إلى ذلك الصبي على الدراجة! سوف ____ يسقط.|will~سوف|is going to~سوف|is falling~يسقط|falls~يسقط|B|Going to for evidence-based predictions.|تستخدم للتعبير عن توقع تدعمه أدلة واضحة.
+129|FUT|My friends ____ to Cairo tomorrow morning.|أصدقائي ____ إلى القاهرة صباح الغد.|are traveling~يسافرون|will travel~سيسافرون|are going to travel~سيسافرون|travel~يسافرون|A|Present continuous for arrangements.|يُستخدم المضارع المستمر للتعبير عن ترتيب مستقبلي محدد.
+130|FUT|I promise I ____ tell anyone your secret.|أعدك أنني ____ أخبر أي شخص بسرك.|am not going to~لن|won't~لن|am not telling~لا أخبر|don't~لا|B|Won't for promises.|يُستخدم المستقبل البسيط للتعبير عن الوعد.
+131|FUT|We have decided to save money. We ____ buy a new car.|قررنا توفير المال. نحن ____ نشتري سيارة جديدة.|will~سوف|are buying~نشتري|are going to~سوف|buy~نشتري|C|Going to for decisions/plans.|تستخدم للتعبير عن نية أو خطة مسبقة.
+132|FUT|“Can you help me with this box?” “Of course. I ____ help you.”|"هل يمكنك مساعدتي في هذا الصندوق؟" "بالطبع. أنا ____ أساعدك."|am going to~سوف|am helping~أساعد|will~سوف|help~أساعد|C|Will for offers.|يُستخدم المستقبل البسيط للتعبير عن العرض.
+133|FUT|She ____ the dentist at 10 a.m. on Monday. She has an appointment.|هي ____ طبيب الأسنان في الساعة 10 صباحاً يوم الاثنين. لديها موعد.|will see~سترى|is seeing~ترى|is going to see~سترى|sees~ترى|B|Present continuous for fixed appointments.|يُستخدم المضارع المستمر للتعبير عن ترتيب مستقبلي محدد.
+134|FUT|Be careful! You ____ break that glass.|كن حذراً! أنت ____ تكسر ذلك الزجاج.|will~سوف|are going to~سوف|are breaking~تكسر|break~تكسر|B|Going to for evidence-based predictions.|تستخدم للتعبير عن توقع تدعمه أدلة واضحة.
+135|FUT|I'm sure you ____ enjoy the movie.|أنا متأكد من أنك ____ تستمتع بالفيلم.|are going to~سوف|are enjoying~تستمتع|will~سوف|enjoy~تستمتع|C|Will for predictions/opinions.|يُستخدم المستقبل البسيط للتعبير عن التوقع أو الرأي.
+136|FUT|They ____ a party next Saturday. They have sent the invitations.|هم ____ حفلة السبت القادم. لقد أرسلوا الدعوات.|are having~يقيمون|will have~سيقيمون|have~يقيمون|are going to have~سيقيمون|A|Present continuous for arrangements.|يُستخدم المضارع المستمر للتعبير عن ترتيب مستقبلي محدد.
+137|FUT|Ahmed has studied hard. He ____ pass the exam.|أحمد درس بجد. هو ____ ينجح في الامتحان.|will~سوف|is going to~سوف|is passing~ينجح|passes~ينجح|B|Going to for evidence-based predictions.|تستخدم للتعبير عن توقع تدعمه أدلة واضحة.
+138|FUT|“This bag is heavy.” “Don’t worry. I ____ carry it for you.”|"هذه الحقيبة ثقيلة." "لا تقلق. أنا ____ أحملها لك."|am going to~سوف|am carrying~أحمل|will~سوف|carry~أحمل|C|Will for offers.|يُستخدم المستقبل البسيط للتعبير عن العرض.
+139|FUT|We ____ our English teacher tomorrow at 11 a.m.|نحن ____ معلم اللغة الإنجليزية غداً في الساعة 11 صباحاً.|are meeting~نلتقي|will meet~سنلتقي|are going to meet~سنلتقي|meet~نلتقي|A|Present continuous for arrangements.|يُستخدم المضارع المستمر للتعبير عن ترتيب مستقبلي محدد.
+140|FUT|Look! That glass is near the edge of the table. It ____ fall.|انظر! ذلك الزجاج بالقرب من حافة الطاولة. سوف ____ يسقط.|will~سوف|is going to~سوف|is falling~يسقط|falls~يسقط|B|Going to for evidence-based predictions.|تستخدم للتعبير عن توقع تدعمه أدلة واضحة.
+141|FUT|I think people ____ use more electric cars in the future.|أعتقد أن الناس ____ يستخدمون المزيد من السيارات الكهربائية في المستقبل.|are using~يستخدمون|are going to use~سيستخدمون|will use~سيستخدمون|use~يستخدمون|C|Will for opinions.|يُستخدم المستقبل البسيط للتعبير عن التوقع أو الرأي.
+142|FUT|My sister ____ married next June. The wedding arrangements are complete.|أختي ____ تتزوج في يونيو القادم. ترتيبات الزفاف مكتملة.|will get~ستتزوج|is getting~تتزوج|is going to get~ستتزوج|gets~تتزوج|B|Present continuous for arrangements.|يُستخدم المضارع المستمر للتعبير عن ترتيب مستقبلي محدد.
+143|FUT|We have bought all the ingredients. We ____ make a cake.|اشترينا جميع المكونات. نحن ____ نصنع كعكة.|will~سوف|are making~نصنع|are going to~سوف|make~نصنع|C|Going to for intentions.|تستخدم للتعبير عن نية أو خطة مسبقة.
+144|FUT|“I forgot to send the email.” “I ____ send it for you.”|"نسيت إرسال البريد الإلكتروني." "أنا ____ أرسله لك."|am going to~سوف|am sending~أرسل|will~سوف|send~أرسل|C|Will for spontaneous offers.|يُستخدم المستقبل البسيط للتعبير عن العرض أو القرار اللحظي.
+145|FUT|They ____ to London on Friday. Their flight is booked.|هم ____ إلى لندن يوم الجمعة. رحلتهم محجوزة.|are flying~يسافرون|will fly~سيسافرون|are going to fly~سيسافرون|fly~يسافرون|A|Present continuous for arrangements.|يُستخدم المضارع المستمر للتعبير عن ترتيب مستقبلي محدد.
+146|FUT|Watch out! The baby ____ touch the hot stove.|احترس! الطفل ____ يلمس الموقد الساخن.|will~سوف|is going to~سوف|is touching~يلمس|touches~يلمس|B|Going to for evidence-based predictions.|تستخدم للتعبير عن توقع تدعمه أدلة واضحة.
+147|FUT|I'm tired. I think I ____ go to bed early tonight.|أنا متعب. أعتقد أنني ____ أذهب إلى الفراش مبكراً الليلة.|am going to~سوف|am going~أذهب|will~سوف|go~أذهب|C|Will for opinions/spontaneous decisions.|يُستخدم المستقبل البسيط للتعبير عن الرأي أو القرار اللحظي.
+148|FUT|We ____ a new English course next Monday.|نحن ____ دورة إنجليزية جديدة الاثنين القادم.|will start~سنبدأ|are starting~نبدأ|are going to start~سنبدأ|start~نبدأ|B|Present continuous for arrangements.|يُستخدم المضارع المستمر للتعبير عن ترتيب مستقبلي محدد.
+149|FUT|He has saved enough money, so he ____ buy a new car.|لقد وفر ما يكفي من المال، لذلك هو ____ يشتري سيارة جديدة.|is going to~سوف|will~سوف|is buying~يشتري|buys~يشتري|A|Going to for intentions.|تستخدم للتعبير عن نية أو خطة مسبقة.
+150|FUT|“Would you like some coffee?” “Yes, please. I ____ have a cup.”|"هل تود بعض القهوة؟" "نعم، من فضلك. أنا ____ أشرب فنجاناً."|am going to~سوف|am having~أشرب|will~سوف|have~أشرب|C|Will for spontaneous decisions.|يُستخدم المستقبل البسيط للتعبير عن القرار اللحظي.
+`;
+
+// الأقسام الأربعة
+const LECTURES = {
+  LINK: {id:'LINK', ar:'روابط الكلمات', en:'LINK', c1:'#d81b60',c2:'#f06292',grad:'linear-gradient(135deg,#d81b60,#f06292)',tint:'rgba(216,27,96,.10)'},
+  IRR:  {id:'IRR',  ar:'الأفعال الشاذة', en:'IRR',  c1:'#3b82f6',c2:'#60a5fa',grad:'linear-gradient(135deg,#3b82f6,#60a5fa)',tint:'rgba(59,130,246,.10)'},
+  REAS: {id:'REAS', ar:'أدوات السببية', en:'REAS', c1:'#8e24aa',c2:'#ce93d8',grad:'linear-gradient(135deg,#8e24aa,#ce93d8)',tint:'rgba(142,36,170,.10)'},
+  FUT:  {id:'FUT',  ar:'أزمنة المستقبل', en:'FUT',  c1:'#ff5722',c2:'#ff8a65',grad:'linear-gradient(135deg,#ff5722,#ff8a65)',tint:'rgba(255,87,34,.12)'}
+};
+const LEC_ORDER = ['LINK','IRR','REAS','FUT'];
+
+const QUESTIONS = RAW.split('\n').map(l=>l.trim()).filter(l=>l && !l.startsWith('//')).map(line=>{
+  const p = line.split('|');
+  const L = LECTURES[p[1]];
+  return {
+    id:+p[0], lectureId:p[1], lectureNameAr:L.ar, lectureNameEn:L.en, gradient:L.grad,
+    questionEn:p[2], questionAr:p[3],
+    options:[p[4],p[5],p[6],p[7]].map(o=>{const s=o.split('~');return {en:s[0],ar:s[1]||''};}),
+    correctIndex:'ABCD'.indexOf(p[8]),
+    expEn:p[9], expAr:p[10]
+  };
+});
+const QBYID = {}; QUESTIONS.forEach(q=>QBYID[q.id]=q);
+
+// ═══════════════════ I18N ═══════════════════
+const I18N = {
+  ar:{title:'اختبار اللغة الإنجليزية',sub:'English Quiz · 149 سؤالاً · 4 أقسام',
+    p1:'⚡ تصحيح فوري',p2:'🌏 ترجمة فورية',p3:'🔊 مؤثرات صوتية',
+    f1:'149 سؤالاً · 4 أقسام',f2:'تصحيح فوري مع شرح مبسط',f3:'ترجمة عربية بضغطة',f4:'مؤثرات صوتية للصح والخطأ',
+    chooseLec:'اختر الأقسام:',shuffleQ:'خلط الأسئلة:',shuffleO:'خلط الخيارات:',sounds:'🔊 الأصوات:',lang:'🌏 اللغة:',theme:'🌙 المظهر:',
+    light:'فاتح',dark:'داكن',start:'▶ ابدأ الاختبار',hint:'اختصارات: 1-4 للاختيار · Enter للتالي · R للترجمة · M للصوت',
+    best:'🏆 أفضل نتيجة:',auto:'استئناف تلقائي عند تحديث الصفحة',noLec:'اختر قسماً واحداً على الأقل',
+    next:'السؤال التالي ←',finish:'عرض النتيجة ←',ok:'✓ إجابة صحيحة',no:'✗ إجابة خاطئة',tr:'🌏 الترجمة',
+    q:'سؤال',home:'الرئيسية',again:'🔁 إعادة',homeB:'🏠 الرئيسية',
+    c:'صحيحة',w:'خاطئة',pct:'النسبة',dur:'المدة',all:'الكل',wo:'الخطأ فقط',co:'الصحيح فقط',un:'لم يُجب',
+    your:'إجابتك',corr:'الإجابة الصحيحة',none:'لم تُجب',res:'النتيجة',byLec:'النتيجة حسب القسم',
+    exit:'هل تريد إنهاء الاختبار والعودة للرئيسية؟',yes:'نعم',cancel:'إلغاء',empty:'لا توجد عناصر',expl:'الشرح'},
+  en:{title:'English Midterm Quiz',sub:'English Quiz · 149 Questions · 4 Sections',
+    p1:'⚡ Instant feedback',p2:'🌏 Instant translation',p3:'🔊 Sound effects',
+    f1:'149 questions · 4 sections',f2:'Instant feedback with explanations',f3:'Arabic translation in one tap',f4:'Sounds for right and wrong',
+    chooseLec:'Choose sections:',shuffleQ:'Shuffle questions:',shuffleO:'Shuffle options:',sounds:'🔊 Sounds:',lang:'🌏 Language:',theme:'🌙 Theme:',
+    light:'Light',dark:'Dark',start:'▶ Start Quiz',hint:'Shortcuts: 1-4 select · Enter next · R translate · M mute',
+    best:'🏆 Best score:',auto:'Auto-resume on page refresh',noLec:'Select at least one section',
+    next:'Next question →',finish:'See results →',ok:'✓ Correct',no:'✗ Incorrect',tr:'🌏 Translate',
+    q:'Question',home:'Home',again:'🔁 Retry',homeB:'🏠 Home',
+    c:'Correct',w:'Wrong',pct:'Score',dur:'Time',all:'All',wo:'Wrong only',co:'Correct only',un:'Unanswered',
+    your:'Your answer',corr:'Correct answer',none:'Not answered',res:'Results',byLec:'Score by section',
+    exit:'End the quiz and return home?',yes:'Yes',cancel:'Cancel',empty:'Nothing here',expl:'Explanation'}
+};
+const t = k => (I18N[S.lang]||I18N.ar)[k];
+
+// ═══════════════════ STATE ═══════════════════
+const LS = {
+  get(k,d){try{const v=localStorage.getItem(k);return v===null?d:JSON.parse(v);}catch(e){return d;}},
+  set(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
+};
+const S = {
+  lang:'ar', theme:'dark', soundOn:true,
+  settings:{lectures:[...LEC_ORDER],shuffleQ:true,shuffleO:true},
+  screen:'welcome',
+  quiz:null, showAr:false, filter:'all'
+};
+
+function loadSettings(){
+  S.lang = LS.get('pedsQuiz.lang','ar');
+  S.theme = LS.get('pedsQuiz.theme','dark');
+  S.soundOn = LS.get('pedsQuiz.soundOn',true);
+  const st = LS.get('pedsQuiz.settings',null);
+  if(st && Array.isArray(st.lectures)) S.settings = Object.assign(S.settings, st);
+}
+function saveSettings(){
+  LS.set('pedsQuiz.lang',S.lang);LS.set('pedsQuiz.theme',S.theme);
+  LS.set('pedsQuiz.soundOn',S.soundOn);LS.set('pedsQuiz.settings',S.settings);
+}
+function applyTheme(th){S.theme=th;document.documentElement.setAttribute('data-theme',th);saveSettings();}
+function applyLanguage(lg){
+  S.lang=lg;
+  document.documentElement.lang = lg;
+  document.documentElement.dir = lg==='ar'?'rtl':'ltr';
+  saveSettings();
+}
+function saveProgress(){
+  try{ if(S.quiz) sessionStorage.setItem('pedsQuiz.progress',JSON.stringify(S.quiz)); }catch(e){}
+}
+function loadProgress(){
+  try{const v=sessionStorage.getItem('pedsQuiz.progress');if(!v)return null;
+    const q=JSON.parse(v);
+    if(q && Array.isArray(q.order) && q.order.every(id=>QBYID[id])) return q;
+  }catch(e){}
+  return null;
+}
+function clearProgress(){try{sessionStorage.removeItem('pedsQuiz.progress');}catch(e){}}
+
+function shuffleArray(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+const esc = s => String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const $ = s => document.querySelector(s);
+const app = $('#app');
+function announce(m){const l=$('#live');l.textContent=m;}
+
+// ═══════════════════ SOUND ═══════════════════
+let AC=null;
+function initAudio(){
+  if(!AC){try{AC=new (window.AudioContext||window.webkitAudioContext)();}catch(e){}}
+  if(AC && AC.state==='suspended') AC.resume();
+}
+function tone(type,f0,f1,dur,vol,wobble){
+  if(!S.soundOn||!AC) return;
+  const o=AC.createOscillator(),g=AC.createGain(),now=AC.currentTime;
+  o.type=type;o.frequency.setValueAtTime(f0,now);
+  if(f1!==f0) o.frequency.exponentialRampToValueAtTime(f1,now+dur);
+  if(wobble){
+    const lfo=AC.createOscillator(),lg=AC.createGain();
+    lfo.frequency.value=28;lg.gain.value=18;lfo.connect(lg);lg.connect(o.frequency);lfo.start(now);lfo.stop(now+dur);
+  }
+  g.gain.setValueAtTime(vol,now);g.gain.exponentialRampToValueAtTime(0.0001,now+dur);
+  o.connect(g);g.connect(AC.destination);o.start(now);o.stop(now+dur+0.02);
+}
+function playCorrect(){tone('sine',880,1320,.32,.15,false);}
+function playWrong(){tone('sawtooth',220,220,.26,.15,true);}
+function playClick(){tone('sine',600,600,.06,.08,false);}
+
+// ═══════════════════ WELCOME ═══════════════════
+function bestScore(){return LS.get('pedsQuiz.best',null);}
+function renderWelcome(){
+  S.screen='welcome';
+  const st=S.settings, b=bestScore();
+  app.innerHTML = `
+  <div class="wrap">
+    <div class="hero">
+      <div class="badge">📝</div>
+      <h1>${t('title')}</h1>
+      <div class="sub">${t('sub')}</div>
+      <div class="pills"><span class="pill">${t('p1')}</span><span class="pill">${t('p2')}</span><span class="pill">${t('p3')}</span></div>
+    </div>
+    <div class="sacred">
+      <div class="ic">🕌</div>
+      <div class="main ar">«اللهم صلِّ وسلِّم على نبينا محمد ﷺ»</div>
+      <hr>
+      <div class="dua ar">🤲 دعواتكم لنستمر</div>
+    </div>
+    <div class="grid">
+      <div class="feat"><span class="e">📚</span>${t('f1')}</div>
+      <div class="feat"><span class="e">⚡</span>${t('f2')}</div>
+      <div class="feat"><span class="e">🌏</span>${t('f3')}</div>
+      <div class="feat"><span class="e">🔊</span>${t('f4')}</div>
+    </div>
+    <div class="setup">
+      <h3>${t('chooseLec')}</h3>
+      <div class="lecs">
+        ${LEC_ORDER.map(id=>{const L=LECTURES[id];const n=QUESTIONS.filter(q=>q.lectureId===id).length;
+          return `<label class="lec"><input type="checkbox" data-lec="${id}" ${st.lectures.includes(id)?'checked':''}>
+          <span class="chip" style="background:${L.grad}">${L.en} · ${n}</span><span>${L.ar}</span></label>`;}).join('')}
+      </div>
+      <div class="row"><label class="t" for="swQ">${t('shuffleQ')}</label><span class="sw"><input type="checkbox" id="swQ" ${st.shuffleQ?'checked':''}><i></i></span></div>
+      <div class="row"><label class="t" for="swO">${t('shuffleO')}</label><span class="sw"><input type="checkbox" id="swO" ${st.shuffleO?'checked':''}><i></i></span></div>
+      <div class="row"><label class="t" for="swS">${t('sounds')}</label><span class="sw"><input type="checkbox" id="swS" ${S.soundOn?'checked':''}><i></i></span></div>
+      <div class="row"><span class="t">${t('lang')}</span><div class="seg"><button data-lg="ar" class="${S.lang==='ar'?'on':''}">AR</button><button data-lg="en" class="${S.lang==='en'?'on':''}">EN</button></div></div>
+      <div class="row"><span class="t">${t('theme')}</span><div class="seg"><button data-th="light" class="${S.theme==='light'?'on':''}">☀️ ${t('light')}</button><button data-th="dark" class="${S.theme==='dark'?'on':''}">🌙 ${t('dark')}</button></div></div>
+      <div class="err hidden" id="werr">${t('noLec')}</div>
+    </div>
+    <div class="cta"><button class="start" id="startBtn">${t('start')}</button>
+      <div class="hint">${t('hint')}</div></div>
+    <div class="foot"><div>${t('best')} <b>${b===null?'—':b+'%'}</b></div><div>${t('auto')}</div></div>
+  </div>`;
+}
+
+// ═══════════════════ QUIZ ═══════════════════
+function startQuiz(){
+  initAudio();
+  const sel = S.settings.lectures;
+  if(!sel.length){$('#werr').classList.remove('hidden');return;}
+  let ids = QUESTIONS.filter(q=>sel.includes(q.lectureId)).map(q=>q.id);
+  if(S.settings.shuffleQ) ids = shuffleArray(ids);
+  const optOrder={};
+  ids.forEach(id=>{optOrder[id]=S.settings.shuffleO?shuffleArray([0,1,2,3]):[0,1,2,3];});
+  S.quiz={order:ids,optOrder,idx:0,answers:{},start:Date.now(),elapsed:0};
+  S.showAr=false;
+  saveProgress();
+  renderQuestion(true);
+}
+function curQ(){return QBYID[S.quiz.order[S.quiz.idx]];}
+function counts(){
+  let c=0,w=0;
+  S.quiz.order.forEach(id=>{const a=S.quiz.answers[id];if(a===undefined)return;if(a===QBYID[id].correctIndex)c++;else w++;});
+  return {c,w};
+}
+function setLectureVars(q){
+  const L=LECTURES[q.lectureId],r=document.documentElement.style;
+  r.setProperty('--grad',L.grad);r.setProperty('--g1',L.c1);r.setProperty('--g2',L.c2);r.setProperty('--tint',L.tint);
+}
+function resetLectureVars(){
+  const r=document.documentElement.style;['--grad','--g1','--g2','--tint'].forEach(p=>r.removeProperty(p));
+}
+function renderQuestion(anim){
+  S.screen='quiz';
+  const Z=S.quiz,q=curQ(),L=LECTURES[q.lectureId];
+  setLectureVars(q);
+  const perm=Z.optOrder[q.id], ans=Z.answers[q.id], answered=ans!==undefined;
+  const {c,w}=counts(), total=Z.order.length;
+  const optsHtml = perm.map((orig,p)=>{
+    const o=q.options[orig]; let cls='',mk='';
+    if(answered){
+      if(orig===q.correctIndex){cls = ans===orig?'right':'reveal';mk='✓';}
+      else if(orig===ans){cls='wrong';mk='✗';}
+      else cls='dim';
+    }
+    return `<button class="opt ${cls}" data-p="${p}" ${answered?'disabled':''} aria-label="${'ABCD'[p]}: ${esc(o.en)}">
+      <span class="l">${'ABCD'[p]}</span>
+      <span class="b">${esc(o.en)}${S.showAr&&o.ar?`<span class="oar">${esc(o.ar)}</span>`:''}</span>
+      <span class="mk">${mk}</span></button>`;
+  }).join('');
+  let exp='';
+  if(answered){
+    const ok=ans===q.correctIndex, last=Z.idx===total-1;
+    exp = `<div class="exp"><div class="hd ${ok?'ok':'no'}">${ok?I18N.ar.ok:I18N.ar.no}</div>
+      <div class="eb en">${esc(q.expEn)}</div>
+      <div class="eb ar">${esc(q.expAr)}</div>
+      <button class="nextbtn" id="nextBtn">${I18N.ar.next.replace(I18N.ar.next,last?I18N.ar.finish:I18N.ar.next)}</button></div>`;
+  }
+  app.innerHTML = `
+  <div class="top"><div class="topin">
+    <span class="ttl">${I18N.ar.title}</span>
+    <span class="mid"><span class="chip" style="background:${L.grad}">${L.en}</span><span>${I18N.ar.q} ${Z.idx+1} / ${total}</span></span>
+    <span class="end"><span>✓ ${c} · ✗ ${w}</span>
+      <button class="ib" id="sndBtn" aria-label="sound">${S.soundOn?'🔊':'🔇'}</button>
+      <button class="ib" id="homeBtn" aria-label="home">🏠</button></span>
+  </div><div class="prog"><div style="width:${(Z.idx+(answered?1:0))/total*100}%"></div></div></div>
+  <div class="qwrap"><div class="qcard ${anim?'anim':''}">
+    <div class="ribbon"></div>
+    <div class="qhead"><span class="qchip">Q${q.id}</span>
+      <button class="trbtn ${S.showAr?'on':''}" id="trBtn" aria-pressed="${S.showAr}">${I18N.ar.tr}</button></div>
+    <div class="qtext">${esc(q.questionEn)}</div>
+    ${S.showAr?`<div class="qar">${esc(q.questionAr)}</div>`:''}
+    <div class="opts" role="group">${optsHtml}</div>
+    ${exp}
+  </div></div>`;
+  if(answered) setTimeout(()=>{const n=$('#nextBtn');if(n){n.scrollIntoView({block:'nearest',behavior:'smooth'});}},60);
+}
+function toggleTranslation(){S.showAr=!S.showAr;renderQuestion(false);}
+function selectOption(p){
+  const Z=S.quiz,q=curQ();
+  if(Z.answers[q.id]!==undefined) return;
+  initAudio();
+  const orig=Z.optOrder[q.id][p];
+  Z.answers[q.id]=orig;
+  Z.elapsed=Date.now()-Z.start;
+  const ok=orig===q.correctIndex;
+  ok?playCorrect():playWrong();
+  saveProgress();
+  announce(ok?I18N.ar.ok:I18N.ar.no);
+  renderQuestion(false);
+}
+function renderExplanation(){renderQuestion(false);}
+function nextQuestion(){
+  const Z=S.quiz;
+  if(Z.answers[curQ().id]===undefined) return;
+  if(Z.idx>=Z.order.length-1){endQuiz();return;}
+  Z.idx++;S.showAr=false;saveProgress();
+  playClickSilent();
+  renderQuestion(true);window.scrollTo(0,0);
+}
+function playClickSilent(){/* click sound only on answer per spec */}
+
+// ═══════════════════ RESULTS ═══════════════════
+function endQuiz(){
+  const Z=S.quiz;
+  Z.finished=true;
+  Z.duration=Date.now()-Z.start;
+  const {c}=counts();
+  const pct=Math.round(c/Z.order.length*100);
+  const best=bestScore();
+  if(best===null||pct>best) LS.set('pedsQuiz.best',pct);
+  clearProgress();
+  S.filter='all';
+  renderResults();
+}
+function gradeOf(p){return p>=85?'A':p>=75?'B':p>=65?'C':p>=50?'D':'F';}
+function fmtTime(ms){const s=Math.max(0,Math.round(ms/1000));return Math.floor(s/60)+':'+String(s%60).padStart(2,'0');}
+function renderResults(){
+  S.screen='results';resetLectureVars();
+  const Z=S.quiz,total=Z.order.length,{c,w}=counts(),un=total-c-w;
+  const pct=Math.round(c/total*100),R=70,C=2*Math.PI*R;
+  const per=LEC_ORDER.map(id=>{
+    const ids=Z.order.filter(i=>QBYID[i].lectureId===id);if(!ids.length)return null;
+    const ok=ids.filter(i=>Z.answers[i]===QBYID[i].correctIndex).length;
+    return {id,n:ids.length,ok,p:Math.round(ok/ids.length*100)};
+  }).filter(Boolean);
+  const flt = (id)=>{const a=Z.answers[id],q=QBYID[id];
+    if(S.filter==='all')return true;
+    if(S.filter==='wrong')return a!==undefined&&a!==q.correctIndex;
+    if(S.filter==='right')return a===q.correctIndex;
+    return a===undefined;};
+  const items=Z.order.filter(flt);
+  app.innerHTML = `
+  <div class="wrap res">
+    <h1>${t('res')}</h1>
+    <div class="ring">
+      <svg width="200" height="200" viewBox="0 0 200 200">
+        <defs><linearGradient id="rg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#d81b60"/><stop offset="1" stop-color="#8e24aa"/></linearGradient></defs>
+        <circle cx="100" cy="100" r="${R}" fill="none" stroke="var(--border)" stroke-width="16"/>
+        <circle id="arc" cx="100" cy="100" r="${R}" fill="none" stroke="url(#rg)" stroke-width="16" stroke-linecap="round" stroke-dasharray="${C}" stroke-dashoffset="${C}" style="transition:stroke-dashoffset 1.2s cubic-bezier(.4,0,.2,1)"/>
+      </svg><div class="n" id="cnt">0%</div></div>
+    <div class="gradeL">${gradeOf(pct)}</div>
+    <div class="stats">
+      <div class="stat"><b style="color:var(--ok)">${c}</b><span>✓ ${t('c')}</span></div>
+      <div class="stat"><b style="color:var(--err)">${w+un}</b><span>✗ ${t('w')}</span></div>
+      <div class="stat"><b>${pct}%</b><span>${t('pct')}</span></div>
+      <div class="stat"><b>${fmtTime(Z.duration||0)}</b><span>${t('dur')}</span></div>
+    </div>
+    <div class="bars"><b>${t('byLec')}</b>
+      ${per.map(x=>`<div class="bar"><div class="bt"><span>${LECTURES[x.id].en} · ${LECTURES[x.id].ar}</span><span class="en">${x.ok}/${x.n} · ${x.p}%</span></div>
+        <div class="tr"><div style="width:0;background:${LECTURES[x.id].grad}" data-w="${x.p}"></div></div></div>`).join('')}
+    </div>
+    <div class="filters">
+      ${[['all','all'],['wrong','wo'],['right','co'],['un','un']].map(([k,l])=>`<button class="fc ${S.filter===k?'on':''}" data-f="${k}">${t(l)}</button>`).join('')}
+    </div>
+    <div id="rlist">${items.length?items.map(id=>reviewItem(id)).join(''):`<p style="color:var(--muted)">${t('empty')}</p>`}</div>
+    <div class="btns"><button class="btn a" id="againBtn">${t('again')}</button><button class="btn b" id="homeBtn2">${t('homeB')}</button></div>
+  </div>`;
+  requestAnimationFrame(()=>{
+    const arc=$('#arc');if(arc)arc.style.strokeDashoffset=C*(1-pct/100);
+    document.querySelectorAll('.bar .tr>div').forEach(d=>d.style.width=d.dataset.w+'%');
+    const el=$('#cnt'),t0=performance.now(),D=1200;
+    (function step(now){const k=Math.min(1,(now-t0)/D);el.textContent=Math.round(pct*k)+'%';if(k<1)requestAnimationFrame(step);})(t0);
+  });
+}
+function reviewItem(id){
+  const q=QBYID[id],a=q.id&&S.quiz.answers[id];
+  const ans=S.quiz.answers[id];
+  const cls=ans===undefined?'na':ans===q.correctIndex?'ok':'no';
+  const mk=ans===undefined?'–':ans===q.correctIndex?'✓':'✗';
+  const you=ans===undefined?t('none'):q.options[ans].en;
+  const youAr=ans===undefined?'':q.options[ans].ar;
+  return `<details class="rv ${cls}"><summary><span class="st">${mk}</span><span class="qq">Q${q.id} · ${esc(q.questionEn)}</span></summary>
+    <div class="rvb">
+      <p class="ar" style="font-weight:600">${esc(q.questionAr)}</p>
+      <p><b>${t('your')}:</b> <span class="en">${esc(you)}</span>${youAr?` <span class="ar">— ${esc(youAr)}</span>`:''}</p>
+      <p><b>${t('corr')}:</b> <span class="en">${esc(q.options[q.correctIndex].en)}</span> <span class="ar">— ${esc(q.options[q.correctIndex].ar)}</span></p>
+      <div class="eb en">${esc(q.expEn)}</div><div class="eb ar">${esc(q.expAr)}</div>
+    </div></details>`;
+}
+
+// ═══════════════════ NAV / EXIT ═══════════════════
+function goHome(){
+  clearProgress();S.quiz=null;resetLectureVars();renderWelcome();window.scrollTo(0,0);
+}
+function confirmExit(){
+  if(document.getElementById('modal')) return;
+  const m=document.createElement('div');m.className='modal';m.id='modal';
+  m.innerHTML=`<div class="mbox" role="dialog" aria-modal="true"><p style="font-weight:700">${I18N.ar.exit}</p>
+    <div class="btns"><button class="btn a" id="mYes">${I18N.ar.yes}</button><button class="btn b" id="mNo" style="background:#64748b">${I18N.ar.cancel}</button></div></div>`;
+  document.body.appendChild(m);
+  $('#mYes').onclick=()=>{m.remove();goHome();};
+  $('#mNo').onclick=()=>m.remove();
+  $('#mNo').focus();
+}
+
+// ═══════════════════ EVENTS ═══════════════════
+document.addEventListener('click',e=>{
+  const T=e.target;
+  const opt=T.closest('.opt');
+  if(opt && S.screen==='quiz'){selectOption(+opt.dataset.p);return;}
+  if(T.closest('#nextBtn')){nextQuestion();return;}
+  if(T.closest('#trBtn')){toggleTranslation();return;}
+  if(T.closest('#sndBtn')){S.soundOn=!S.soundOn;saveSettings();initAudio();renderQuestion(false);return;}
+  if(T.closest('#homeBtn')){confirmExit();return;}
+  if(T.closest('#homeBtn2')){goHome();return;}
+  if(T.closest('#againBtn')){startQuiz();return;}
+  if(T.closest('#startBtn')){startQuiz();return;}
+  const lg=T.closest('[data-lg]');if(lg){applyLanguage(lg.dataset.lg);renderWelcome();return;}
+  const th=T.closest('[data-th]');if(th){applyTheme(th.dataset.th);renderWelcome();return;}
+  const f=T.closest('[data-f]');if(f){S.filter=f.dataset.f;renderResults();return;}
+});
+document.addEventListener('change',e=>{
+  const T=e.target;
+  if(T.dataset && T.dataset.lec){
+    const set=new Set(S.settings.lectures);T.checked?set.add(T.dataset.lec):set.delete(T.dataset.lec);
+    S.settings.lectures=LEC_ORDER.filter(x=>set.has(x));saveSettings();
+    const er=$('#werr');if(er)er.classList.toggle('hidden',S.settings.lectures.length>0);
+  }else if(T.id==='swQ'){S.settings.shuffleQ=T.checked;saveSettings();}
+  else if(T.id==='swO'){S.settings.shuffleO=T.checked;saveSettings();}
+  else if(T.id==='swS'){S.soundOn=T.checked;saveSettings();initAudio();}
+});
+document.addEventListener('keydown',e=>{
+  if(e.ctrlKey||e.metaKey||e.altKey) return;
+  const k=e.key;
+  if(k==='Escape'){if(S.screen==='quiz')confirmExit();else{const m=$('#modal');if(m)m.remove();}return;}
+  if(k==='m'||k==='M'||k==='ة'){if(S.screen!=='welcome'){S.soundOn=!S.soundOn;saveSettings();if(S.screen==='quiz')renderQuestion(false);}return;}
+  if(S.screen!=='quiz'||$('#modal')) return;
+  const q=curQ(),answered=S.quiz.answers[q.id]!==undefined;
+  if(k==='r'||k==='R'||k==='ق'){toggleTranslation();return;}
+  if(!answered){
+    let p=-1;
+    if('1234'.includes(k)&&k.length===1)p=+k-1;
+    else{const u=k.toUpperCase();if('ABCD'.includes(u)&&u.length===1)p='ABCD'.indexOf(u);}
+    if(p>=0){e.preventDefault();selectOption(p);}
+  }else if(k==='Enter'||k===' '){
+    e.preventDefault();nextQuestion();
+  }
+});
+
+// ═══════════════════ INIT ═══════════════════
+function init(){
+  try {
+    loadSettings();
+    applyTheme(S.theme);applyLanguage(S.lang);
+    const pr=loadProgress();
+    if(pr && !pr.finished){S.quiz=pr;S.showAr=false;renderQuestion(true);}
+    else renderWelcome();
+  } catch(e) {
+    console.error("Initialization error:", e);
+    document.getElementById('app').innerHTML = `<div style="padding:20px; text-align:center; color:var(--text);">حدث خطأ أثناء تحميل الاختبار. يرجى تحديث الصفحة.</div>`;
+  }
+}
+
+// تشغيل التطبيق فوراً بدون أنميشن
+init();
+
+console.log("✅ Loaded " + QUESTIONS.length + " questions");
+</script>
+</body>
+</html>
